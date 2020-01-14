@@ -1,0 +1,11 @@
+.Modal-show.ant-btn {
+    background-color: #f9c548;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #f9c548;
+}
+
+.ant-btn.ant-btn-primary {
+    background-color: #99b83c;
+    border: #99b83c;
+}

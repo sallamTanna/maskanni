@@ -1,0 +1,14 @@
+.spinner {
+    margin: 0 auto;
+    position: absolute;
+    left: 45%;
+    top: 35%;
+    z-index: 100;
+}
+
+
+@media only screen and (max-width: 425px) {
+    .spinner {
+        left: 32%;
+    }
+}

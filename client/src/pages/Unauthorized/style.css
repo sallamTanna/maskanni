@@ -1,0 +1,14 @@
+.back-button.ant-btn {
+    color: #8c8cb1;
+    height: 40px;
+}
+
+.back-button.ant-btn:hover {
+    background-color: #f9c548;
+    color: white;
+    border: 1px solid #f9c548;
+}
+
+.antd-pro-exception-exception .antd-pro-exception-imgBlock {
+    flex: 0 0 46.5%;
+}
