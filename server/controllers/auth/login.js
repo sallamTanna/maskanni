@@ -35,6 +35,6 @@ module.exports = async (req, res, next) => {
       return res.json({ response: { role: loginResult.rows[0].role }, error: null });
     });
   } catch (error) {
-    return next(boom.conflict("Server Error"));
+    return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
