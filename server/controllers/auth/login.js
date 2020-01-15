@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
         {
           username: loginResult.rows[0].username,
           id: loginResult.rows[0].id,
+          email: loginResult.rows[0].email,
           role: loginResult.rows[0].role
         },
         process.env.SECRET

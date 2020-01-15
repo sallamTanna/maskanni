@@ -115,8 +115,8 @@ class Login extends React.Component {
           <Button onClick={this.handleLogin} label="تسجيل الدخول" className="login__body__button" />
         </div>
         <div className="login__signup">
-          <p>قم بتسجيل حساب جديد</p>&nbsp;&nbsp;&nbsp;
-          <p>لا تمتلك حساب على مسكني.كوم بعد؟</p>
+          <p>لا تمتلك حساب على مسكني.كوم بعد؟</p>&nbsp;&nbsp;&nbsp;
+          <p>قم بتسجيل حساب جديد</p>
         </div>
       </div>
     );
