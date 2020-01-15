@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
 .login__logo {
@@ -19,7 +19,7 @@
 .login__body {
   background-color: white;
   padding: 5%;
-  width: 25%;
+  width: 35%;
   text-align: right;
   box-shadow: 0 4px 8px #dad4d4;
 }
@@ -37,10 +37,11 @@
 }
 
 .login__body input {
-  padding: 2% 0;
+  padding: 2% 2% 2% 0;
   border: 2px solid #dcdcdc;
   border-radius: 2px;
   width: 98%;
+  text-align: right;
 }
 
 .login__body input::placeholder {
@@ -74,7 +75,12 @@
   color: #909090;
 }
 
-.login__body__button {
+.login__errorMsg {
+  font-size: 13px;
+  margin-bottom: 4%;
+}
+
+.login__body__button.ant-btn {
   width: 100%;
   border: none;
   background-color: #ffc000;
