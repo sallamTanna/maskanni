@@ -1,4 +1,41 @@
-.ant-menu-item-selected > .ant-menu-item-selected {
-  color: red;
-  border-bottom: 2px solid red;
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Navbar__links {
+  margin: 0 0 0 5%;
+}
+
+.Navbar__links button,
+.Navbar__links a {
+  margin: 0 5px;
+}
+
+.Navbar__links a {
+  color: #202020;
+}
+
+.Navbar__menu {
+  background-color: chartreuse;
+}
+
+.Navbar__links-login.ant-btn {
+  border: 1px solid #ffc000;
+  color: #ffc000;
+}
+
+.Navbar__links-signup.ant-btn {
+  background-color: #ffc000;
+  color: white;
+  border: none;
+}
+
+.Navbar__item li {
+  color: #909090;
+}
+
+.Navbar__item > li.ant-menu-item.ant-menu-item-selected {
+  border-bottom: 2px solid #ffc000;
+  color: #202020;
 }

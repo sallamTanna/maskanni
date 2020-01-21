@@ -23,7 +23,6 @@
 
 .signup__info {
   background-image: url("../../assets/signup-pg.png");
-  /* background-color: red; */
   width: 50%;
 }
 
@@ -150,8 +149,6 @@
 }
 
 @media only screen and (max-width: 425px) {
-  .signup__body {
-  }
   .signup__logo {
     width: 23%;
     height: 23%;
@@ -163,7 +160,6 @@
   .signup__signup {
     flex: none;
     display: inline;
-    margin-top: 5%;
   }
   .signup__signup p {
     padding: 0;
@@ -175,5 +171,17 @@
 @media only screen and (max-width: 320px) {
   .signup__login {
     display: block;
+  }
+
+  .signup__options {
+    display: block;
+  }
+
+  .signup__options div {
+    width: 100%;
+  }
+
+  .signup__options div:nth-child(1) {
+    margin-bottom: 2%;
   }
 }
