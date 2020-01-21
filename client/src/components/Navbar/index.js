@@ -25,14 +25,29 @@ class Navbar extends React.Component {
             <Menu.Item key="1" disabled>
               <img src={logo} alt="logo" />
             </Menu.Item>
-            <Menu.Item key="2">الرئيسية</Menu.Item>
-            <Menu.Item key="3">المشاريع</Menu.Item>
-            <Menu.Item key="4">كيف نعمل</Menu.Item>
-            <Menu.Item key="5">المدونة</Menu.Item>
-            <Menu.Item key="6">من نحن</Menu.Item>
-            <Menu.Item key="7">اتصل بنا</Menu.Item>
+            <Menu.Item key="2">
+              <Link>الرئيسية</Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Link>المشاريع</Link>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <Link>كيف نعمل</Link>
+            </Menu.Item>
+            <Menu.Item key="5">
+              <Link>المدونة</Link>
+            </Menu.Item>
+            <Menu.Item key="6">
+              <Link>من نحن</Link>
+            </Menu.Item>
+            <Menu.Item key="7">
+              <Link>اتصل بنا</Link>
+            </Menu.Item>
           </Menu>
         </div>
+        <Link className="menu-icon" onclick="myFunction()">
+          <i className="fa fa-bars" />
+        </Link>
         <div className="Navbar__links">
           <Link>طلب تصميم خاص</Link>
           <Button

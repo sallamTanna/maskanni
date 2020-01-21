@@ -16,10 +16,6 @@
   color: #202020;
 }
 
-.Navbar__menu {
-  background-color: chartreuse;
-}
-
 .Navbar__links-login.ant-btn {
   border: 1px solid #ffc000;
   color: #ffc000;
@@ -37,5 +33,33 @@
 
 .Navbar__item > li.ant-menu-item.ant-menu-item-selected {
   border-bottom: 2px solid #ffc000;
+}
+
+.Navbar__item > li.ant-menu-item.ant-menu-item-selected a {
   color: #202020;
+}
+
+.menu-icon {
+  display: none;
+  color: #202020;
+}
+
+/* Media Queries */
+
+@media only screen and (max-width: 1024px) {
+  .Navbar__links {
+    /* margin: 0 0 0 -5%; */
+  }
+}
+@media only screen and (max-width: 768px) {
+  .menu-icon {
+    display: inline;
+  }
+  .Navbar__menu {
+    display: none;
+  }
+  .Navbar {
+    padding: 0 5%;
+    justify-content: space-between;
+  }
 }
