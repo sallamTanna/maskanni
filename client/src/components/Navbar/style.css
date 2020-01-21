@@ -39,27 +39,31 @@
   color: #202020;
 }
 
-.menu-icon {
+/* .menu-icon {
   display: none;
   color: #202020;
-}
+} */
 
 /* Media Queries */
 
 @media only screen and (max-width: 1024px) {
   .Navbar__links {
-    /* margin: 0 0 0 -5%; */
+    margin: 0 0 0 -5%;
   }
 }
+
 @media only screen and (max-width: 768px) {
-  .menu-icon {
+  /* .menu-icon {
     display: inline;
-  }
-  .Navbar__menu {
+  } */
+  /* .Navbar__menu {
     display: none;
-  }
+  } */
   .Navbar {
     padding: 0 5%;
     justify-content: space-between;
+  }
+  .Navbar__links {
+    margin: 0;
   }
 }
