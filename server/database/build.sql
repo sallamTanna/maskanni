@@ -5,8 +5,8 @@ BEGIN;
 
     CREATE TYPE roles AS ENUM
     (
-    'admin',
-    'chef'
+    'arch',
+    'cons'
     );
 
 CREATE TABLE users

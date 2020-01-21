@@ -16,7 +16,7 @@
 
 .signup__body {
   background-color: white;
-  padding: 10%;
+  padding: 10% 5% 10% 10%;
   width: 50%;
   text-align: right;
   box-shadow: 0 4px 8px #dad4d4;
@@ -106,7 +106,9 @@
   padding: 4% 0%;
 }
 
-.signup__options div:hover img {
+.signup__options div:hover img,
+.signup__options div:hover h4 {
+  filter: invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%);
 }
 
 .signup__options div h4 {
