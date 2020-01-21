@@ -55,10 +55,10 @@ class Login extends React.Component {
                 errors: false,
                 isLoading: false,
               });
-              if (response.data.response.role === "chef") {
-                return history.push("/chef-home");
+              if (response.data.response.role === "arch") {
+                return history.push("/architect-home");
               }
-              return history.push("/admin-home");
+              return history.push("/consumer-home");
             }
           })
           .catch(error => {
@@ -101,8 +101,8 @@ class Login extends React.Component {
           </div>
           <div className="login__password">
             <div>
-              <p>هل نسيت كلمة المرور؟</p>
               <p className="login__field">كلمة المرور</p>
+              <p>هل نسيت كلمة المرور؟</p>
             </div>
 
             <Input
@@ -117,10 +117,10 @@ class Login extends React.Component {
           <Button onClick={this.handleLogin} label="تسجيل الدخول" className="login__body__button" />
         </div>
         <div className="login__signup">
-          <p>لا تمتلك حساب على مسكني.كوم بعد؟</p>&nbsp;&nbsp;&nbsp;
           <p>
             <Link to="/signup">قم بتسجيل حساب جديد</Link>
           </p>
+          <p>لا تمتلك حساب على مسكني.كوم بعد؟</p>&nbsp;&nbsp;&nbsp;
         </div>
       </div>
     );

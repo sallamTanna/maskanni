@@ -1,6 +1,5 @@
 .signup {
   display: flex;
-  flex-direction: row;
 }
 
 .signup__logo {
@@ -104,11 +103,11 @@
   text-align: center;
   border: 2px solid #dcdcdc;
   padding: 4% 0%;
+  border-radius: 4px;
 }
 
-.signup__options div:hover img,
-.signup__options div:hover h4 {
-  filter: invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%);
+.signup__options div:hover {
+  cursor: pointer;
 }
 
 .signup__options div h4 {

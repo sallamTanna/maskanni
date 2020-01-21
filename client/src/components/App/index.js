@@ -5,7 +5,8 @@ import NotFoundPage from "../../pages/NotFound";
 import Unauthorized from "../../pages/Unauthorized";
 import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
-import H from "../Header";
+import ArchitectHome from "../../pages/ArchitectHome";
+import ConsumerHome from "../../pages/ConsumerHome";
 
 import "./style.css";
 
@@ -15,9 +16,11 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/" component={H} />
+            {/* <Route exact path="/" component={H} /> */}
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/architect-home" component={ArchitectHome} />
+            <Route exact path="/consumer-home" component={ConsumerHome} />
             <Route exact path="/unauthorized" component={Unauthorized} />
             <Route component={NotFoundPage} />
           </Switch>

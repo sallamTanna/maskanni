@@ -5,14 +5,14 @@ BEGIN;
 
     CREATE TYPE roles AS ENUM
     (
-    'arch',
-    'cons'
+    'architect',
+    'consumer'
     );
 
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
-    username VARCHAR NOT NULL,
+    full_name VARCHAR NOT NULL,
     password TEXT NOT NULL,
     email VARCHAR NOT NULL,
     role roles NOT NULL,

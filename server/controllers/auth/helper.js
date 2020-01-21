@@ -9,6 +9,11 @@ exports.getMails = () => ({
   text: `SELECT email FROM users`
 });
 
+exports.addNewUser = (fullName, email, password, role) => ({
+  text: `INSERT INTO users(full_name, email, password, role) values($1, $2, $3, $4)`,
+  values: [fullName, email, password, role]
+});
+
 exports.validateCredentials = () =>
   Joi.object().keys({
     email: Joi.string()

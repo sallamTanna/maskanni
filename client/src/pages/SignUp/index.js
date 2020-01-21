@@ -1,5 +1,10 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { Link } from "react-router-dom";
+import * as yup from "yup";
+import axios from "axios";
 
 import eng from "../../assets/eng.svg";
 import consumer from "../../assets/consumer.svg";
@@ -19,6 +24,85 @@ class SignUp extends React.Component {
     errorMessage: "",
     errors: false,
     fullName: "",
+    role: "",
+  };
+
+  handleInputChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleEnginnerUser = () => {
+    this.setState({
+      role: "architect",
+    });
+  };
+
+  handleConsumerUser = () => {
+    this.setState({
+      role: "consumer",
+    });
+  };
+
+  handleSignup = () => {
+    const { email, password, fullName, role } = this.state;
+    this.setState({ isLoading: true });
+    const schema = yup.object().shape({
+      email: yup
+        .string()
+        .email("يرجي كتابة ايميل صحيح")
+        .required("يرجى كتابة الايميل"),
+      password: yup
+        .string()
+        .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
+        .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
+        .required("يرجى كتابة كلمة المرور"),
+      fullName: yup
+        .string()
+        .min(6, "الاسم كاملا لا يقل عن 6 أحرف")
+        .max(20, "الاسم كاملا لا يزيد عن 20 حرفا")
+        .required("يرجى كتابة الاسم كاملا"),
+    });
+
+    schema
+      .validate({ email, password, fullName })
+      .then(() => {
+        axios
+          .post("/v1/signup", {
+            email: email.toLowerCase(),
+            password,
+            fullName,
+            role,
+          })
+          .then(response => {
+            if (response.status === 200) {
+              this.setState(
+                {
+                  errors: false,
+                  isLoading: false,
+                },
+                () => {
+                  this.props.history.push("/login");
+                }
+              );
+            }
+          })
+          .catch(error => {
+            this.setState({
+              errors: true,
+              isLoading: false,
+              errorMessage: error.response.data.error.msg,
+            });
+          });
+      })
+      .catch(error => {
+        this.setState({
+          errors: true,
+          isLoading: false,
+          errorMessage: error.errors[0],
+        });
+      });
   };
 
   render() {
@@ -26,6 +110,9 @@ class SignUp extends React.Component {
 
     return (
       <div className="signup">
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+        <div className="signup__info">sss</div>
+
         <div className="signup__body">
           <p className="signup__title">تسجيل حساب جديد</p>
           {errors ? (
@@ -35,7 +122,7 @@ class SignUp extends React.Component {
             <p className="signup__field">الاسم كاملا</p>
             <Input
               value={fullName}
-              name="email"
+              name="fullName"
               onChange={this.handleInputChange}
               placeholder="الاسم الاول والاسم الاخير"
             />
@@ -50,10 +137,7 @@ class SignUp extends React.Component {
             />
           </div>
           <div className="signup__password">
-            <div>
-              <p className="signup__field">كلمة المرور</p>
-            </div>
-
+            <p className="signup__field">كلمة المرور</p>
             <Input
               password
               value={password}
@@ -63,14 +147,70 @@ class SignUp extends React.Component {
             />
           </div>
           <div className="signup__options">
-            <div className="engineer__user">
-              <img src={eng} alt="engIcon" />
-              <h4>مهندس</h4>
+            <div
+              className="engineer__user"
+              onClick={this.handleEnginnerUser}
+              style={{
+                border: `${
+                  this.state.role === "architect" ? "2px solid #ffc000" : "2px solid #dcdcdc"
+                }`,
+              }}
+            >
+              <img
+                src={eng}
+                alt="engIcon"
+                style={{
+                  filter: `${
+                    this.state.role === "architect"
+                      ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
+                      : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
+                  }`,
+                }}
+              />
+              <h4
+                style={{
+                  filter: `${
+                    this.state.role === "architect"
+                      ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
+                      : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
+                  }`,
+                }}
+              >
+                مهندس
+              </h4>
               <p>أريد نشر وبيع التصماميم والمخططات المعمارية فقط</p>
             </div>
-            <div className="consumer__user">
-              <img src={consumer} alt="consumer" />
-              <h4>عميل</h4>
+            <div
+              className="consumer__user"
+              onClick={this.handleConsumerUser}
+              style={{
+                border: `${
+                  this.state.role === "consumer" ? "2px solid #ffc000" : "2px solid #dcdcdc"
+                }`,
+              }}
+            >
+              <img
+                src={consumer}
+                alt="consumer"
+                style={{
+                  filter: `${
+                    this.state.role === "consumer"
+                      ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
+                      : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
+                  }`,
+                }}
+              />
+              <h4
+                style={{
+                  filter: `${
+                    this.state.role === "consumer"
+                      ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
+                      : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
+                  }`,
+                }}
+              >
+                عميل
+              </h4>
               <p>أريد تصفح وشراء التصاميم و المخططات المعمارية</p>
             </div>
           </div>
@@ -85,13 +225,12 @@ class SignUp extends React.Component {
             className="signup__body__button"
           />
           <div className="signup__login">
+            <p>هل تمتلك حساب على مسكني.كوم بالفعل؟</p>
             <p>
               <Link to="/login">قم بتسجيل</Link>
             </p>
-            <p>هل تمتلك حساب على مسكني.كوم بالفعل؟</p>
           </div>
         </div>
-        <div className="signup__info">sss</div>
       </div>
     );
   }
