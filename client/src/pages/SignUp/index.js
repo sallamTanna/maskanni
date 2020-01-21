@@ -111,7 +111,7 @@ class SignUp extends React.Component {
     return (
       <div className="signup">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
-        <div className="signup__info">sss</div>
+        <div className="signup__info" />
 
         <div className="signup__body">
           <p className="signup__title">تسجيل حساب جديد</p>

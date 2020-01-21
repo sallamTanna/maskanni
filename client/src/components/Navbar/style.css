@@ -1,0 +1,4 @@
+.ant-menu-item-selected > .ant-menu-item-selected {
+  color: red;
+  border-bottom: 2px solid red;
+}

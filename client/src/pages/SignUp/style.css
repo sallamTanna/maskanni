@@ -139,9 +139,18 @@
 
 /* Media Queries */
 
+@media only screen and (max-width: 768px) {
+  .signup__info {
+    display: none;
+  }
+  .signup__body {
+    width: 100%;
+    padding: 10%;
+  }
+}
+
 @media only screen and (max-width: 425px) {
   .signup__body {
-    width: 90%;
   }
   .signup__logo {
     width: 23%;
@@ -160,5 +169,11 @@
     padding: 0;
     margin: 0;
     text-align: center;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .signup__login {
+    display: block;
   }
 }
