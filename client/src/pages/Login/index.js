@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 import logo from "../../assets/logo1.png";
@@ -105,6 +106,7 @@ class Login extends React.Component {
             </div>
 
             <Input
+              password
               value={password}
               name="password"
               onChange={this.handleInputChange}
@@ -116,7 +118,9 @@ class Login extends React.Component {
         </div>
         <div className="login__signup">
           <p>لا تمتلك حساب على مسكني.كوم بعد؟</p>&nbsp;&nbsp;&nbsp;
-          <p>قم بتسجيل حساب جديد</p>
+          <p>
+            <Link to="/signup">قم بتسجيل حساب جديد</Link>
+          </p>
         </div>
       </div>
     );
