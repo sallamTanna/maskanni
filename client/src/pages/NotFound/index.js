@@ -11,11 +11,7 @@ class NotFound extends React.Component {
     const { history } = this.props;
     const actions = (
       <div>
-        <Button
-          label="العودة الى الخلف"
-          className="back-button"
-          onClick={() => history.push("/forget")}
-        />
+        <Button label="العودة الى الخلف" className="back-button" onClick={() => history.goBack()} />
       </div>
     );
 
