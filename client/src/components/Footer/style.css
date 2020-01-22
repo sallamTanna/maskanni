@@ -37,3 +37,30 @@
 .footer-access a {
   color: #606060;
 }
+
+/* Media Queries */
+
+@media only screen and (max-width: 425px) {
+  .footer {
+    flex-direction: column;
+  }
+  .footer-contact,
+  .footer-products,
+  .footer-links,
+  .footer-access,
+  .footer-general {
+    width: 100%;
+  }
+
+  .footer-contact p,
+  .footer-products p,
+  .footer-links a,
+  .footer-access p,
+  .footer-general p {
+    font-size: 12px;
+  }
+  .footer-title {
+    font-weight: bolder !important;
+    font-size: 15px !important;
+  }
+}
