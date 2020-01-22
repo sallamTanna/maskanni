@@ -8,6 +8,8 @@ import SignUp from "../../pages/SignUp";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
+import Navbar from "../Navbar";
+import Header from "../Header";
 
 import "./style.css";
 
@@ -18,6 +20,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/add" component={AddProject} />
+            <Route exact path="/navbar" component={Navbar} />
+            <Route exact path="/header" component={Header} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/architect-home" component={ArchitectHome} />

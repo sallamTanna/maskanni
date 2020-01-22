@@ -88,7 +88,7 @@ class AddProject extends React.Component {
     } = this.state;
 
     return (
-      <>
+      <div>
         <Navbar />
         <Header title="أضافة تصميم جديد" />
         <div className="add-project">
@@ -348,7 +348,7 @@ class AddProject extends React.Component {
           </div>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 }
