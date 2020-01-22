@@ -6,6 +6,8 @@ import CheckBox from "../../components/CheckBox";
 import InputNumber from "../../components/InputNumber";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import Navbar from "../../components/Navbar";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
@@ -19,6 +21,8 @@ class AddProject extends React.Component {
   render() {
     return (
       <>
+        <Navbar />
+        <Header title="أضافة تصميم جديد" />
         <div className="add-project">
           <div className="main-details">
             <p className="main-details__title">معلومات أساسية</p>
