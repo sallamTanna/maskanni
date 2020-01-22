@@ -7,9 +7,7 @@ import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
-import Navbar from "../Navbar";
 import AddProject from "../../pages/AddProject";
-import Footer from "../Footer";
 
 import "./style.css";
 
@@ -19,9 +17,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/navbar" component={Navbar} />
             <Route exact path="/add" component={AddProject} />
-            <Route exact path="/footer" component={Footer} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/architect-home" component={ArchitectHome} />

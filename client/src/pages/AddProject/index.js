@@ -18,7 +18,75 @@ import addImage from "../../assets/img-icon.svg";
 import "./style.css";
 
 class AddProject extends React.Component {
+  state = {
+    projectName: "",
+    projectDescription: "",
+    size: "",
+    width: "",
+    length: "",
+    height: "",
+    bedRooms: "",
+    livingRooms: "",
+    bathRooms: "",
+    carGarage: "",
+    floors: "",
+    kitchenDescription: "",
+    roomsDescription: "",
+    garageDescription: "",
+    gardenDescription: "",
+    gardenChart: false,
+    interiorDecorationChart: false,
+    HealthChart: false,
+    executiveCahrt: false,
+    buildingChart: false,
+    quantityChart: false,
+    electricityChart: false,
+    conditioningChart: false,
+    price: 0,
+    platformPrice: 0,
+    engineerPrice: 0,
+  };
+
+  handleInputChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleCheckboxChange = e => {
+    this.setState(prevState => ({
+      [e.target.name]: !prevState[e.target.name],
+    }));
+  };
+
+  handlePriceChange = value => {
+    this.setState({
+      price: value,
+    });
+  };
+
   render() {
+    const {
+      projectName,
+      projectDescription,
+      size,
+      width,
+      length,
+      height,
+      livingRooms,
+      bathRooms,
+      carGarage,
+      floors,
+      bedRooms,
+      kitchenDescription,
+      roomsDescription,
+      garageDescription,
+      gardenDescription,
+      price,
+      platformPrice,
+      engineerPrice,
+    } = this.state;
+
     return (
       <>
         <Navbar />
@@ -28,11 +96,21 @@ class AddProject extends React.Component {
             <p className="main-details__title">معلومات أساسية</p>
             <div className="project-name">
               <p>اسم المشروع</p>
-              <Input placeholder="ادخل اسم المشروع" />{" "}
+              <Input
+                onChange={this.handleInputChange}
+                name="projectName"
+                value={projectName}
+                placeholder="ادخل اسم المشروع"
+              />
             </div>
             <div className="project-description">
               <p>وصف المشروع</p>
-              <TextArea placeholder="أكتب وصفاً جدياً لهذا المشروع" />{" "}
+              <TextArea
+                onChange={this.handleInputChange}
+                name="projectDescription"
+                value={projectDescription}
+                placeholder="أكتب وصفاً جدياً لهذا المشروع"
+              />
             </div>
           </div>
           <div className="main-prop">
@@ -74,42 +152,110 @@ class AddProject extends React.Component {
             <div className="total-size">
               <p>المساحة الكلية</p>
               <div className="size-fileds">
-                <Input placeholder="المساحة" />
-                <Input placeholder="الطول" /> <Input placeholder="العرض" />{" "}
-                <Input placeholder="الارتفاع" />{" "}
+                <Input
+                  name="size"
+                  value={size}
+                  onChange={this.handleInputChange}
+                  placeholder="المساحة"
+                />
+                <Input
+                  name="length"
+                  value={length}
+                  onChange={this.handleInputChange}
+                  placeholder="الطول"
+                />
+                <Input
+                  name="width"
+                  value={width}
+                  onChange={this.handleInputChange}
+                  placeholder="العرض"
+                />
+                <Input
+                  name="height"
+                  value={height}
+                  onChange={this.handleInputChange}
+                  placeholder="الارتفاع"
+                />
               </div>
             </div>
 
             <div className="total-size">
               <p>المساحة الكلية</p>
               <div className="size-fileds">
-                <Input placeholder="غرف النوم" />
-                <Input placeholder="غرف المعيشة" /> <Input placeholder="الحمامات" />{" "}
-                <Input placeholder="كراج السيارات" /> <Input placeholder="الأدوار" />{" "}
+                <Input
+                  name="bedRooms"
+                  value={bedRooms}
+                  onChange={this.handleInputChange}
+                  placeholder="غرف النوم"
+                />
+                <Input
+                  name="livingRooms"
+                  value={livingRooms}
+                  onChange={this.handleInputChange}
+                  placeholder="غرف المعيشة"
+                />
+                <Input
+                  name="bathRooms"
+                  value={bathRooms}
+                  onChange={this.handleInputChange}
+                  placeholder="الحمامات"
+                />
+                <Input
+                  name="carGarage"
+                  value={carGarage}
+                  onChange={this.handleInputChange}
+                  placeholder="كراج السيارات"
+                />
+                <Input
+                  name="floors"
+                  value={floors}
+                  onChange={this.handleInputChange}
+                  placeholder="الأدوار"
+                />
               </div>
             </div>
             <div className="total-size">
               <p>غرف النوم</p>
               <div className="size-fileds">
-                <Input placeholder="وصف غرفة النوم" />
+                <Input
+                  name="roomsDescription"
+                  value={roomsDescription}
+                  onChange={this.handleInputChange}
+                  placeholder="وصف غرفة النوم"
+                />
               </div>
             </div>
             <div className="total-size">
               <p>المطبخ</p>
               <div className="size-fileds">
-                <Input placeholder="وصف المطبخ" />
+                <Input
+                  name="kitchenDescription"
+                  value={kitchenDescription}
+                  onChange={this.handleInputChange}
+                  placeholder="وصف المطبخ"
+                />
               </div>
             </div>
             <div className="total-size">
               <p>الكراج</p>
               <div className="size-fileds">
-                <Input placeholder="وصف الكراج" />
+                <Input
+                  name="garageDescription"
+                  value={garageDescription}
+                  onChange={this.handleInputChange}
+                  placeholder="وصف الكراج"
+                />
               </div>
             </div>
             <div className="total-size">
               <p>الحديقة</p>
               <div className="size-fileds">
-                <Input placeholder="وصف الحديقة" />
+                <Input
+                  name="gardenDescription"
+                  value={gardenDescription}
+                  onChange={this.handleInputChange}
+                  placeholder="وصف الحديقة"
+                />
               </div>
             </div>
           </div>
@@ -117,16 +263,48 @@ class AddProject extends React.Component {
             <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
             <div className="available-charts">
               <div>
-                <CheckBox label="مخطط تصميم حديقة" />
-                <CheckBox label="مخطط ديكور داخلي" />
-                <CheckBox label="مخطط صحي" />
-                <CheckBox label="المخطط التنفيذي" />
+                <CheckBox
+                  name="gardenChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط تصميم حديقة"
+                />
+                <CheckBox
+                  name="interiorDecorationChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط ديكور داخلي"
+                />
+                <CheckBox
+                  name="HealthChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط صحي"
+                />
+                <CheckBox
+                  name="executiveCahrt"
+                  onChange={this.handleCheckboxChange}
+                  label="المخطط التنفيذي"
+                />
               </div>
               <div>
-                <CheckBox label="مخطط بناء" />
-                <CheckBox label="مخطط كميات" />
-                <CheckBox label="مخطط كهرباء" />
-                <CheckBox label="مخطط تكييف" />
+                <CheckBox
+                  name="buildingChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط بناء"
+                />
+                <CheckBox
+                  name="quantityChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط كميات"
+                />
+                <CheckBox
+                  name="electricityChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط كهرباء"
+                />
+                <CheckBox
+                  name="conditioningChart"
+                  onChange={this.handleCheckboxChange}
+                  label="مخطط تكييف"
+                />
               </div>
             </div>
           </div>
@@ -147,15 +325,20 @@ class AddProject extends React.Component {
             <div className="price-div">
               <div className="total-price">
                 <p>سعر التصميم</p>
-                <InputNumber symbol="$" />{" "}
+                <InputNumber
+                  onChange={this.handlePriceChange}
+                  name="price"
+                  value={price}
+                  symbol="$"
+                />{" "}
               </div>
               <div className="platform-price">
                 <p>السعر المعروض على المنصة</p>
-                <p>00.00$</p>
+                <p>{platformPrice}$</p>
               </div>
               <div className="eng-price">
                 <p>مستحقاتك بعض الخصم</p>
-                <p>00.00$</p>
+                <p>{engineerPrice}$</p>
               </div>
             </div>
           </div>

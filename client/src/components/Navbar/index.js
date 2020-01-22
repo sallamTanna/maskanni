@@ -37,7 +37,6 @@ class Navbar extends React.Component {
   };
 
   render() {
-    const { history } = this.props;
     const { isResponsive, showLinks } = this.state;
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
@@ -92,18 +91,13 @@ class Navbar extends React.Component {
         </div>
         {showLinks ? (
           <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
-            {" "}
             <Link>طلب تصميم خاص</Link>
-            <Button
-              label="تسجيل الدخول"
-              className="Navbar__links-login"
-              onClick={() => history.push("/login")}
-            />
-            <Button
-              label="تسجيل حساب جديد"
-              className="Navbar__links-signup"
-              onClick={() => history.push("/signup")}
-            />
+            <Link to="/login">
+              <Button label="تسجيل الدخول" className="Navbar__links-login" />
+            </Link>
+            <Link to="/signup">
+              <Button label="تسجيل حساب جديد" className="Navbar__links-signup" />
+            </Link>
           </div>
         ) : (
           <Menu className="Navbar__item" theme="#fff" mode="horizontal">
