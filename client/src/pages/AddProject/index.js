@@ -138,7 +138,7 @@ class AddProject extends React.Component {
             </div>
           </div>
           <div className="price">
-            <p className="price__title">أضافة التصميم</p>
+            <p className="price__title">سعر التصميم</p>
 
             <div className="price-div">
               <div className="total-price">

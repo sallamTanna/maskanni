@@ -150,3 +150,23 @@
   border: 1px solid #ffc000;
   color: #ffc000;
 }
+
+/* Media Queries */
+
+@media only screen and (max-width: 768px) {
+  .add-project {
+    width: 100%;
+  }
+  .buttons {
+    padding: 3% !important;
+    width: 100%;
+  }
+  .available-charts div:nth-child(1),
+  .available-charts div:nth-child(2) {
+    flex: none;
+  }
+  .price-div {
+    flex: none;
+    display: block;
+  }
+}
