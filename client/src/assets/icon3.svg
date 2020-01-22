@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 30 32">
+  <g id="bath-tub" transform="translate(1 1)">
+    <path id="Path" d="M0,6V4A4,4,0,0,1,4,0H4A4,4,0,0,1,8,4V17" transform="translate(13)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M0,4A4,4,0,0,1,8,4Z" transform="translate(9 6)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-3" data-name="Path" d="M.5,0V3" transform="translate(6.5 27)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-4" data-name="Path" d="M.5,0V3" transform="translate(20.5 27)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-5" data-name="Path" d="M28,0H0V5a5,5,0,0,0,5,5H23a5,5,0,0,0,5-5Z" transform="translate(0 17)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="31" viewBox="0 0 32 31">
+  <g id="car-parking" transform="translate(1 1)">
+    <path id="Path" d="M22,8,20.189.757A1,1,0,0,0,19.219,0H2.781a1,1,0,0,0-.97.757L0,8" transform="translate(4 9)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M26,9H0V2.414a1,1,0,0,1,.293-.707L2,0H24l1.707,1.707A1,1,0,0,1,26,2.414Z" transform="translate(2 17)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <circle id="Oval" cx="1.5" cy="1.5" r="1.5" transform="translate(5 20)" fill="#dcdcdc"/>
+    <circle id="Oval-2" data-name="Oval" cx="1.5" cy="1.5" r="1.5" transform="translate(22 20)" fill="#dcdcdc"/>
+    <path id="Path-3" data-name="Path" d="M0,7,15,0,30,7" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <rect id="Rectangle" width="4" height="3" stroke-width="2" transform="translate(2 26)" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" fill="none"/>
+    <rect id="Rectangle-2" data-name="Rectangle" width="4" height="3" transform="translate(24 26)" stroke-width="2" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" fill="none"/>
+    <rect id="Rectangle-3" data-name="Rectangle" width="4" height="3" transform="translate(2 26)" fill="#dcdcdc"/>
+    <rect id="Rectangle-4" data-name="Rectangle" width="4" height="3" transform="translate(24 26)" fill="#dcdcdc"/>
+  </g>
+</svg>

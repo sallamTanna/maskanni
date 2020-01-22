@@ -1,5 +1,5 @@
 {
-  "name": "yhangry",
+  "name": "maskanni",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sallamTanna/yhangry.git"
+    "url": "git+https://github.com/sallamTanna/maskanni.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sallamTanna/yhangry/issues"
+    "url": "https://github.com/sallamTanna/maskanni/issues"
   },
-  "homepage": "https://github.com/sallamTanna/yhangry#readme",
+  "homepage": "https://github.com/sallamTanna/maskanni#readme",
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^6.1.0",

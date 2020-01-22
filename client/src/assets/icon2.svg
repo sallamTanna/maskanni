@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 32 28">
+  <g id="bed-09" transform="translate(1 1)">
+    <path id="Path" d="M0,.5H30" transform="translate(0 15.5)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M0,.5H30" transform="translate(0 20.5)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <rect id="Rectangle" width="22" height="8" stroke-width="2" transform="translate(4)" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" fill="none"/>
+    <path id="Path-3" data-name="Path" d="M4,18V8L0,0" transform="translate(26 8)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-4" data-name="Path" d="M4,0,0,8V18" transform="translate(0 8)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

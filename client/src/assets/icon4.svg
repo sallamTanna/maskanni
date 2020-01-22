@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="29" viewBox="0 0 32 29">
+  <g id="stair-climber" transform="translate(1 1)">
+    <path id="Path" d="M0,15V10.9A3,3,0,0,1,1.716,8.189L19,0" transform="translate(4)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M7,18,24,9V0H16V5H8v5H0v5" transform="translate(4 9)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-3" data-name="Path" d="M30,.5H0" transform="translate(0 26.5)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>
