@@ -1,0 +1,39 @@
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0 10%;
+  background-color: #ffffff;
+}
+
+.footer-general img {
+  margin-bottom: 10%;
+}
+
+.footer-contact,
+.footer-products,
+.footer-links,
+.footer-access {
+  background-color: #ffffff;
+  width: 20%;
+  padding: 0 3%;
+}
+
+.footer-general {
+  background-color: #ffffff;
+  width: 30%;
+  padding: 0 3%;
+}
+
+.footer-title {
+  color: #909090;
+  font-size: 13px;
+}
+
+.footer-contact div i {
+  margin-left: 5%;
+}
+
+.footer-access a {
+  color: #606060;
+}
