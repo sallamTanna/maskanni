@@ -2,8 +2,9 @@
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  padding: 0 10%;
+  padding: 3% 10%;
   background-color: #ffffff;
+  margin-top: 6%;
 }
 
 .footer-general img {
