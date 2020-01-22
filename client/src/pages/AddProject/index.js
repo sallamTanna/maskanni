@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
+import Upload from "../../components/Upload";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
@@ -92,7 +93,6 @@ class AddProject extends React.Component {
       roomsDescription,
       garageDescription,
       gardenDescription,
-
       gardenChart,
       interiorDecorationChart,
       HealthChart,
@@ -270,12 +270,13 @@ class AddProject extends React.Component {
           </div>
           <div className="project-pic">
             <p className="project-pic__title">صور التصميم\المشروع</p>
-            <div className="project-img">
+            {/* <div className="project-img">
               <div>
                 <img src={addImage} alt="addImage" />
                 <p>إضافة صورة جديدة</p>
               </div>
-            </div>
+            </div> */}
+            <Upload />
           </div>
           <div className="more-details">
             <p className="more-details__title">المواصفات والميزات بالتفصيل</p>

@@ -162,6 +162,12 @@
   border-color: #ffc000;
 }
 
+.project-pic .ant-upload-list-picture-card {
+  float: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
 /* Media Queries */
 
 @media only screen and (max-width: 768px) {
