@@ -11,17 +11,11 @@ class NotFound extends React.Component {
     const { history } = this.props;
     const actions = (
       <div>
-        <Button label="Go Back" className="back-button" onClick={() => history.goBack()} />
+        <Button label="العودة الى الخلف" className="back-button" onClick={() => history.goBack()} />
       </div>
     );
 
-    return (
-      <Exception
-        title="401"
-        actions={actions}
-        desc="Sorry, you are not allowed to visit this page!"
-      />
-    );
+    return <Exception title="401" actions={actions} desc="لا يمكنك الدخول الي هذه الصفحة" />;
   }
 }
 

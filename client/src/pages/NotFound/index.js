@@ -12,7 +12,7 @@ class NotFound extends React.Component {
     const actions = (
       <div>
         <Button
-          label="Back to home"
+          label="العودة الى الخلف"
           className="back-button"
           onClick={() => history.push("/forget")}
         />
@@ -20,11 +20,7 @@ class NotFound extends React.Component {
     );
 
     return (
-      <Exception
-        title="404"
-        actions={actions}
-        desc="Sorry, the page you are trying to reach is not found!"
-      />
+      <Exception title="404" actions={actions} desc="الصفحة التي تحاول الوصول اليها غير موجودة" />
     );
   }
 }
