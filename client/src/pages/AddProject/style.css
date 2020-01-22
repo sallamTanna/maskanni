@@ -6,7 +6,10 @@
 .main-details,
 .main-prop,
 .project-pic,
-.more-details {
+.more-details,
+.charts,
+.upload-projects,
+.price {
   background-color: #ffffff;
   color: #202020;
   box-shadow: 0 4px 8px #dad4d4;
@@ -18,7 +21,10 @@
 .main-details__title,
 .main-prop__title,
 .project-pic__title,
-.more-details__title {
+.more-details__title,
+.available-charts__title,
+.upload-projects__title,
+.price__title {
   border-bottom: 1px solid #ebebeb;
   padding: 3% 0;
   padding-right: 3%;
@@ -26,7 +32,12 @@
 
 .project-name,
 .project-description,
-.total-size {
+.total-size,
+.building-chart,
+.total-price,
+.garden-chart,
+.platform-price,
+.eng-price {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -36,9 +47,24 @@
 
 .project-name p,
 .project-description p,
-.total-size p {
+.total-size p,
+.building-chart p,
+.garden-chart p,
+.total-price p,
+.garden-chart p {
   font-size: 12px;
   width: 50%;
+}
+
+.platform-price p,
+.eng-price p {
+  width: 100%;
+}
+
+.platform-price p:nth-child(2),
+.eng-price p:nth-child(2) {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .main-prop__data {
@@ -87,5 +113,40 @@
 
 .available-charts {
   display: flex;
+  padding: 3% 3%;
+}
+
+.available-charts div:nth-child(1),
+.available-charts div:nth-child(2) {
+  margin-left: 10%;
+  display: flex;
   flex-direction: column;
+}
+
+.price-div {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.price-div div {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5%;
+}
+
+.publish-project {
+  background-color: #ffc000;
+  color: white;
+  border: none;
+  margin-right: 3%;
+}
+
+.save-project {
+  border: 1px solid #ffc000;
+  color: #ffc000;
 }

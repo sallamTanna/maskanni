@@ -3,6 +3,8 @@ import React from "react";
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
 import CheckBox from "../../components/CheckBox";
+import InputNumber from "../../components/InputNumber";
+import Button from "../../components/Button";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
@@ -104,6 +106,9 @@ class AddProject extends React.Component {
               <Input placeholder="وصف الحديقة" />
             </div>
           </div>
+        </div>
+        <div className="charts">
+          <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
           <div className="available-charts">
             <div>
               <CheckBox label="مخطط تصميم حديقة" />
@@ -118,6 +123,39 @@ class AddProject extends React.Component {
               <CheckBox label="مخطط تكييف" />
             </div>
           </div>
+        </div>
+        <div className="upload-projects">
+          <p className="upload-projects__title">أضافة التصميم</p>
+          <div className="building-chart">
+            <p>مخطط البناء</p>
+            <Input />{" "}
+          </div>
+          <div className="garden-chart">
+            <p>مخطط تصميم حديقة</p>
+            <Input />{" "}
+          </div>
+        </div>
+        <div className="price">
+          <p className="price__title">أضافة التصميم</p>
+
+          <div className="price-div">
+            <div className="total-price">
+              <p>سعر التصميم</p>
+              <InputNumber symbol="$" />{" "}
+            </div>
+            <div className="platform-price">
+              <p>السعر المعروض على المنصة</p>
+              <p>00.00$</p>
+            </div>
+            <div className="eng-price">
+              <p>مستحقاتك بعض الخصم</p>
+              <p>00.00$</p>
+            </div>
+          </div>
+        </div>
+        <div className="buttons">
+          <Button label="حفظ  التصميم بدون نشر" className="save-project" />
+          <Button label="نشر التصميم" className="publish-project" />
         </div>
       </div>
     );
