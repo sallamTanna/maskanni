@@ -25,11 +25,11 @@ class AddProject extends React.Component {
     width: "",
     length: "",
     height: "",
-    bedRooms: "",
-    livingRooms: "",
-    bathRooms: "",
-    carGarage: "",
-    floors: "",
+    bedRoomsSize: "",
+    livingRoomsSize: "",
+    bathRoomsSize: "",
+    carGarageSize: "",
+    floorsSize: "",
     kitchenDescription: "",
     roomsDescription: "",
     garageDescription: "",
@@ -62,6 +62,8 @@ class AddProject extends React.Component {
   handlePriceChange = value => {
     this.setState({
       price: value,
+      platformPrice: (0.1 * value).toFixed(2),
+      engineerPrice: (0.9 * value).toFixed(2),
     });
   };
 
@@ -73,11 +75,11 @@ class AddProject extends React.Component {
       width,
       length,
       height,
-      livingRooms,
-      bathRooms,
-      carGarage,
-      floors,
-      bedRooms,
+      livingRoomsSize,
+      bathRoomsSize,
+      carGarageSize,
+      floorsSize,
+      bedRoomsSize,
       kitchenDescription,
       roomsDescription,
       garageDescription,
@@ -183,32 +185,32 @@ class AddProject extends React.Component {
               <p>المساحة الكلية</p>
               <div className="size-fileds">
                 <Input
-                  name="bedRooms"
-                  value={bedRooms}
+                  name="bedRoomsSize"
+                  value={bedRoomsSize}
                   onChange={this.handleInputChange}
                   placeholder="غرف النوم"
                 />
                 <Input
-                  name="livingRooms"
-                  value={livingRooms}
+                  name="livingRoomsSize"
+                  value={livingRoomsSize}
                   onChange={this.handleInputChange}
                   placeholder="غرف المعيشة"
                 />
                 <Input
-                  name="bathRooms"
-                  value={bathRooms}
+                  name="bathRoomsSize"
+                  value={bathRoomsSize}
                   onChange={this.handleInputChange}
                   placeholder="الحمامات"
                 />
                 <Input
-                  name="carGarage"
-                  value={carGarage}
+                  name="carGarageSize"
+                  value={carGarageSize}
                   onChange={this.handleInputChange}
                   placeholder="كراج السيارات"
                 />
                 <Input
-                  name="floors"
-                  value={floors}
+                  name="floorsSize"
+                  value={floorsSize}
                   onChange={this.handleInputChange}
                   placeholder="الأدوار"
                 />

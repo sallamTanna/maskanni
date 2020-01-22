@@ -28,11 +28,21 @@ class Footer extends React.Component {
         </div>
         <div className="footer-links">
           <p className="footer-title">روابط</p>
-          <p>المشاريع</p>
-          <p>المدونة</p>
-          <p>كيف تعمل المنصة</p>
-          <p>من نحن</p>
-          <p>إتصل بنا</p>
+          <p>
+            <Link>المشاريع</Link>
+          </p>
+          <p>
+            <Link>المدونة</Link>
+          </p>
+          <p>
+            <Link>كيف تعمل المنصة</Link>
+          </p>
+          <p>
+            <Link>من نحن</Link>
+          </p>
+          <p>
+            <Link>إتصل بنا</Link>
+          </p>
         </div>
         <div className="footer-access">
           <p className="footer-title">الوصول السريع</p>

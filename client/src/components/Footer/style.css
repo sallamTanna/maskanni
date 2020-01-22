@@ -35,8 +35,18 @@
   margin-left: 5%;
 }
 
-.footer-access a {
+.footer-contact div:hover {
+  color: #ffc000;
+}
+
+.footer-access a,
+.footer-links a {
   color: #606060;
+}
+
+.footer-access a:hover,
+.footer-links a:hover {
+  color: #ffc000;
 }
 
 /* Media Queries */
