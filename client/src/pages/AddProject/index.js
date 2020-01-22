@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
@@ -8,17 +9,24 @@ import Button from "../../components/Button";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
+import Message from "../../components/Message";
+import Spinner from "../../components/Spinner";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
 import icon4 from "../../assets/icon4.svg";
 import icon5 from "../../assets/icon5.svg";
 import addImage from "../../assets/img-icon.svg";
+import { saveProjectValidation } from "../helper";
+import { alert } from "../../utilities";
 
 import "./style.css";
 
 class AddProject extends React.Component {
   state = {
+    isLoading: false,
+    errors: false,
+    errorMessage: "",
     projectName: "",
     projectDescription: "",
     size: "",
@@ -67,6 +75,119 @@ class AddProject extends React.Component {
     });
   };
 
+  handleSaveProject = () => {
+    const {
+      projectName,
+      projectDescription,
+      size,
+      width,
+      length,
+      height,
+      livingRoomsSize,
+      bathRoomsSize,
+      carGarageSize,
+      floorsSize,
+      bedRoomsSize,
+      kitchenDescription,
+      roomsDescription,
+      garageDescription,
+      gardenDescription,
+
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      executiveCahrt,
+      buildingChart,
+      quantityChart,
+      electricityChart,
+      conditioningChart,
+      price,
+      isLoading,
+      errors,
+      errorMessage,
+    } = this.state;
+
+    this.setState({
+      isLoading: true,
+    });
+    const schema = saveProjectValidation();
+    schema
+      .validate({
+        projectName,
+        projectDescription,
+        size,
+        width,
+        length,
+        height,
+        livingRoomsSize,
+        bathRoomsSize,
+        carGarageSize,
+        floorsSize,
+        bedRoomsSize,
+        kitchenDescription,
+        roomsDescription,
+        garageDescription,
+        gardenDescription,
+        price,
+      })
+      .then(() => {
+        axios
+          .post("/v1/projects", {
+            projectName,
+            projectDescription,
+            size,
+            width,
+            length,
+            height,
+            livingRoomsSize,
+            bathRoomsSize,
+            carGarageSize,
+            floorsSize,
+            bedRoomsSize,
+            kitchenDescription,
+            roomsDescription,
+            garageDescription,
+            gardenDescription,
+            gardenChart,
+            interiorDecorationChart,
+            HealthChart,
+            executiveCahrt,
+            buildingChart,
+            quantityChart,
+            electricityChart,
+            conditioningChart,
+            price,
+          })
+          .then(response => {
+            if (response.status === 200) {
+              this.setState(
+                {
+                  errors: false,
+                  isLoading: false,
+                },
+                () => {
+                  return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
+                }
+              );
+            }
+          })
+          .catch(error => {
+            this.setState({
+              errors: true,
+              isLoading: false,
+              errorMessage: error.response.data.error.msg,
+            });
+          });
+      })
+      .catch(error => {
+        this.setState({
+          errors: true,
+          isLoading: false,
+          errorMessage: error.errors[0],
+        });
+      });
+  };
+
   render() {
     const {
       projectName,
@@ -87,6 +208,9 @@ class AddProject extends React.Component {
       price,
       platformPrice,
       engineerPrice,
+      isLoading,
+      errors,
+      errorMessage,
     } = this.state;
 
     return (
@@ -94,6 +218,10 @@ class AddProject extends React.Component {
         <Navbar />
         <Header title="أضافة تصميم جديد" />
         <div className="add-project">
+          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+          {errors ? (
+            <Message message={errorMessage} type="error" className="login__errorMsg" />
+          ) : null}
           <div className="main-details">
             <p className="main-details__title">معلومات أساسية</p>
             <div className="project-name">
@@ -345,8 +473,16 @@ class AddProject extends React.Component {
             </div>
           </div>
           <div className="buttons">
-            <Button label="حفظ  التصميم بدون نشر" className="save-project" />
-            <Button label="نشر التصميم" className="publish-project" />
+            <Button
+              label="حفظ  التصميم بدون نشر"
+              className="save-project"
+              onClick={this.handleSaveProject}
+            />
+            <Button
+              label="نشر التصميم"
+              className="publish-project"
+              onClick={this.handlePublishProject}
+            />
           </div>
         </div>
         <Footer />

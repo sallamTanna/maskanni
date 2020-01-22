@@ -8,6 +8,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
+import { loginValidation } from "../helper";
 
 import "./style.css";
 
@@ -29,17 +30,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     this.setState({ isLoading: true });
     const { history } = this.props;
-    const schema = yup.object().shape({
-      email: yup
-        .string()
-        .email()
-        .required("يرجى كتابة الايميل"),
-      password: yup
-        .string()
-        .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
-        .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
-        .required("يرجى كتابة كلمة المرور"),
-    });
+    const schema = loginValidation();
 
     schema
       .validate({ email, password })

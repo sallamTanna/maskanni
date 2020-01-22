@@ -1,6 +1,6 @@
 BEGIN;
 
-    DROP TABLE IF EXISTS user, project;
+    DROP TABLE IF EXISTS users, projects;
     DROP TYPE IF EXISTS roles;
 
     CREATE TYPE roles AS ENUM
@@ -9,7 +9,7 @@ BEGIN;
     'consumer'
     );
 
-CREATE TABLE user
+CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
     full_name VARCHAR NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE user
     resetPasswordExpires BIGINT
 );
 
-CREATE TABLE project
+CREATE TABLE projects
 (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
