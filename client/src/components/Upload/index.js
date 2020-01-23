@@ -4,8 +4,6 @@ import { Upload, Icon, Modal } from "antd";
 import "./style.css";
 
 function getBase64(file) {
-  console.log("fileeeeeeeee", file);
-
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
