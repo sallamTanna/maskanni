@@ -75,8 +75,8 @@ class AddProject extends React.Component {
   handlePriceChange = value => {
     this.setState({
       price: value,
-      platformPrice: (0.1 * value).toFixed(2),
-      engineerPrice: (0.9 * value).toFixed(2),
+      platformPrice: (0.2 * value).toFixed(2),
+      engineerPrice: (0.8 * value).toFixed(2),
     });
   };
 
