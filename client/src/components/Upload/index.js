@@ -32,11 +32,15 @@ class UploadComponent extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = ({ fileList }) => {
+    const { fileListProp } = this.props;
+    fileListProp(fileList);
+    this.setState({ fileList });
+  };
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
-    this.props.fileListProp(fileList);
+
     const uploadButton = (
       <div>
         <Icon type="plus" />

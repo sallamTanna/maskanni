@@ -28,8 +28,11 @@ module.exports = async (req, res, next) => {
     quantityChart,
     electricityChart,
     conditioningChart,
-    price
+    price,
+    urlArray
   } = req.body;
+  console.log(888888888, urlArray);
+
   try {
     const saveNewProjectResult = await dbQuery(
       addNewProject(
@@ -56,7 +59,8 @@ module.exports = async (req, res, next) => {
         quantityChart,
         electricityChart,
         conditioningChart,
-        price
+        price,
+        urlArray
       )
     );
     res.json({

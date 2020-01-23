@@ -20,8 +20,20 @@ import icon5 from "../../assets/icon5.svg";
 import addImage from "../../assets/img-icon.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
+import { storage } from "../../firebase";
 
 import "./style.css";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBiDGL7gpyi6OetjxSmzimalK0PTMM4vyA",
+  authDomain: "maskanni-858d3.firebaseapp.com",
+  databaseURL: "https://maskanni-858d3.firebaseio.com",
+  projectId: "maskanni-858d3",
+  messagingSenderId: "915221898526",
+  appId: "1:915221898526:web:4fc51b8a92c5de1cbd150f",
+  measurementId: "G-E2FMRTK53D",
+  storageBucket: "gs://maskanni-858d3.appspot.com",
+};
 
 class AddProject extends React.Component {
   state = {
@@ -54,6 +66,10 @@ class AddProject extends React.Component {
     price: 0,
     platformPrice: 0,
     engineerPrice: 0,
+    imagesArray: [],
+    testImage: null,
+    urlArray: "",
+    username: "mohammed",
   };
 
   handleInputChange = e => {
@@ -73,6 +89,13 @@ class AddProject extends React.Component {
       price: value,
       platformPrice: (0.1 * value).toFixed(2),
       engineerPrice: (0.9 * value).toFixed(2),
+    });
+  };
+
+  getFilesList = files => {
+    console.log(666666666, files);
+    this.setState({
+      imagesArray: files,
     });
   };
 
@@ -102,15 +125,18 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
       price,
+      imagesArray,
       isLoading,
       errors,
       errorMessage,
+      urlArray,
     } = this.state;
 
     this.setState({
       isLoading: true,
     });
     const schema = saveProjectValidation();
+
     schema
       .validate({
         projectName,
@@ -157,6 +183,7 @@ class AddProject extends React.Component {
             electricityChart,
             conditioningChart,
             price,
+            urlArray,
           })
           .then(response => {
             if (response.status === 200) {
@@ -188,8 +215,34 @@ class AddProject extends React.Component {
       });
   };
 
-  getFilesList = files => {
-    console.log(1111111, files);
+  a = e => {
+    this.setState({
+      testImage: e.target.files[0],
+    });
+  };
+
+  b = () => {
+    const { testImage } = this.state;
+    const uploadTask = storage.ref(`${this.state.username}/${testImage.name}`).put(testImage);
+    uploadTask.on(
+      `state_changed`,
+      snapshot => {
+        // progress
+      },
+      error => {},
+      data => {
+        // complete
+        storage
+          .ref(`${this.state.username}`)
+          .child(testImage.name)
+          .getDownloadURL()
+          .then(url => {
+            this.setState({
+              urlArray: [...this.state.urlArray, url],
+            });
+          });
+      }
+    );
   };
 
   render() {
@@ -215,13 +268,18 @@ class AddProject extends React.Component {
       isLoading,
       errors,
       errorMessage,
+      urlArray,
     } = this.state;
+    console.log(444444, urlArray);
 
     return (
       <div>
         <Navbar />
         <Header title="أضافة تصميم جديد" />
         <div className="add-project">
+          <input type="file" onChange={this.a} />
+          <img src={this.state.url} />
+          <button onClick={this.b}>uploaaaaaad</button>
           {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
           {errors ? (
             <Message message={errorMessage} type="error" className="login__errorMsg" />

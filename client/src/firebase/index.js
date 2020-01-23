@@ -1,3 +1,6 @@
+import firebase from "firebase";
+import "firebase/storage";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBiDGL7gpyi6OetjxSmzimalK0PTMM4vyA",
   authDomain: "maskanni-858d3.firebaseapp.com",
@@ -9,7 +12,8 @@ const firebaseConfig = {
   storageBucket: "gs://maskanni-858d3.appspot.com",
 };
 
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-// // Get a reference to the storage service, which is used to create references in your storage bucket
-// var storage = firebase.storage();
+const storage = firebase.storage();
+
+export { storage, firebase as default };

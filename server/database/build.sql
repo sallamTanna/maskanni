@@ -46,8 +46,10 @@ CREATE TABLE projects
     building_chart BOOLEAN NOT NULL,
     quantity_chart BOOLEAN NOT NULL,
     electricity_chart BOOLEAN NOT NULL,
-    conditioning_chart BOOLEAN NOT NULL
+    conditioning_chart BOOLEAN NOT NULL,
+    images_url VARCHAR
+    []
 
 );
 
-COMMIT;
+    COMMIT;
