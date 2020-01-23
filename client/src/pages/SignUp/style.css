@@ -1,6 +1,7 @@
 .signup {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  /* height: min-content; */
 }
 
 .signup__logo {
@@ -131,7 +132,8 @@
 }
 
 .signup__login {
-  margin-top: 6%;
+  padding-bottom: 5%;
+  margin-top: 2%;
   display: flex;
   justify-content: space-between;
   font-size: 12px;

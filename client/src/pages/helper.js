@@ -13,6 +13,24 @@ const loginValidation = () =>
       .required("يرجى كتابة كلمة المرور"),
   });
 
+const signupValidation = () =>
+  yup.object().shape({
+    email: yup
+      .string()
+      .email("يرجي كتابة ايميل صحيح")
+      .required("يرجى كتابة الايميل"),
+    password: yup
+      .string()
+      .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
+      .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
+      .required("يرجى كتابة كلمة المرور"),
+    fullName: yup
+      .string()
+      .min(6, "الاسم كاملا لا يقل عن 6 أحرف")
+      .max(20, "الاسم كاملا لا يزيد عن 20 حرفا")
+      .required("يرجى كتابة الاسم كاملا"),
+  });
+
 const saveProjectValidation = () =>
   yup.object().shape({
     projectName: yup
@@ -75,4 +93,4 @@ const saveProjectValidation = () =>
       .required("يرجى ارفاق صور للمشروع"),
   });
 
-export { saveProjectValidation, loginValidation };
+export { loginValidation, signupValidation, saveProjectValidation };

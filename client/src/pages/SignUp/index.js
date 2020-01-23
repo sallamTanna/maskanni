@@ -13,6 +13,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
+import { signupValidation } from "../helper";
 
 import "./style.css";
 
@@ -48,22 +49,7 @@ class SignUp extends React.Component {
   handleSignup = () => {
     const { email, password, fullName, role } = this.state;
     this.setState({ isLoading: true });
-    const schema = yup.object().shape({
-      email: yup
-        .string()
-        .email("يرجي كتابة ايميل صحيح")
-        .required("يرجى كتابة الايميل"),
-      password: yup
-        .string()
-        .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
-        .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
-        .required("يرجى كتابة كلمة المرور"),
-      fullName: yup
-        .string()
-        .min(6, "الاسم كاملا لا يقل عن 6 أحرف")
-        .max(20, "الاسم كاملا لا يزيد عن 20 حرفا")
-        .required("يرجى كتابة الاسم كاملا"),
-    });
+    const schema = signupValidation();
 
     schema
       .validate({ email, password, fullName })
