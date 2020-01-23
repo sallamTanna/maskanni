@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
 
 import logo from "../../assets/logo1.png";
 import Input from "../../components/Input";

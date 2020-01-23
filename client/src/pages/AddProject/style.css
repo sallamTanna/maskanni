@@ -168,10 +168,7 @@
   justify-content: flex-start;
 }
 
-/* .project-pic__pictures.project-pic .ant-upload-list-picture-card { */
 .project-pic .ant-upload-list-picture-card {
-  /* display: flex; */
-
   flex-wrap: wrap;
 }
 

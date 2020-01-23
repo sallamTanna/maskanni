@@ -123,12 +123,8 @@ class AddProject extends React.Component {
     this.setState({
       isLoading: true,
     });
-
-    // ////////////////////////////////////
-
+    // Start uploading imags to firebase
     imagesArray.map(obj => {
-      console.log("objjjjjj", obj);
-
       const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
       uploadTask.on(
         `state_changed`,
@@ -143,8 +139,6 @@ class AddProject extends React.Component {
             .child(`${obj.name}`)
             .getDownloadURL()
             .then(url => {
-              console.log("urll", url);
-
               this.setState({
                 urlArray: [...this.state.urlArray, url],
               });
@@ -153,7 +147,6 @@ class AddProject extends React.Component {
       );
     });
 
-    // ///////////////////////////////////
     const schema = saveProjectValidation();
 
     schema
