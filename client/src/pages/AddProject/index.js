@@ -17,23 +17,11 @@ import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
 import icon4 from "../../assets/icon4.svg";
 import icon5 from "../../assets/icon5.svg";
-import addImage from "../../assets/img-icon.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
 import { storage } from "../../firebase";
 
 import "./style.css";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBiDGL7gpyi6OetjxSmzimalK0PTMM4vyA",
-  authDomain: "maskanni-858d3.firebaseapp.com",
-  databaseURL: "https://maskanni-858d3.firebaseio.com",
-  projectId: "maskanni-858d3",
-  messagingSenderId: "915221898526",
-  appId: "1:915221898526:web:4fc51b8a92c5de1cbd150f",
-  measurementId: "G-E2FMRTK53D",
-  storageBucket: "gs://maskanni-858d3.appspot.com",
-};
 
 class AddProject extends React.Component {
   state = {
@@ -68,7 +56,7 @@ class AddProject extends React.Component {
     engineerPrice: 0,
     imagesArray: [],
     testImage: null,
-    urlArray: "",
+    urlArray: [],
     username: "mohammed",
   };
 
@@ -93,7 +81,6 @@ class AddProject extends React.Component {
   };
 
   getFilesList = files => {
-    console.log(666666666, files);
     this.setState({
       imagesArray: files,
     });
@@ -130,11 +117,43 @@ class AddProject extends React.Component {
       errors,
       errorMessage,
       urlArray,
+      username,
     } = this.state;
 
     this.setState({
       isLoading: true,
     });
+
+    // ////////////////////////////////////
+
+    imagesArray.map(obj => {
+      console.log("objjjjjj", obj);
+
+      const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
+      uploadTask.on(
+        `state_changed`,
+        snapshot => {
+          // progress
+        },
+        error => {},
+        data => {
+          // complete
+          storage
+            .ref(`${username}`)
+            .child(`${obj.name}`)
+            .getDownloadURL()
+            .then(url => {
+              console.log("urll", url);
+
+              this.setState({
+                urlArray: [...this.state.urlArray, url],
+              });
+            });
+        }
+      );
+    });
+
+    // ///////////////////////////////////
     const schema = saveProjectValidation();
 
     schema
@@ -155,6 +174,7 @@ class AddProject extends React.Component {
         garageDescription,
         gardenDescription,
         price,
+        urlArray,
       })
       .then(() => {
         axios
@@ -215,36 +235,6 @@ class AddProject extends React.Component {
       });
   };
 
-  a = e => {
-    this.setState({
-      testImage: e.target.files[0],
-    });
-  };
-
-  b = () => {
-    const { testImage } = this.state;
-    const uploadTask = storage.ref(`${this.state.username}/${testImage.name}`).put(testImage);
-    uploadTask.on(
-      `state_changed`,
-      snapshot => {
-        // progress
-      },
-      error => {},
-      data => {
-        // complete
-        storage
-          .ref(`${this.state.username}`)
-          .child(testImage.name)
-          .getDownloadURL()
-          .then(url => {
-            this.setState({
-              urlArray: [...this.state.urlArray, url],
-            });
-          });
-      }
-    );
-  };
-
   render() {
     const {
       projectName,
@@ -270,16 +260,12 @@ class AddProject extends React.Component {
       errorMessage,
       urlArray,
     } = this.state;
-    console.log(444444, urlArray);
 
     return (
       <div>
         <Navbar />
         <Header title="أضافة تصميم جديد" />
         <div className="add-project">
-          <input type="file" onChange={this.a} />
-          <img src={this.state.url} />
-          <button onClick={this.b}>uploaaaaaad</button>
           {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
           {errors ? (
             <Message message={errorMessage} type="error" className="login__errorMsg" />
@@ -310,23 +296,48 @@ class AddProject extends React.Component {
             <div className="main-prop__data">
               <div>
                 <img src={icon1} alt="icon1" />
-                <Input />
+                <Input
+                  name="livingRoomsSize"
+                  value={livingRoomsSize}
+                  onChange={this.handleInputChange}
+                  placeholder="غرف المعيشة"
+                />
               </div>
               <div>
                 <img src={icon2} alt="icon2" />
-                <Input />
+                <Input
+                  name="bedRoomsSize"
+                  value={bedRoomsSize}
+                  onChange={this.handleInputChange}
+                  placeholder="غرف النوم"
+                />
               </div>
               <div>
                 <img src={icon3} alt="icon3" />
-                <Input />
+                <Input
+                  name="bathRoomsSize"
+                  value={bathRoomsSize}
+                  onChange={this.handleInputChange}
+                  placeholder="الحمامات"
+                />
               </div>
               <div>
                 <img src={icon4} alt="icon4" />
-                <Input />
+                <Input
+                  name="floorsSize"
+                  value={floorsSize}
+                  onChange={this.handleInputChange}
+                  placeholder="الأدوار"
+                />
               </div>
               <div>
                 <img src={icon5} alt="icon5" />
-                <Input />
+                <Input
+                  name="carGarageSize"
+                  value={carGarageSize}
+                  onChange={this.handleInputChange}
+                  placeholder="كراج السيارات"
+                />
               </div>
             </div>
           </div>
@@ -368,41 +379,6 @@ class AddProject extends React.Component {
               </div>
             </div>
 
-            <div className="total-size">
-              <p>المساحة الكلية</p>
-              <div className="size-fileds">
-                <Input
-                  name="bedRoomsSize"
-                  value={bedRoomsSize}
-                  onChange={this.handleInputChange}
-                  placeholder="غرف النوم"
-                />
-                <Input
-                  name="livingRoomsSize"
-                  value={livingRoomsSize}
-                  onChange={this.handleInputChange}
-                  placeholder="غرف المعيشة"
-                />
-                <Input
-                  name="bathRoomsSize"
-                  value={bathRoomsSize}
-                  onChange={this.handleInputChange}
-                  placeholder="الحمامات"
-                />
-                <Input
-                  name="carGarageSize"
-                  value={carGarageSize}
-                  onChange={this.handleInputChange}
-                  placeholder="كراج السيارات"
-                />
-                <Input
-                  name="floorsSize"
-                  value={floorsSize}
-                  onChange={this.handleInputChange}
-                  placeholder="الأدوار"
-                />
-              </div>
-            </div>
             <div className="total-size">
               <p>غرف النوم</p>
               <div className="size-fileds">
