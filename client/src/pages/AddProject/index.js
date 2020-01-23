@@ -188,10 +188,9 @@ class AddProject extends React.Component {
       });
   };
 
-  getFilesList = (files) => {
+  getFilesList = files => {
     console.log(1111111, files);
-    
-  }
+  };
 
   render() {
     const {
@@ -275,7 +274,9 @@ class AddProject extends React.Component {
           </div>
           <div className="project-pic">
             <p className="project-pic__title">صور التصميم\المشروع</p>
-            <Upload fileListProp={(fileList) => this.getFilesList(fileList)} />
+            <div className="project-pic__pictures">
+              <Upload fileListProp={fileList => this.getFilesList(fileList)} />
+            </div>
           </div>
           <div className="more-details">
             <p className="more-details__title">المواصفات والميزات بالتفصيل</p>
