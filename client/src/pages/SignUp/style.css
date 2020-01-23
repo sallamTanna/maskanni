@@ -1,5 +1,6 @@
 .signup {
   display: flex;
+  height: 100vh;
 }
 
 .signup__logo {
@@ -15,7 +16,7 @@
 
 .signup__body {
   background-color: white;
-  padding: 10% 5% 10% 10%;
+  padding: 2% 5% 0% 10%;
   width: 50%;
   text-align: right;
   box-shadow: 0 4px 8px #dad4d4;
@@ -55,7 +56,7 @@
 
 .signup__email,
 .signup__fullname {
-  margin-bottom: 6%;
+  margin-bottom: 0%;
   width: 100%;
 }
 
