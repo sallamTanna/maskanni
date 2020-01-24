@@ -10,7 +10,6 @@
 .projects_body {
   width: 70%;
   display: flex;
-  /* background-color: red; */
   flex-wrap: wrap;
 }
 
@@ -79,16 +78,26 @@
   background-color: tomato;
 }
 
-.number-of-floors-filter input .ant-input-number,
-.number-of-floors-filter.input.ant-input-number-input-wrap,
-.number-of-floors-filter.input.ant-input-number-input {
-  width: 100%;
-}
-
 .filter_search {
   background-color: #ffc000;
   border: none;
   width: 100%;
   margin-top: 6%;
   color: white;
+}
+
+/* Media Queries */
+
+@media only screen and (max-width: 425px) {
+  .projects__page {
+    flex-direction: column;
+  }
+  .projects_body,
+  .projects_filter {
+    width: 100%;
+  }
+  .projects_body div {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
