@@ -13,61 +13,77 @@ import test from "../../assets/test.png";
 import "./style.css";
 
 class Projects extends React.Component {
+  state = {
+    projects: [
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+      {
+        src: test,
+        name: "الخطة A1002",
+        roomsNumber: 5,
+        livingRoomsNumber: 5,
+        floorsNumber: 5,
+        totalSize: 5,
+      },
+    ],
+  };
+
   render() {
+    const { projects } = this.state;
     return (
       <div className="projects">
         <Navbar />
         <Header title="المشاريع" />
         <div className="projects__page">
           <div className="projects_body">
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
-            <Project
-              src={test}
-              name="الخطة 44ش4ش"
-              roomsNumber={5}
-              livingRoomsNumber={5}
-              floorsNumber={5}
-              totalSize={5}
-            />
+            {projects.map(project => (
+              <Project
+                totalSize={project.totalSize}
+                floorsNumber={project.floorsNumber}
+                livingRoomsNumber={project.livingRoomsNumber}
+                src={project.src}
+                name={project.name}
+                roomsNumber={project.roomsNumber}
+              />
+            ))}
           </div>
           <div className="projects_filter">
             <p className="projects_filter__title">ترتيب النتائج</p>
