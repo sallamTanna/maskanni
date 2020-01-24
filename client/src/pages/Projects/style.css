@@ -10,11 +10,85 @@
 .projects_body {
   width: 70%;
   display: flex;
-  background-color: red;
+  /* background-color: red; */
   flex-wrap: wrap;
 }
 
+.projects_body div:nth-child(1),
+.projects_body div:nth-child(4n) {
+  margin-right: 0;
+}
+
 .projects_filter {
-  background-color: coral;
+  background-color: #ffffff;
   width: 30%;
+  box-shadow: 0 4px 8px #dad4d4;
+  margin: 1.5% 0;
+  border-radius: 1%;
+  padding: 1% 2%;
+  height: fit-content;
+}
+
+.projects_filter__title {
+  color: #202020;
+  font-size: 14px;
+}
+
+.size-filter,
+.length-filter,
+.hight-filter {
+  display: flex;
+  margin-bottom: 3%;
+}
+
+.size-filter input,
+.length-filter input,
+.hight-filter input {
+  margin-left: 10px;
+  width: 95%;
+}
+
+.size-filter button,
+.length-filter button,
+.hight-filter button {
+  color: white;
+  background-color: #ffc000;
+  border: none;
+}
+
+.hight-filter {
+  margin-bottom: 6%;
+}
+
+.type-filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6%;
+}
+
+.type-filter span {
+  color: #202020;
+}
+
+.type-filter .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #ffc000;
+}
+
+.numbe-filter.ant-input-number {
+  margin-bottom: 10%;
+  background-color: tomato;
+}
+
+.number-of-floors-filter input .ant-input-number,
+.number-of-floors-filter.input.ant-input-number-input-wrap,
+.number-of-floors-filter.input.ant-input-number-input {
+  width: 100%;
+}
+
+.filter_search {
+  background-color: #ffc000;
+  border: none;
+  width: 100%;
+  margin-top: 6%;
+  color: white;
 }
