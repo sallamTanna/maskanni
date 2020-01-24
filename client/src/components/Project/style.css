@@ -1,0 +1,48 @@
+.project {
+  width: 30%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 3%;
+  padding: 2%;
+}
+
+.project__icons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-ellipsis-h,
+.fa-heart {
+  font-size: 20px;
+  color: #dcdcdc;
+}
+
+.fa-ellipsis-h:hover,
+.fa-heart:hover {
+  color: #ffc000;
+}
+
+.project__image {
+  display: block;
+  text-align: center;
+}
+
+.project__name {
+  color: #151515;
+  font-weight: normal;
+  border-bottom: 1px solid #ebebeb;
+  padding: 3% 0%;
+}
+
+.project_summary {
+  display: flex;
+  justify-content: space-around;
+}
+
+.project_summary div p:nth-child(1) {
+  color: #151515;
+}
+
+.project_summary div p:nth-child(2) {
+  font-size: 12px;
+}
