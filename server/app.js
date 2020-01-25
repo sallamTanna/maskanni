@@ -5,13 +5,20 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const compresion = require("compression");
 const helmet = require("compression");
+const morgan = require("morgan");
 const router = require("./router");
 
-const middlewares = [helmet(), compresion(), express.json(), express.urlencoded()];
+const middlewares = [
+  helmet(),
+  compresion(),
+  morgan("tiny"),
+  cookieParser(),
+  express.json(),
+  express.urlencoded({ extended: false })
+];
 
 require("dotenv").config();
 
-app.use(cookieParser());
 app.use(middlewares);
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
@@ -26,7 +33,6 @@ app.get("*", (req, res) => {
 app.get((req, res, next) => {
   res.status(404).send("404 not found");
 });
-
 
 app.use((err, req, res, next) => {
   if (err.isBoom) {
