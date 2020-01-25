@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import InputNumber from "../../components/InputNumber";
 import CheckBox from "../../components/CheckBox";
 import Footer from "../../components/Footer";
+import ButtonGroup from "../../components/ButtonGroup";
 import test from "../../assets/test.png";
 
 import "./style.css";
@@ -114,7 +115,8 @@ class Projects extends React.Component {
               <CheckBox label="مبنى كبير" />
             </div>
             <p className="projects_filter__title">عدد الأدوار</p>
-            <InputNumber symbol="أدوار" className="numbe-filter" />
+            <ButtonGroup className="oo" style={{ display: "flex", flexDirection: "row-reverse" }} />
+            {/* <InputNumber symbol="أدوار" className="numbe-filter" /> */}
             <p className="projects_filter__title">عدد الغرف</p>
             <InputNumber symbol="أدوار" className="numbe-filter" />
             <p className="projects_filter__title">عدد غرف المعيشة</p>
