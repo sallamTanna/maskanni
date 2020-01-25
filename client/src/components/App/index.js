@@ -12,7 +12,6 @@ import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
 import Navbar from "../Navbar";
 import Header from "../Header";
-import Projects from "../../pages/Projects";
 
 import "./style.css";
 
@@ -24,7 +23,6 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/add" component={AddProject} />
-              <Route exact path="/projects" component={Projects} />
               <Route exact path="/navbar" component={Navbar} />
               <Route exact path="/header" component={Header} />
               <Route exact path="/login" component={Login} />
