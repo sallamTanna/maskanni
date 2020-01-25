@@ -10,9 +10,9 @@ import SignUp from "../../pages/SignUp";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
+import Projects from "../../pages/Projects";
 import Navbar from "../Navbar";
 import Header from "../Header";
-import Projects from "../../pages/Projects";
 
 import "./style.css";
 

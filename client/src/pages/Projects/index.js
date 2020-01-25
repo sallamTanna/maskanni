@@ -8,79 +8,27 @@ import Button from "../../components/Button";
 import InputNumber from "../../components/InputNumber";
 import CheckBox from "../../components/CheckBox";
 import Footer from "../../components/Footer";
-import ButtonGroup from "../../components/ButtonGroup";
 import test from "../../assets/test.png";
+import fakeProjects from "./fakeProjects";
 
 import "./style.css";
 
 class Projects extends React.Component {
-  state = {
-    projects: [
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-      {
-        src: test,
-        name: "الخطة A1002",
-        roomsNumber: 5,
-        livingRoomsNumber: 5,
-        floorsNumber: 5,
-        totalSize: 5,
-      },
-    ],
-  };
+  state = {};
 
   render() {
-    const { projects } = this.state;
     return (
       <div className="projects">
         <Navbar />
         <Header title="المشاريع" />
         <div className="projects__page">
           <div className="projects_body">
-            {projects.map(project => (
+            {fakeProjects.projects.map(project => (
               <Project
+                src={test}
                 totalSize={project.totalSize}
                 floorsNumber={project.floorsNumber}
                 livingRoomsNumber={project.livingRoomsNumber}
-                src={project.src}
                 name={project.name}
                 roomsNumber={project.roomsNumber}
               />
@@ -115,8 +63,7 @@ class Projects extends React.Component {
               <CheckBox label="مبنى كبير" />
             </div>
             <p className="projects_filter__title">عدد الأدوار</p>
-            <ButtonGroup className="oo" style={{ display: "flex", flexDirection: "row-reverse" }} />
-            {/* <InputNumber symbol="أدوار" className="numbe-filter" /> */}
+            <InputNumber symbol="أدوار" className="numbe-filter" />
             <p className="projects_filter__title">عدد الغرف</p>
             <InputNumber symbol="أدوار" className="numbe-filter" />
             <p className="projects_filter__title">عدد غرف المعيشة</p>
