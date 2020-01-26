@@ -22,7 +22,7 @@ const firebaseConfig = {
   messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
   appId: REACT_APP_APP_ID,
   measurementId: REACT_APP_MEASUREMENT_ID,
-  storageBucket: REACT_APP_STORAGE_BUCKET,
+  storageBucket: "maskanni-858d3.appspot.com ",
 };
 
 firebase.initializeApp(firebaseConfig);
