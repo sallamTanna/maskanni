@@ -13,6 +13,12 @@
   flex-wrap: wrap;
 }
 
+.no-projects {
+  color: #dcdcdc;
+  text-align: center;
+  margin-top: 3%;
+}
+
 .projects_body div:nth-child(1),
 .projects_body div:nth-child(4n) {
   margin-right: 0;
@@ -75,7 +81,6 @@
 
 .numbe-filter.ant-input-number {
   margin-bottom: 10%;
-  background-color: tomato;
 }
 
 .filter_search {
@@ -100,9 +105,4 @@
     margin-right: 0;
     margin-left: 0;
   }
-}
-
-.oo button {
-  margin: 5px;
-  border-radius: 3px;
 }
