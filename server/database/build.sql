@@ -1,12 +1,21 @@
 BEGIN;
 
     DROP TABLE IF EXISTS users, projects;
-    DROP TYPE IF EXISTS roles;
+    DROP TYPE IF EXISTS roles
+    , types;
 
-    CREATE TYPE roles AS ENUM
-    (
+CREATE TYPE roles AS ENUM
+(
     'architect',
     'consumer'
+    );
+
+CREATE TYPE types AS ENUM
+(
+    'studio',
+    'chalet',
+    'villa',
+    'big_home'
     );
 
 CREATE TABLE users
@@ -49,6 +58,7 @@ CREATE TABLE projects
     electricity_chart BOOLEAN NOT NULL,
     conditioning_chart BOOLEAN NOT NULL,
     sold BOOLEAN,
+    type types,
     images_url VARCHAR
     []
 

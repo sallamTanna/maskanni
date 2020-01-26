@@ -7,7 +7,7 @@ import Project from "../../components/Project";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import InputNumber from "../../components/InputNumber";
-import CheckBox from "../../components/CheckBox";
+import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import test from "../../assets/test.png";
@@ -28,6 +28,11 @@ class Projects extends React.Component {
     lengthMax: "",
     heightMin: "",
     heightMax: "",
+    buildingType: "",
+    floorsNumber: 0,
+    roomsNumber: 0,
+    livingRoomsNumber: 0,
+    bedRoomsNumber: 0,
     isEmptyProjects: false,
   };
 
@@ -93,6 +98,36 @@ class Projects extends React.Component {
     });
   };
 
+  handleBuildingType = e => {
+    this.setState({
+      buildingType: e.target.value,
+    });
+  };
+
+  handleFloorsNumberChange = value => {
+    this.setState({
+      floorsNumber: value,
+    });
+  };
+
+  handleRoomsNumberChange = value => {
+    this.setState({
+      roomsNumber: value,
+    });
+  };
+
+  handleLivingRoomsNumber = value => {
+    this.setState({
+      livingRoomsNumber: value,
+    });
+  };
+
+  handleBedRoomsNumber = value => {
+    this.setState({
+      bedRoomsNumber: value,
+    });
+  };
+
   render() {
     const {
       isLoading,
@@ -104,7 +139,14 @@ class Projects extends React.Component {
       heightMin,
       heightMax,
       isEmptyProjects,
+      buildingType,
+      floorsNumber,
+      roomsNumber,
+      livingRoomsNumber,
+      bedRoomsNumber,
     } = this.state;
+    console.log(11111111, floorsNumber);
+
     return (
       <div className="projects">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
@@ -180,20 +222,52 @@ class Projects extends React.Component {
             </div>
             <p className="projects_filter__title">نوع التصميم / المخطط</p>
             <div className="type-filter">
-              <CheckBox label="كل الأنواع" />
-              <CheckBox label="شقة ستوديو" />
-              <CheckBox label="شاليه" />
-              <CheckBox label="فيلا سكنية" />
-              <CheckBox label="مبنى كبير" />
+              <RadioButtons
+                selectedValue={buildingType}
+                values={["كل الأنواع", "شقة ستوديو", "شاليه", "فيلا سكنية", "مبنى كبير"]}
+                onChange={this.handleBuildingType}
+              />
             </div>
-            <p className="projects_filter__title">عدد الأدوار</p>
-            <InputNumber symbol="أدوار" className="numbe-filter" />
-            <p className="projects_filter__title">عدد الغرف</p>
-            <InputNumber symbol="أدوار" className="numbe-filter" />
-            <p className="projects_filter__title">عدد غرف المعيشة</p>
-            <InputNumber symbol="أدوار" className="numbe-filter" />
-            <p className="projects_filter__title">عدد الحمامات</p>
-            <InputNumber symbol="أدوار" className="numbe-filter" />
+
+            <div className="numbe-filter">
+              <div>
+                <p className="projects_filter__title">عدد الأدوار</p>
+                <InputNumber
+                  value={floorsNumber}
+                  onChange={this.handleFloorsNumberChange}
+                  symbol="أدوار"
+                  className="numbe-filter__floors"
+                />
+              </div>
+              <div>
+                <p className="projects_filter__title">عدد الغرف</p>
+                <InputNumber
+                  value={roomsNumber}
+                  symbol="غرفة"
+                  className="numbe-filter__rooms"
+                  onChange={this.handleRoomsNumberChange}
+                />
+              </div>
+              <div>
+                <p className="projects_filter__title">عدد غرف المعيشة</p>
+                <InputNumber
+                  value={livingRoomsNumber}
+                  symbol="غرفة"
+                  className="numbe-filter__livingRooms"
+                  onChange={this.handleLivingRoomsNumber}
+                />
+              </div>
+              <div>
+                <p className="projects_filter__title">عدد الحمامات</p>
+                <InputNumber
+                  value={bedRoomsNumber}
+                  symbol="حمام"
+                  className="numbe-filter__bathRooms"
+                  onChange={this.handleBedRoomsNumber}
+                />
+              </div>
+            </div>
+
             <Button label="بحث" className="filter_search" />
           </div>
         </div>

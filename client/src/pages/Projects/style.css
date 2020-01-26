@@ -66,9 +66,18 @@
 }
 
 .type-filter {
-  display: flex;
+  display: table-caption;
   flex-direction: column;
   margin-bottom: 6%;
+}
+
+.type-filter .ant-radio-checked .ant-radio-inner {
+  border-color: #ffc000;
+  color: #ffc000;
+}
+
+.type-filter .ant-radio-inner:after {
+  background-color: #ffc000;
 }
 
 .type-filter span {
@@ -79,8 +88,22 @@
   background-color: #ffc000;
 }
 
-.numbe-filter.ant-input-number {
-  margin-bottom: 10%;
+.numbe-filter {
+  margin: 5% 0;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas:
+    "numbe-filter__floors numbe-filter__rooms"
+    "numbe-filter__livingRooms numbe-filter__bathRooms";
+}
+
+.numbe-filter div {
+  width: 99%;
+}
+
+.numbe-filter div input {
+  /* height: 60px; */
 }
 
 .filter_search {
