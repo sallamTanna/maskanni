@@ -7,7 +7,7 @@ class RadioButtons extends React.Component {
     return (
       <Radio.Group onChange={onChange} value={selectedValue}>
         {values.map(item => (
-          <Radio value={item}>{item}</Radio>
+          <Radio value={item.value}>{item.label}</Radio>
         ))}
       </Radio.Group>
     );

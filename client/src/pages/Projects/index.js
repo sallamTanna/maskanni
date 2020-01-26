@@ -6,7 +6,6 @@ import Header from "../../components/Header";
 import Project from "../../components/Project";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import InputNumber from "../../components/InputNumber";
 import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
@@ -31,7 +30,7 @@ class Projects extends React.Component {
     floorsNumber: 0,
     roomsNumber: 0,
     livingRoomsNumber: 0,
-    bedRoomsNumber: 0,
+    bathRoomsNumber: 0,
     isEmptyProjects: false,
   };
 
@@ -103,27 +102,34 @@ class Projects extends React.Component {
     });
   };
 
-  handleFloorsNumberChange = value => {
-    this.setState({
-      floorsNumber: value,
+  handleSearch = () => {
+    const {
+      allProjects,
+      buildingType,
+      floorsNumber,
+      roomsNumber,
+      livingRoomsNumber,
+      bathRoomsNumber,
+    } = this.state;
+    const filteredProjects = allProjects.filter(project => {
+      if (buildingType === "كل الأنواع") {
+        return (
+          project.floors_number === +floorsNumber &&
+          project.bedrooms_number === +roomsNumber &&
+          project.livingrooms_number === +livingRoomsNumber &&
+          project.bathrooms_number === +bathRoomsNumber
+        );
+      }
+      return (
+        project.type === buildingType &&
+        project.floors_number === +floorsNumber &&
+        project.bedrooms_number === +roomsNumber &&
+        project.livingrooms_number === +livingRoomsNumber &&
+        project.bathrooms_number === +bathRoomsNumber
+      );
     });
-  };
-
-  handleRoomsNumberChange = value => {
     this.setState({
-      roomsNumber: value,
-    });
-  };
-
-  handleLivingRoomsNumber = value => {
-    this.setState({
-      livingRoomsNumber: value,
-    });
-  };
-
-  handleBedRoomsNumber = value => {
-    this.setState({
-      bedRoomsNumber: value,
+      projects: filteredProjects,
     });
   };
 
@@ -142,7 +148,7 @@ class Projects extends React.Component {
       floorsNumber,
       roomsNumber,
       livingRoomsNumber,
-      bedRoomsNumber,
+      bathRoomsNumber,
     } = this.state;
     return (
       <div className="projects">
@@ -221,7 +227,13 @@ class Projects extends React.Component {
             <div className="type-filter">
               <RadioButtons
                 selectedValue={buildingType}
-                values={["كل الأنواع", "شقة ستوديو", "شاليه", "فيلا سكنية", "مبنى كبير"]}
+                values={[
+                  { value: "كل الأنواع", label: "كل الأنواع" },
+                  { value: "chalet", label: "شاليه" },
+                  { value: "villa", label: "فيلا سكنية" },
+                  { value: "big_home", label: "مبنى كبير" },
+                  { value: "studio", label: "شقة استوديو" },
+                ]}
                 onChange={this.handleBuildingType}
               />
             </div>
@@ -229,43 +241,47 @@ class Projects extends React.Component {
             <div className="numbe-filter">
               <div>
                 <p className="projects_filter__title">عدد الأدوار</p>
-                <InputNumber
+                <Input
                   value={floorsNumber}
-                  onChange={this.handleFloorsNumberChange}
-                  symbol="أدوار"
+                  name="floorsNumber"
+                  onChange={this.handleInputChange}
+                  placeholder="أدوار"
                   className="numbe-filter__floors"
                 />
               </div>
               <div>
                 <p className="projects_filter__title">عدد الغرف</p>
-                <InputNumber
+                <Input
                   value={roomsNumber}
-                  symbol="غرفة"
+                  name="roomsNumber"
+                  placeholder="غرفة"
                   className="numbe-filter__rooms"
-                  onChange={this.handleRoomsNumberChange}
+                  onChange={this.handleInputChange}
                 />
               </div>
               <div>
                 <p className="projects_filter__title">عدد غرف المعيشة</p>
-                <InputNumber
+                <Input
                   value={livingRoomsNumber}
-                  symbol="غرفة"
+                  name="livingRoomsNumber"
+                  placeholder="غرفة"
                   className="numbe-filter__livingRooms"
-                  onChange={this.handleLivingRoomsNumber}
+                  onChange={this.handleInputChange}
                 />
               </div>
               <div>
                 <p className="projects_filter__title">عدد الحمامات</p>
-                <InputNumber
-                  value={bedRoomsNumber}
-                  symbol="حمام"
+                <Input
+                  value={bathRoomsNumber}
+                  name="bathRoomsNumber"
+                  placeholder="حمام"
                   className="numbe-filter__bathRooms"
-                  onChange={this.handleBedRoomsNumber}
+                  onChange={this.handleInputChange}
                 />
               </div>
             </div>
 
-            <Button label="بحث" className="filter_search" />
+            <Button label="بحث" className="filter_search" onClick={this.handleSearch} />
           </div>
         </div>
         <Footer />

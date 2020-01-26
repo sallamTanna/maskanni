@@ -27,7 +27,8 @@ INSERT INTO projects
     quantity_chart,
     electricity_chart,
     conditioning_chart,
-    sold
+    sold,
+    type
     )
 VALUES
     (1, '
@@ -39,7 +40,7 @@ test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
 النوم', 'وصف
 كراج
 السيارات', 'وصف
-الحديقة', 5000, true, true, true, true, false, false, false, false, false ),
+الحديقة', 5000, true, true, true, true, false, false, false, false, false, 'studio' ),
     (1, 'الخطة
 A1002', 'test
 test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
@@ -48,7 +49,7 @@ test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
 النوم', 'وصف
 كراج
 السيارات', 'وصف
-الحديقة', 5000, true, true, true, true, false, false, false, false, false ),
+الحديقة', 5000, true, true, true, true, false, false, false, false, false , 'studio'),
     (1, 'الخطة
 A1002', 'test
 test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
@@ -57,7 +58,7 @@ test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
 النوم', 'وصف
 كراج
 السيارات', 'وصف
-الحديقة', 5000, true, true, true, true, false, false, false, false, false ),
+الحديقة', 5000, true, true, true, true, false, false, false, false, false , 'studio'),
     (1, 'الخطة
 A1002', 'test
 test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
@@ -66,10 +67,10 @@ test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف
 النوم', 'وصف
 كراج
 السيارات', 'وصف
-الحديقة', 5000, true, true, true, true, false, false, false, false, false ),
+الحديقة', 5000, true, true, true, true, false, false, false, false, false, 'studio' ),
     (1, 'الخطة
 A1002', '
-test test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف المطبخ', 'وصف غرف النوم', 'وصف كراج السيارات', 'وصف الحديقة', 5000, true, true, true, true, false, false, false, false, false ),
-    (1, 'الخطة A1002', 'test test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف المطبخ', 'وصف غرف النوم', 'وصف كراج السيارات', 'وصف الحديقة', 5000, true, true, true, true, false, false, false, false, false )
+test test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف المطبخ', 'وصف غرف النوم', 'وصف كراج السيارات', 'وصف الحديقة', 5000, true, true, true, true, false, false, false, false, false , 'studio'),
+    (1, 'الخطة A1002', 'test test', 100, 100, 100, 100, 100, 100, 100, 100 , 100, 'وصف المطبخ', 'وصف غرف النوم', 'وصف كراج السيارات', 'وصف الحديقة', 5000, true, true, true, true, false, false, false, false, false, 'studio' )
 ;
 
