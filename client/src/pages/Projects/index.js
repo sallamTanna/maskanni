@@ -9,6 +9,8 @@ import Button from "../../components/Button";
 import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
+import { alert } from "../../utilities";
+import { numberInputValidation } from "../helper";
 import test from "../../assets/test.png";
 
 import "./style.css";
@@ -26,7 +28,7 @@ class Projects extends React.Component {
     lengthMax: "",
     heightMin: "",
     heightMax: "",
-    buildingType: "",
+    buildingType: "كل الأنواع",
     floorsNumber: 0,
     roomsNumber: 0,
     livingRoomsNumber: 0,
@@ -111,26 +113,35 @@ class Projects extends React.Component {
       livingRoomsNumber,
       bathRoomsNumber,
     } = this.state;
-    const filteredProjects = allProjects.filter(project => {
-      if (buildingType === "كل الأنواع") {
-        return (
-          project.floors_number === +floorsNumber &&
-          project.bedrooms_number === +roomsNumber &&
-          project.livingrooms_number === +livingRoomsNumber &&
-          project.bathrooms_number === +bathRoomsNumber
-        );
-      }
-      return (
-        project.type === buildingType &&
-        project.floors_number === +floorsNumber &&
-        project.bedrooms_number === +roomsNumber &&
-        project.livingrooms_number === +livingRoomsNumber &&
-        project.bathrooms_number === +bathRoomsNumber
-      );
-    });
-    this.setState({
-      projects: filteredProjects,
-    });
+    const schema = numberInputValidation();
+
+    schema
+      .validate({ floorsNumber, roomsNumber, livingRoomsNumber, bathRoomsNumber })
+      .then(() => {
+        const filteredProjects = allProjects.filter(project => {
+          if (buildingType === "كل الأنواع") {
+            return (
+              project.floors_number === +floorsNumber &&
+              project.bedrooms_number === +roomsNumber &&
+              project.livingrooms_number === +livingRoomsNumber &&
+              project.bathrooms_number === +bathRoomsNumber
+            );
+          }
+          return (
+            project.type === buildingType &&
+            project.floors_number === +floorsNumber &&
+            project.bedrooms_number === +roomsNumber &&
+            project.livingrooms_number === +livingRoomsNumber &&
+            project.bathrooms_number === +bathRoomsNumber
+          );
+        });
+        this.setState({
+          projects: filteredProjects,
+        });
+      })
+      .catch(error => {
+        return alert("error", "error", "مشكلة!", error.errors[0], 1500, false);
+      });
   };
 
   render() {

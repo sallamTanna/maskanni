@@ -102,4 +102,28 @@ const saveProjectValidation = () =>
       .required("يرجى ارفاق صور للمشروع"),
   });
 
-export { loginValidation, signupValidation, saveProjectValidation };
+const numberInputValidation = () =>
+  yup.object().shape({
+    floorsNumber: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لعدد الادوار")
+      .positive("يرجى ادخال قيمة صحيحة لعدد الادوار")
+      .required("يرجى ادخال قيمة صحيحة لعدد الادوار"),
+    roomsNumber: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لعدد غرف النوم")
+      .positive("يرجى ادخال قيمة صحيحة لعدد غرف النوم")
+      .required("يرجى ادخال قيمة صحيحة لعدد غرف النوم"),
+    livingRoomsNumber: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لعدد غرف المعيشة")
+      .positive("يرجى ادخال قيمة صحيحة لعدد غرف المعيشة")
+      .required("يرجى ادخال قيمة صحيحة لعدد غرف المعيشة"),
+    bathRoomsNumber: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لعدد الحمامات")
+      .positive("يرجى ادخال قيمة صحيحة لعدد الحمامات")
+      .required("يرجى ادخال قيمة صحيحة لعدد الحمامات"),
+  });
+
+export { loginValidation, signupValidation, saveProjectValidation, numberInputValidation };
