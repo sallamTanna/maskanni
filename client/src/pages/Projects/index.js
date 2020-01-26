@@ -31,7 +31,7 @@ class Projects extends React.Component {
           projects: response.data.response.data,
         });
       })
-      .catch(error => {
+      .catch(() => {
         this.setState({
           errors: true,
           errorMsg: "Something went wrong!",
@@ -52,10 +52,11 @@ class Projects extends React.Component {
             {projects.length > 0
               ? projects.map(project => (
                   <Project
+                    livingRoomsNumber={project.livingrooms_number}
+                    bedRoomsNumber={project.bedrooms_number}
+                    floorsNumber={project.floors_number}
+                    totalSize={project.size}
                     src={test}
-                    totalSize={project.totalSize}
-                    floorsNumber={project.floorsNumber}
-                    livingRoomsNumber={project.livingRoomsNumber}
                     name={project.name}
                     roomsNumber={project.roomsNumber}
                   />

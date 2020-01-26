@@ -7,7 +7,7 @@ class Project extends React.Component {
     const {
       src,
       name,
-      roomsNumber,
+      bedRoomsNumber,
       livingRoomsNumber,
       floorsNumber,
       totalSize,
@@ -26,7 +26,7 @@ class Project extends React.Component {
         <p className="project__name">{name}</p>
         <div className="project_summary">
           <div className="data1">
-            <p>{roomsNumber}</p>
+            <p>{bedRoomsNumber}</p>
             <p>الغرف</p>
           </div>
           <div className="data2">

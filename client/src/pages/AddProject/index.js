@@ -34,11 +34,11 @@ class AddProject extends React.Component {
     width: "",
     length: "",
     height: "",
-    bedRoomsSize: "",
-    livingRoomsSize: "",
-    bathRoomsSize: "",
-    carGarageSize: "",
-    floorsSize: "",
+    bedRoomsNumber: "",
+    livingRoomsNumber: "",
+    bathRoomsNumber: "",
+    carGarageNumber: "",
+    floorsNumber: "",
     kitchenDescription: "",
     roomsDescription: "",
     garageDescription: "",
@@ -94,11 +94,11 @@ class AddProject extends React.Component {
       width,
       length,
       height,
-      livingRoomsSize,
-      bathRoomsSize,
-      carGarageSize,
-      floorsSize,
-      bedRoomsSize,
+      livingRoomsNumber,
+      bathRoomsNumber,
+      carGarageNumber,
+      floorsNumber,
+      bedRoomsNumber,
       kitchenDescription,
       roomsDescription,
       garageDescription,
@@ -157,11 +157,11 @@ class AddProject extends React.Component {
         width,
         length,
         height,
-        livingRoomsSize,
-        bathRoomsSize,
-        carGarageSize,
-        floorsSize,
-        bedRoomsSize,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
         kitchenDescription,
         roomsDescription,
         garageDescription,
@@ -178,11 +178,11 @@ class AddProject extends React.Component {
             width,
             length,
             height,
-            livingRoomsSize,
-            bathRoomsSize,
-            carGarageSize,
-            floorsSize,
-            bedRoomsSize,
+            livingRoomsNumber,
+            bathRoomsNumber,
+            carGarageNumber,
+            floorsNumber,
+            bedRoomsNumber,
             kitchenDescription,
             roomsDescription,
             garageDescription,
@@ -236,11 +236,11 @@ class AddProject extends React.Component {
       width,
       length,
       height,
-      livingRoomsSize,
-      bathRoomsSize,
-      carGarageSize,
-      floorsSize,
-      bedRoomsSize,
+      livingRoomsNumber,
+      bathRoomsNumber,
+      carGarageNumber,
+      floorsNumber,
+      bedRoomsNumber,
       kitchenDescription,
       roomsDescription,
       garageDescription,
@@ -251,7 +251,6 @@ class AddProject extends React.Component {
       isLoading,
       errors,
       errorMessage,
-      urlArray,
     } = this.state;
 
     return (
@@ -290,8 +289,8 @@ class AddProject extends React.Component {
               <div>
                 <img src={icon1} alt="icon1" />
                 <Input
-                  name="livingRoomsSize"
-                  value={livingRoomsSize}
+                  name="livingRoomsNumber"
+                  value={livingRoomsNumber}
                   onChange={this.handleInputChange}
                   placeholder="غرف المعيشة"
                 />
@@ -299,8 +298,8 @@ class AddProject extends React.Component {
               <div>
                 <img src={icon2} alt="icon2" />
                 <Input
-                  name="bedRoomsSize"
-                  value={bedRoomsSize}
+                  name="bedRoomsNumber"
+                  value={bedRoomsNumber}
                   onChange={this.handleInputChange}
                   placeholder="غرف النوم"
                 />
@@ -308,8 +307,8 @@ class AddProject extends React.Component {
               <div>
                 <img src={icon3} alt="icon3" />
                 <Input
-                  name="bathRoomsSize"
-                  value={bathRoomsSize}
+                  name="bathRoomsNumber"
+                  value={bathRoomsNumber}
                   onChange={this.handleInputChange}
                   placeholder="الحمامات"
                 />
@@ -317,8 +316,8 @@ class AddProject extends React.Component {
               <div>
                 <img src={icon4} alt="icon4" />
                 <Input
-                  name="floorsSize"
-                  value={floorsSize}
+                  name="floorsNumber"
+                  value={floorsNumber}
                   onChange={this.handleInputChange}
                   placeholder="الأدوار"
                 />
@@ -326,8 +325,8 @@ class AddProject extends React.Component {
               <div>
                 <img src={icon5} alt="icon5" />
                 <Input
-                  name="carGarageSize"
-                  value={carGarageSize}
+                  name="carGarageNumber"
+                  value={carGarageNumber}
                   onChange={this.handleInputChange}
                   placeholder="كراج السيارات"
                 />
