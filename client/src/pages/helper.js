@@ -126,4 +126,54 @@ const numberInputValidation = () =>
       .required("يرجى ادخال قيمة صحيحة لعدد الحمامات"),
   });
 
-export { loginValidation, signupValidation, saveProjectValidation, numberInputValidation };
+const sizeFilterValidation = () =>
+  yup.object().shape({
+    sizeMin: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة")
+      .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة")
+      .required("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة"),
+    sizeMax: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة للمساحة")
+      .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة للمساحة")
+      .required("يرجى ادخال قيمة صحيحة لأكبر قيمة للمساحة"),
+  });
+
+const lengthFilterValidation = () =>
+  yup.object().shape({
+    lengthMin: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة")
+      .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة")
+      .required("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة"),
+    lengthMax: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة لطول الواجهة")
+      .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة لطول الواجهة")
+      .required("يرجى ادخال قيمة صحيحة لأكبر قيمة لطول الواجهة"),
+  });
+
+const heightFilterValidation = () =>
+  yup.object().shape({
+    heightMin: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع")
+      .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع")
+      .required("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع"),
+    heightMax: yup
+      .number()
+      .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع")
+      .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع")
+      .required("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع"),
+  });
+
+export {
+  loginValidation,
+  signupValidation,
+  saveProjectValidation,
+  numberInputValidation,
+  sizeFilterValidation,
+  lengthFilterValidation,
+  heightFilterValidation,
+};

@@ -10,7 +10,12 @@ import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import { alert } from "../../utilities";
-import { numberInputValidation } from "../helper";
+import {
+  numberInputValidation,
+  sizeFilterValidation,
+  lengthFilterValidation,
+  heightFilterValidation,
+} from "../helper";
 import test from "../../assets/test.png";
 
 import "./style.css";
@@ -70,32 +75,60 @@ class Projects extends React.Component {
 
   handleSizeFilter = () => {
     const { allProjects, sizeMin, sizeMax } = this.state;
-    const filteredProjects = allProjects.filter(project => {
-      return project.size >= sizeMin && project.size <= sizeMax;
-    });
-    this.setState({
-      projects: filteredProjects,
-    });
+    const schema = sizeFilterValidation();
+
+    schema
+      .validate({ sizeMin, sizeMax })
+      .then(() => {
+        const filteredProjects = allProjects.filter(project => {
+          return project.size >= sizeMin && project.size <= sizeMax;
+        });
+        this.setState({
+          projects: filteredProjects,
+        });
+      })
+      .catch(error => {
+        return alert("error", "error", "مشكلة!", error.errors[0], 1500, false);
+      });
   };
 
   handleLengthFilter = () => {
     const { allProjects, lengthMin, lengthMax } = this.state;
-    const filteredProjects = allProjects.filter(project => {
-      return project.length >= lengthMin && project.length <= lengthMax;
-    });
-    this.setState({
-      projects: filteredProjects,
-    });
+    const schema = lengthFilterValidation();
+
+    schema
+      .validate({ lengthMin, lengthMax })
+      .then(() => {
+        const filteredProjects = allProjects.filter(project => {
+          return project.length >= lengthMin && project.length <= lengthMax;
+        });
+        this.setState({
+          projects: filteredProjects,
+        });
+      })
+      .catch(error => {
+        return alert("error", "error", "مشكلة!", error.errors[0], 1500, false);
+      });
   };
 
   handleHeightFilter = () => {
     const { allProjects, heightMin, heightMax } = this.state;
-    const filteredProjects = allProjects.filter(project => {
-      return project.height >= heightMin && project.height <= heightMax;
-    });
-    this.setState({
-      projects: filteredProjects,
-    });
+
+    const schema = heightFilterValidation();
+
+    schema
+      .validate({ heightMin, heightMax })
+      .then(() => {
+        const filteredProjects = allProjects.filter(project => {
+          return project.height >= heightMin && project.height <= heightMax;
+        });
+        this.setState({
+          projects: filteredProjects,
+        });
+      })
+      .catch(error => {
+        return alert("error", "error", "مشكلة!", error.errors[0], 1500, false);
+      });
   };
 
   handleBuildingType = e => {
