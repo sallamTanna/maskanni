@@ -39,10 +39,10 @@ class Projects extends React.Component {
   componentDidMount() {
     axios(`/v1/projects/`)
       .then(response => {
-        console.log(11111, response.data.response.data);
         if (response.data.response.data.length === 0) {
           this.setState({
             isEmptyProjects: true,
+            isLoading: false,
           });
         } else {
           this.setState({

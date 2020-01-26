@@ -14,9 +14,11 @@
 }
 
 .no-projects {
-  color: #dcdcdc;
-  text-align: center;
-  margin-top: 3%;
+  color: #202020;
+  margin: 0 auto;
+  margin-top: 4%;
+  font-size: 18px;
+  font-weight: lighter;
 }
 
 .projects_body div:nth-child(1),
