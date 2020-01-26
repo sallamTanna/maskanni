@@ -11,7 +11,6 @@ import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import test from "../../assets/test.png";
-import fakeProjects from "./fakeProjects";
 
 import "./style.css";
 
@@ -145,8 +144,6 @@ class Projects extends React.Component {
       livingRoomsNumber,
       bedRoomsNumber,
     } = this.state;
-    console.log(11111111, floorsNumber);
-
     return (
       <div className="projects">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
