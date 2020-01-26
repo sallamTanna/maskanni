@@ -41,7 +41,8 @@ exports.addNewProject = (
             electricity_chart,
             conditioning_chart, 
             price,
-            images_url ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)`,
+            images_url,
+            sold ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)`,
   values: [
     projectName,
     projectDescription,
@@ -67,8 +68,13 @@ exports.addNewProject = (
     electricityChart,
     conditioningChart,
     price,
-    urlArray
+    urlArray,
+    false,
   ]
 });
 
+exports.getAllProjects = () => ({
+  text: 'select * FROM projects WHERE sold = $1',
+  values: [false]
+})
 

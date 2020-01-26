@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Navbar from "../../components/Navbar";
 import Header from "../../components/Header";
@@ -7,6 +8,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import InputNumber from "../../components/InputNumber";
 import CheckBox from "../../components/CheckBox";
+import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import test from "../../assets/test.png";
 import fakeProjects from "./fakeProjects";
@@ -14,25 +16,51 @@ import fakeProjects from "./fakeProjects";
 import "./style.css";
 
 class Projects extends React.Component {
-  state = {};
+  state = {
+    isLoading: true,
+    projects: [],
+    errors: false,
+    errorMsg: "",
+  };
+
+  componentDidMount() {
+    axios(`/v1/projects/`)
+      .then(response => {
+        this.setState({
+          isLoading: false,
+          projects: response.data.response.data,
+        });
+      })
+      .catch(error => {
+        this.setState({
+          errors: true,
+          errorMsg: "Something went wrong!",
+        });
+      });
+  }
 
   render() {
+    const { isLoading, projects } = this.state;
     return (
       <div className="projects">
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+
         <Navbar />
         <Header title="المشاريع" />
         <div className="projects__page">
           <div className="projects_body">
-            {fakeProjects.projects.map(project => (
-              <Project
-                src={test}
-                totalSize={project.totalSize}
-                floorsNumber={project.floorsNumber}
-                livingRoomsNumber={project.livingRoomsNumber}
-                name={project.name}
-                roomsNumber={project.roomsNumber}
-              />
-            ))}
+            {projects.length > 0
+              ? projects.map(project => (
+                  <Project
+                    src={test}
+                    totalSize={project.totalSize}
+                    floorsNumber={project.floorsNumber}
+                    livingRoomsNumber={project.livingRoomsNumber}
+                    name={project.name}
+                    roomsNumber={project.roomsNumber}
+                  />
+                ))
+              : null}
           </div>
           <div className="projects_filter">
             <p className="projects_filter__title">ترتيب النتائج</p>

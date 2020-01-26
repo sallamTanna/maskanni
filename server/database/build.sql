@@ -23,6 +23,7 @@ CREATE TABLE users
 CREATE TABLE projects
 (
     id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR NOT NULL,
     description TEXT NOT NULL,
     size INT NOT NULL,
@@ -47,6 +48,7 @@ CREATE TABLE projects
     quantity_chart BOOLEAN NOT NULL,
     electricity_chart BOOLEAN NOT NULL,
     conditioning_chart BOOLEAN NOT NULL,
+    sold BOOLEAN,
     images_url VARCHAR
     []
 
