@@ -31,7 +31,6 @@ module.exports = async (req, res, next) => {
     price,
     urlArray
   } = req.body;
-  console.log(888888888, urlArray);
 
   try {
     const saveNewProjectResult = await dbQuery(
