@@ -24,6 +24,8 @@ class UploadFile extends React.Component {
       return file;
     });
 
+    const { fileListProp } = this.props;
+    fileListProp(fileList);
     this.setState({ fileList });
   };
 

@@ -58,8 +58,10 @@ class AddProject extends React.Component {
     platformPrice: 0,
     engineerPrice: 0,
     imagesArray: [],
+    filesArray: [],
+    imagesUrlArray: [],
+    filesUrlArray: [],
     testImage: null,
-    urlArray: [],
     username: "mohammed",
   };
 
@@ -86,6 +88,12 @@ class AddProject extends React.Component {
   getFilesList = files => {
     this.setState({
       imagesArray: files,
+    });
+  };
+
+  handleFileUpload = files => {
+    this.setState({
+      filesArray: files,
     });
   };
 
@@ -121,10 +129,11 @@ class AddProject extends React.Component {
       conditioningChart,
       price,
       imagesArray,
+      filesArray,
       isLoading,
       errors,
       errorMessage,
-      urlArray,
+      imagesUrlArray,
       username,
       projectMainImage,
     } = this.state;
@@ -149,7 +158,31 @@ class AddProject extends React.Component {
             .getDownloadURL()
             .then(url => {
               this.setState({
-                urlArray: [...this.state.urlArray, url],
+                imagesUrlArray: [...this.state.imagesUrlArray, url],
+              });
+            });
+        }
+      );
+    });
+
+    // Start uploading files to firebase
+    filesArray.map(obj => {
+      const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
+      uploadTask.on(
+        `state_changed`,
+        snapshot => {
+          // progress
+        },
+        error => {},
+        data => {
+          // complete
+          storage
+            .ref(`${username}`)
+            .child(`${obj.name}`)
+            .getDownloadURL()
+            .then(url => {
+              this.setState({
+                filesUrlArray: [...this.state.filesUrlArray, url],
               });
             });
         }
@@ -183,9 +216,8 @@ class AddProject extends React.Component {
         roomsDescription,
         garageDescription,
         gardenDescription,
-        charts,
         price,
-        urlArray,
+        imagesArray,
         projectMainImage,
       })
       .then(() => {
@@ -208,7 +240,7 @@ class AddProject extends React.Component {
             gardenDescription,
             charts,
             price,
-            urlArray,
+            imagesUrlArray,
             projectMainImage,
           })
           .then(response => {
@@ -273,6 +305,7 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
     } = this.state;
+    console.log(this.state.filesArray, this.state.filesUrlArray);
 
     return (
       <div>
@@ -492,7 +525,7 @@ class AddProject extends React.Component {
               {architecturalChart ? (
                 <div className="building-chart">
                   <p>المخطط المعماري</p>
-                  <UploadFile fileName="المخطط المعماري" />
+                  <UploadFile fileName="المخطط المعماري" fileListProp={this.handleFileUpload} />
                 </div>
               ) : null}
               {constructionChart ? (
