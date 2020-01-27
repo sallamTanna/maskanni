@@ -30,14 +30,10 @@ class UploadFile extends React.Component {
   };
 
   render() {
-    const props = {
-      action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-      onChange: this.handleChange,
-      multiple: true,
-    };
     const { fileName } = this.props;
+    const { fileList } = this.state;
     return (
-      <Upload {...props} fileList={this.state.fileList} className="upload-file">
+      <Upload onChange={this.handleChange} fileList={fileList} className="upload-file">
         <Button>
           <Icon type="upload" /> حمل ملف {fileName}
         </Button>
