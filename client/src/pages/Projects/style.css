@@ -1,0 +1,133 @@
+.projects {
+  width: 100%;
+}
+
+.projects__page {
+  display: flex;
+  padding: 0% 6%;
+}
+
+.projects_body {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.no-projects {
+  color: #202020;
+  margin: 0 auto;
+  margin-top: 4%;
+  font-size: 18px;
+  font-weight: lighter;
+}
+
+.projects_body div:nth-child(1),
+.projects_body div:nth-child(4n) {
+  margin-right: 0;
+}
+
+.projects_filter {
+  background-color: #ffffff;
+  width: 30%;
+  box-shadow: 0 4px 8px #dad4d4;
+  margin: 1.5% 0;
+  border-radius: 1%;
+  padding: 1% 2%;
+  height: fit-content;
+}
+
+.projects_filter__title {
+  color: #202020;
+  font-size: 14px;
+}
+
+.size-filter,
+.length-filter,
+.hight-filter {
+  display: flex;
+  margin-bottom: 3%;
+}
+
+.size-filter input,
+.length-filter input,
+.hight-filter input {
+  margin-left: 10px;
+  width: 95%;
+}
+
+.size-filter button,
+.length-filter button,
+.hight-filter button {
+  color: white;
+  background-color: #ffc000;
+  border: none;
+}
+
+.hight-filter {
+  margin-bottom: 6%;
+}
+
+.type-filter {
+  display: table-caption;
+  flex-direction: column;
+  margin-bottom: 6%;
+}
+
+.type-filter .ant-radio-checked .ant-radio-inner {
+  border-color: #ffc000;
+  color: #ffc000;
+}
+
+.type-filter .ant-radio-inner:after {
+  background-color: #ffc000;
+}
+
+.type-filter span {
+  color: #202020;
+}
+
+.type-filter .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #ffc000;
+}
+
+.numbe-filter {
+  margin: 5% 0;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas:
+    "numbe-filter__floors numbe-filter__rooms"
+    "numbe-filter__livingRooms numbe-filter__bathRooms";
+}
+
+.numbe-filter div {
+  width: 99%;
+}
+
+.numbe-filter div input {
+  /* height: 60px; */
+}
+
+.filter_search {
+  background-color: #ffc000;
+  border: none;
+  width: 100%;
+  margin-top: 6%;
+  color: white;
+}
+
+/* Media Queries */
+
+@media only screen and (max-width: 425px) {
+  .projects__page {
+    flex-direction: column;
+  }
+  .projects_body,
+  .projects_filter {
+    width: 100%;
+  }
+  .projects_body div {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}

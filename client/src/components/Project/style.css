@@ -5,6 +5,7 @@
   border-radius: 3%;
   padding: 2%;
   margin: 2%;
+  height: fit-content;
 }
 
 .project__icons {

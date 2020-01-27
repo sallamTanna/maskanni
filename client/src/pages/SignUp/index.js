@@ -3,12 +3,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
 import axios from "axios";
 
 import eng from "../../assets/eng.svg";
 import consumer from "../../assets/consumer.svg";
-import pg from "../../assets/signup-pg.png";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";

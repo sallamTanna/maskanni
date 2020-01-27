@@ -11,11 +11,11 @@ module.exports = async (req, res, next) => {
     width,
     length,
     height,
-    livingRoomsSize,
-    bathRoomsSize,
-    carGarageSize,
-    floorsSize,
-    bedRoomsSize,
+    livingRoomsNumber,
+    bathRoomsNumber,
+    carGarageNumber,
+    floorsNumber,
+    bedRoomsNumber,
     kitchenDescription,
     roomsDescription,
     garageDescription,
@@ -31,7 +31,6 @@ module.exports = async (req, res, next) => {
     price,
     urlArray
   } = req.body;
-  console.log(888888888, urlArray);
 
   try {
     const saveNewProjectResult = await dbQuery(
@@ -42,11 +41,11 @@ module.exports = async (req, res, next) => {
         width,
         length,
         height,
-        livingRoomsSize,
-        bathRoomsSize,
-        carGarageSize,
-        floorsSize,
-        bedRoomsSize,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
         kitchenDescription,
         roomsDescription,
         garageDescription,

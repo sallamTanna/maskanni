@@ -1,14 +1,13 @@
 .spinner {
-    margin: 0 auto;
-    position: absolute;
-    left: 45%;
-    top: 35%;
-    z-index: 100;
+  margin: 0 auto;
+  position: fixed;
+  left: 45%;
+  z-index: 100;
+  top: 30vh;
 }
 
-
 @media only screen and (max-width: 425px) {
-    .spinner {
-        left: 32%;
-    }
+  .spinner {
+    left: 32%;
+  }
 }

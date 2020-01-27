@@ -1,12 +1,21 @@
 BEGIN;
 
     DROP TABLE IF EXISTS users, projects;
-    DROP TYPE IF EXISTS roles;
+    DROP TYPE IF EXISTS roles
+    , types;
 
-    CREATE TYPE roles AS ENUM
-    (
+CREATE TYPE roles AS ENUM
+(
     'architect',
     'consumer'
+    );
+
+CREATE TYPE types AS ENUM
+(
+    'studio',
+    'chalet',
+    'villa',
+    'big_home'
     );
 
 CREATE TABLE users
@@ -23,17 +32,18 @@ CREATE TABLE users
 CREATE TABLE projects
 (
     id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     name VARCHAR NOT NULL,
     description TEXT NOT NULL,
     size INT NOT NULL,
     width INT NOT NULL,
     length INT NOT NULL,
     height INT NOT NULL,
-    livingrooms_size INT NOT NULL,
-    bathrooms_size INT NOT NULL,
-    car_garage_size INT NOT NULL,
-    floors_size INT NOT NULL,
-    bedrooms_size INT NOT NULL,
+    livingrooms_number INT NOT NULL,
+    bathrooms_number INT NOT NULL,
+    car_garage_number INT NOT NULL,
+    floors_number INT NOT NULL,
+    bedrooms_number INT NOT NULL,
     kitchen_description TEXT NOT NULL,
     rooms_description TEXT NOT NULL,
     garage_description TEXT NOT NULL,
@@ -47,6 +57,8 @@ CREATE TABLE projects
     quantity_chart BOOLEAN NOT NULL,
     electricity_chart BOOLEAN NOT NULL,
     conditioning_chart BOOLEAN NOT NULL,
+    sold BOOLEAN,
+    type types,
     images_url VARCHAR
     []
 

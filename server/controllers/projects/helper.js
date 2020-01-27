@@ -5,11 +5,11 @@ exports.addNewProject = (
   width,
   length,
   height,
-  livingRoomsSize,
-  bathRoomsSize,
-  carGarageSize,
-  floorsSize,
-  bedRoomsSize,
+  livingRoomsNumber,
+  bathRoomsNumber,
+  carGarageNumber,
+  floorsNumber,
+  bedRoomsNumber,
   kitchenDescription,
   roomsDescription,
   garageDescription,
@@ -25,10 +25,11 @@ exports.addNewProject = (
   price,
   urlArray
 ) => ({
-  text: `INSERT INTO projects(name, description, size, width, length, height, livingrooms_size, bathrooms_size,
-            car_garage_size,
-            floors_size,
-            bedrooms_size,
+  text: `INSERT INTO projects(name, description, size, width, length, height,
+            livingrooms_number, bathrooms_number,
+            car_garage_number,
+            floors_number,
+            bedrooms_number,
             kitchen_description ,
             rooms_description ,
             garage_description ,
@@ -41,7 +42,8 @@ exports.addNewProject = (
             electricity_chart,
             conditioning_chart, 
             price,
-            images_url ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)`,
+            images_url,
+            sold ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)`,
   values: [
     projectName,
     projectDescription,
@@ -49,11 +51,11 @@ exports.addNewProject = (
     width,
     length,
     height,
-    livingRoomsSize,
-    bathRoomsSize,
-    carGarageSize,
-    floorsSize,
-    bedRoomsSize,
+    livingRoomsNumber,
+    bathRoomsNumber,
+    carGarageNumber,
+    floorsNumber,
+    bedRoomsNumber,
     kitchenDescription,
     roomsDescription,
     garageDescription,
@@ -67,8 +69,13 @@ exports.addNewProject = (
     electricityChart,
     conditioningChart,
     price,
-    urlArray
+    urlArray,
+    false,
   ]
 });
 
+exports.getAllProjects = () => ({
+  text: 'select * FROM projects WHERE sold = $1',
+  values: [false]
+})
 
