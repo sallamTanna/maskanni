@@ -12,8 +12,9 @@ import Navbar from "../../components/Navbar";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
-import Upload from "../../components/Upload";
-import UploadOneFile from "../../components/UploadOneFile";
+import UploadImages from "../../components/UploadImages";
+import UploadOneFile from "../../components/UploadOneImage";
+import UploadFile from "../../components/UploadFile";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
@@ -264,6 +265,14 @@ class AddProject extends React.Component {
       errors,
       errorMessage,
       projectMainImage,
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      executiveCahrt,
+      buildingChart,
+      quantityChart,
+      electricityChart,
+      conditioningChart,
     } = this.state;
 
     return (
@@ -351,7 +360,7 @@ class AddProject extends React.Component {
             <div className="project-pic">
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
-                <Upload fileListProp={fileList => this.getFilesList(fileList)} />
+                <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
                 <UploadOneFile projectMainImage={this.handleProjectMainImage} />
               </div>
             </div>
@@ -437,31 +446,14 @@ class AddProject extends React.Component {
               <div className="available-charts">
                 <div>
                   <CheckBox
-                    name="gardenChart"
+                    name="buildingChart"
                     onChange={this.handleCheckboxChange}
-                    label="مخطط تصميم حديقة"
+                    label="المخطط المعماري"
                   />
-                  <CheckBox
-                    name="interiorDecorationChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط ديكور داخلي"
-                  />
-                  <CheckBox
-                    name="HealthChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط صحي"
-                  />
-                  <CheckBox
-                    name="executiveCahrt"
-                    onChange={this.handleCheckboxChange}
-                    label="المخطط التنفيذي"
-                  />
-                </div>
-                <div>
                   <CheckBox
                     name="buildingChart"
                     onChange={this.handleCheckboxChange}
-                    label="مخطط بناء"
+                    label="مخطط انشائي"
                   />
                   <CheckBox
                     name="quantityChart"
@@ -473,6 +465,26 @@ class AddProject extends React.Component {
                     onChange={this.handleCheckboxChange}
                     label="مخطط كهرباء"
                   />
+
+                  <CheckBox
+                    name="HealthChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط صحي"
+                  />
+                </div>
+                <div>
+                  <CheckBox
+                    name="gardenChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط تصميم حديقة"
+                  />
+
+                  <CheckBox
+                    name="interiorDecorationChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط ديكور داخلي"
+                  />
+
                   <CheckBox
                     name="conditioningChart"
                     onChange={this.handleCheckboxChange}
@@ -485,12 +497,39 @@ class AddProject extends React.Component {
               <p className="upload-projects__title">أضافة التصميم</p>
               <div className="building-chart">
                 <p>مخطط البناء</p>
-                <Input />{" "}
+                <UploadFile fileName="مخطط البناء" />
               </div>
-              <div className="garden-chart">
-                <p>مخطط تصميم حديقة</p>
-                <Input />{" "}
-              </div>
+              {gardenChart ? (
+                <div className="garden-chart">
+                  <p>مخطط تصميم حديقة</p>
+                  <UploadFile fileName="مخطط تصميم الحديقة" />
+                </div>
+              ) : null}
+
+              {interiorDecorationChart ? (
+                <div className="garden-chart">
+                  <p>مخطط ديكور داخلي</p>
+                  <UploadFile fileName="مخطط ديكور داخلي" />
+                </div>
+              ) : null}
+              {conditioningChart ? (
+                <div className="garden-chart">
+                  <p>مخطط تكييف</p>
+                  <UploadFile fileName="مخطط تكييف" />
+                </div>
+              ) : null}
+              {HealthChart ? (
+                <div className="garden-chart">
+                  <p>المخطط الصحي</p>
+                  <UploadFile fileName="المخطط الصحي" />
+                </div>
+              ) : null}
+              {electricityChart ? (
+                <div className="garden-chart">
+                  <p>مخطط الكهرباء</p>
+                  <UploadFile fileName="مخطط الكهرباء" />
+                </div>
+              ) : null}
             </div>
             <div className="price">
               <p className="price__title">سعر التصميم</p>

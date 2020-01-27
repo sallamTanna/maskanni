@@ -1,3 +1,7 @@
+.text {
+  width: 100%;
+}
+
 .projects-page {
   display: flex;
   padding: 0 6%;
