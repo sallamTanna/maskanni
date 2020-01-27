@@ -20,18 +20,13 @@ module.exports = async (req, res, next) => {
     roomsDescription,
     garageDescription,
     gardenDescription,
-    gardenChart,
-    interiorDecorationChart,
-    HealthChart,
-    executiveCahrt,
-    buildingChart,
-    quantityChart,
-    electricityChart,
-    conditioningChart,
+    charts,
     price,
     urlArray,
     projectMainImage
   } = req.body;
+
+  console.log("5555555", price, charts);
 
   try {
     const saveNewProjectResult = await dbQuery(
@@ -51,14 +46,7 @@ module.exports = async (req, res, next) => {
         roomsDescription,
         garageDescription,
         gardenDescription,
-        gardenChart,
-        interiorDecorationChart,
-        HealthChart,
-        executiveCahrt,
-        buildingChart,
-        quantityChart,
-        electricityChart,
-        conditioningChart,
+        charts,
         price,
         urlArray,
         projectMainImage

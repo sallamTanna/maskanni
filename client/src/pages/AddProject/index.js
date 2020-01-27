@@ -47,14 +47,13 @@ class AddProject extends React.Component {
     roomsDescription: "",
     garageDescription: "",
     gardenDescription: "",
-    gardenChart: false,
-    interiorDecorationChart: false,
-    HealthChart: false,
-    executiveCahrt: false,
-    buildingChart: false,
-    quantityChart: false,
-    electricityChart: false,
-    conditioningChart: false,
+    gardenChart: "",
+    interiorDecorationChart: "",
+    HealthChart: "",
+    architecturalChart: "",
+    constructionChart: "",
+    electricityChart: "",
+    conditioningChart: "",
     price: 0,
     platformPrice: 0,
     engineerPrice: 0,
@@ -71,9 +70,9 @@ class AddProject extends React.Component {
   };
 
   handleCheckboxChange = e => {
-    this.setState(prevState => ({
-      [e.target.name]: !prevState[e.target.name],
-    }));
+    this.setState({
+      [e.target.name]: e.target.name,
+    });
   };
 
   handlePriceChange = value => {
@@ -116,9 +115,8 @@ class AddProject extends React.Component {
       gardenChart,
       interiorDecorationChart,
       HealthChart,
-      executiveCahrt,
-      buildingChart,
-      quantityChart,
+      architecturalChart,
+      constructionChart,
       electricityChart,
       conditioningChart,
       price,
@@ -159,6 +157,18 @@ class AddProject extends React.Component {
     });
 
     const schema = saveProjectValidation();
+    // const chartToSave = [];
+    const charts = [
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+    ].filter(chart => chart !== "");
+
+    console.log(11111111111, charts);
 
     schema
       .validate({
@@ -177,6 +187,7 @@ class AddProject extends React.Component {
         roomsDescription,
         garageDescription,
         gardenDescription,
+        charts,
         price,
         urlArray,
         projectMainImage,
@@ -199,14 +210,7 @@ class AddProject extends React.Component {
             roomsDescription,
             garageDescription,
             gardenDescription,
-            gardenChart,
-            interiorDecorationChart,
-            HealthChart,
-            executiveCahrt,
-            buildingChart,
-            quantityChart,
-            electricityChart,
-            conditioningChart,
+            charts,
             price,
             urlArray,
             projectMainImage,
@@ -268,9 +272,8 @@ class AddProject extends React.Component {
       gardenChart,
       interiorDecorationChart,
       HealthChart,
-      executiveCahrt,
-      buildingChart,
-      quantityChart,
+      architecturalChart,
+      constructionChart,
       electricityChart,
       conditioningChart,
     } = this.state;
@@ -446,30 +449,25 @@ class AddProject extends React.Component {
               <div className="available-charts">
                 <div>
                   <CheckBox
-                    name="buildingChart"
+                    name="architecturalChart"
                     onChange={this.handleCheckboxChange}
                     label="المخطط المعماري"
                   />
                   <CheckBox
-                    name="buildingChart"
+                    name="constructionChart"
                     onChange={this.handleCheckboxChange}
                     label="مخطط انشائي"
-                  />
-                  <CheckBox
-                    name="quantityChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط كميات"
-                  />
-                  <CheckBox
-                    name="electricityChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط كهرباء"
                   />
 
                   <CheckBox
                     name="HealthChart"
                     onChange={this.handleCheckboxChange}
                     label="مخطط صحي"
+                  />
+                  <CheckBox
+                    name="electricityChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط كهرباء"
                   />
                 </div>
                 <div>
@@ -495,10 +493,18 @@ class AddProject extends React.Component {
             </div>
             <div className="upload-projects">
               <p className="upload-projects__title">أضافة التصميم</p>
-              <div className="building-chart">
-                <p>مخطط البناء</p>
-                <UploadFile fileName="مخطط البناء" />
-              </div>
+              {architecturalChart ? (
+                <div className="building-chart">
+                  <p>المخطط المعماري</p>
+                  <UploadFile fileName="المخطط المعماري" />
+                </div>
+              ) : null}
+              {constructionChart ? (
+                <div className="building-chart">
+                  <p>المخطط الانشائي</p>
+                  <UploadFile fileName="المخطط الانشائي" />
+                </div>
+              ) : null}
               {gardenChart ? (
                 <div className="garden-chart">
                   <p>مخطط تصميم حديقة</p>
