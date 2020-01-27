@@ -157,7 +157,6 @@ class AddProject extends React.Component {
     });
 
     const schema = saveProjectValidation();
-    // const chartToSave = [];
     const charts = [
       gardenChart,
       interiorDecorationChart,
@@ -167,9 +166,6 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
     ].filter(chart => chart !== "");
-
-    console.log(11111111111, charts);
-
     schema
       .validate({
         projectName,

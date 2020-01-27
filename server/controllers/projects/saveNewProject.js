@@ -26,8 +26,6 @@ module.exports = async (req, res, next) => {
     projectMainImage
   } = req.body;
 
-  console.log("5555555", price, charts);
-
   try {
     const saveNewProjectResult = await dbQuery(
       addNewProject(
@@ -57,8 +55,6 @@ module.exports = async (req, res, next) => {
       error: null
     });
   } catch (error) {
-    console.log(555555, error);
-
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
