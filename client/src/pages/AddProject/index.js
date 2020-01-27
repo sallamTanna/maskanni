@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
+import Project from "../../components/Project";
 import Upload from "../../components/Upload";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
@@ -251,264 +252,278 @@ class AddProject extends React.Component {
       isLoading,
       errors,
       errorMessage,
+      urlArray,
     } = this.state;
 
     return (
       <div>
         <Navbar />
         <Header title="أضافة تصميم جديد" />
-        <div className="add-project">
-          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
-          {errors ? (
-            <Message message={errorMessage} type="error" className="login__errorMsg" />
-          ) : null}
-          <div className="main-details">
-            <p className="main-details__title">معلومات أساسية</p>
-            <div className="project-name">
-              <p>اسم المشروع</p>
-              <Input
-                onChange={this.handleInputChange}
-                name="projectName"
-                value={projectName}
-                placeholder="ادخل اسم المشروع"
+
+        <div className="projects-page">
+          <div className="add-project">
+            {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+            {errors ? (
+              <Message message={errorMessage} type="error" className="login__errorMsg" />
+            ) : null}
+            <div className="main-details">
+              <p className="main-details__title">معلومات أساسية</p>
+              <div className="project-name">
+                <p>اسم المشروع</p>
+                <Input
+                  onChange={this.handleInputChange}
+                  name="projectName"
+                  value={projectName}
+                  placeholder="ادخل اسم المشروع"
+                />
+              </div>
+              <div className="project-description">
+                <p>وصف المشروع</p>
+                <TextArea
+                  onChange={this.handleInputChange}
+                  name="projectDescription"
+                  value={projectDescription}
+                  placeholder="أكتب وصفاً جدياً لهذا المشروع"
+                />
+              </div>
+            </div>
+            <div className="main-prop">
+              <p className="main-prop__title">المواصفات الرئيسية</p>
+              <div className="main-prop__data">
+                <div>
+                  <img src={icon1} alt="icon1" />
+                  <Input
+                    name="livingRoomsNumber"
+                    value={livingRoomsNumber}
+                    onChange={this.handleInputChange}
+                    placeholder="غرف المعيشة"
+                  />
+                </div>
+                <div>
+                  <img src={icon2} alt="icon2" />
+                  <Input
+                    name="bedRoomsNumber"
+                    value={bedRoomsNumber}
+                    onChange={this.handleInputChange}
+                    placeholder="غرف النوم"
+                  />
+                </div>
+                <div>
+                  <img src={icon3} alt="icon3" />
+                  <Input
+                    name="bathRoomsNumber"
+                    value={bathRoomsNumber}
+                    onChange={this.handleInputChange}
+                    placeholder="الحمامات"
+                  />
+                </div>
+                <div>
+                  <img src={icon4} alt="icon4" />
+                  <Input
+                    name="floorsNumber"
+                    value={floorsNumber}
+                    onChange={this.handleInputChange}
+                    placeholder="الأدوار"
+                  />
+                </div>
+                <div>
+                  <img src={icon5} alt="icon5" />
+                  <Input
+                    name="carGarageNumber"
+                    value={carGarageNumber}
+                    onChange={this.handleInputChange}
+                    placeholder="كراج السيارات"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="project-pic">
+              <p className="project-pic__title">صور التصميم\المشروع</p>
+              <div className="project-pic__pictures">
+                <Upload fileListProp={fileList => this.getFilesList(fileList)} />
+              </div>
+            </div>
+            <div className="more-details">
+              <p className="more-details__title">المواصفات والميزات بالتفصيل</p>
+              <div className="total-size">
+                <p>المساحة الكلية</p>
+                <div className="size-fileds">
+                  <Input
+                    name="size"
+                    value={size}
+                    onChange={this.handleInputChange}
+                    placeholder="المساحة"
+                  />
+                  <Input
+                    name="length"
+                    value={length}
+                    onChange={this.handleInputChange}
+                    placeholder="الطول"
+                  />
+                  <Input
+                    name="width"
+                    value={width}
+                    onChange={this.handleInputChange}
+                    placeholder="العرض"
+                  />
+                  <Input
+                    name="height"
+                    value={height}
+                    onChange={this.handleInputChange}
+                    placeholder="الارتفاع"
+                  />
+                </div>
+              </div>
+
+              <div className="total-size">
+                <p>غرف النوم</p>
+                <div className="size-fileds">
+                  <Input
+                    name="roomsDescription"
+                    value={roomsDescription}
+                    onChange={this.handleInputChange}
+                    placeholder="وصف غرفة النوم"
+                  />
+                </div>
+              </div>
+              <div className="total-size">
+                <p>المطبخ</p>
+                <div className="size-fileds">
+                  <Input
+                    name="kitchenDescription"
+                    value={kitchenDescription}
+                    onChange={this.handleInputChange}
+                    placeholder="وصف المطبخ"
+                  />
+                </div>
+              </div>
+              <div className="total-size">
+                <p>الكراج</p>
+                <div className="size-fileds">
+                  <Input
+                    name="garageDescription"
+                    value={garageDescription}
+                    onChange={this.handleInputChange}
+                    placeholder="وصف الكراج"
+                  />
+                </div>
+              </div>
+              <div className="total-size">
+                <p>الحديقة</p>
+                <div className="size-fileds">
+                  <Input
+                    name="gardenDescription"
+                    value={gardenDescription}
+                    onChange={this.handleInputChange}
+                    placeholder="وصف الحديقة"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="charts">
+              <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
+              <div className="available-charts">
+                <div>
+                  <CheckBox
+                    name="gardenChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط تصميم حديقة"
+                  />
+                  <CheckBox
+                    name="interiorDecorationChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط ديكور داخلي"
+                  />
+                  <CheckBox
+                    name="HealthChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط صحي"
+                  />
+                  <CheckBox
+                    name="executiveCahrt"
+                    onChange={this.handleCheckboxChange}
+                    label="المخطط التنفيذي"
+                  />
+                </div>
+                <div>
+                  <CheckBox
+                    name="buildingChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط بناء"
+                  />
+                  <CheckBox
+                    name="quantityChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط كميات"
+                  />
+                  <CheckBox
+                    name="electricityChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط كهرباء"
+                  />
+                  <CheckBox
+                    name="conditioningChart"
+                    onChange={this.handleCheckboxChange}
+                    label="مخطط تكييف"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="upload-projects">
+              <p className="upload-projects__title">أضافة التصميم</p>
+              <div className="building-chart">
+                <p>مخطط البناء</p>
+                <Input />{" "}
+              </div>
+              <div className="garden-chart">
+                <p>مخطط تصميم حديقة</p>
+                <Input />{" "}
+              </div>
+            </div>
+            <div className="price">
+              <p className="price__title">سعر التصميم</p>
+
+              <div className="price-div">
+                <div className="total-price">
+                  <p>سعر التصميم</p>
+                  <InputNumber
+                    onChange={this.handlePriceChange}
+                    name="price"
+                    value={price}
+                    symbol="$"
+                  />{" "}
+                </div>
+                <div className="platform-price">
+                  <p>السعر المعروض على المنصة</p>
+                  <p>{platformPrice}$</p>
+                </div>
+                <div className="eng-price">
+                  <p>مستحقاتك بعض الخصم</p>
+                  <p>{engineerPrice}$</p>
+                </div>
+              </div>
+            </div>
+            <div className="buttons">
+              <Button
+                label="حفظ  التصميم بدون نشر"
+                className="save-project"
+                onClick={this.handleSaveProject}
+              />
+              <Button
+                label="نشر التصميم"
+                className="publish-project"
+                onClick={this.handlePublishProject}
               />
             </div>
-            <div className="project-description">
-              <p>وصف المشروع</p>
-              <TextArea
-                onChange={this.handleInputChange}
-                name="projectDescription"
-                value={projectDescription}
-                placeholder="أكتب وصفاً جدياً لهذا المشروع"
-              />
-            </div>
           </div>
-          <div className="main-prop">
-            <p className="main-prop__title">المواصفات الرئيسية</p>
-            <div className="main-prop__data">
-              <div>
-                <img src={icon1} alt="icon1" />
-                <Input
-                  name="livingRoomsNumber"
-                  value={livingRoomsNumber}
-                  onChange={this.handleInputChange}
-                  placeholder="غرف المعيشة"
-                />
-              </div>
-              <div>
-                <img src={icon2} alt="icon2" />
-                <Input
-                  name="bedRoomsNumber"
-                  value={bedRoomsNumber}
-                  onChange={this.handleInputChange}
-                  placeholder="غرف النوم"
-                />
-              </div>
-              <div>
-                <img src={icon3} alt="icon3" />
-                <Input
-                  name="bathRoomsNumber"
-                  value={bathRoomsNumber}
-                  onChange={this.handleInputChange}
-                  placeholder="الحمامات"
-                />
-              </div>
-              <div>
-                <img src={icon4} alt="icon4" />
-                <Input
-                  name="floorsNumber"
-                  value={floorsNumber}
-                  onChange={this.handleInputChange}
-                  placeholder="الأدوار"
-                />
-              </div>
-              <div>
-                <img src={icon5} alt="icon5" />
-                <Input
-                  name="carGarageNumber"
-                  value={carGarageNumber}
-                  onChange={this.handleInputChange}
-                  placeholder="كراج السيارات"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="project-pic">
-            <p className="project-pic__title">صور التصميم\المشروع</p>
-            <div className="project-pic__pictures">
-              <Upload fileListProp={fileList => this.getFilesList(fileList)} />
-            </div>
-          </div>
-          <div className="more-details">
-            <p className="more-details__title">المواصفات والميزات بالتفصيل</p>
-            <div className="total-size">
-              <p>المساحة الكلية</p>
-              <div className="size-fileds">
-                <Input
-                  name="size"
-                  value={size}
-                  onChange={this.handleInputChange}
-                  placeholder="المساحة"
-                />
-                <Input
-                  name="length"
-                  value={length}
-                  onChange={this.handleInputChange}
-                  placeholder="الطول"
-                />
-                <Input
-                  name="width"
-                  value={width}
-                  onChange={this.handleInputChange}
-                  placeholder="العرض"
-                />
-                <Input
-                  name="height"
-                  value={height}
-                  onChange={this.handleInputChange}
-                  placeholder="الارتفاع"
-                />
-              </div>
-            </div>
-
-            <div className="total-size">
-              <p>غرف النوم</p>
-              <div className="size-fileds">
-                <Input
-                  name="roomsDescription"
-                  value={roomsDescription}
-                  onChange={this.handleInputChange}
-                  placeholder="وصف غرفة النوم"
-                />
-              </div>
-            </div>
-            <div className="total-size">
-              <p>المطبخ</p>
-              <div className="size-fileds">
-                <Input
-                  name="kitchenDescription"
-                  value={kitchenDescription}
-                  onChange={this.handleInputChange}
-                  placeholder="وصف المطبخ"
-                />
-              </div>
-            </div>
-            <div className="total-size">
-              <p>الكراج</p>
-              <div className="size-fileds">
-                <Input
-                  name="garageDescription"
-                  value={garageDescription}
-                  onChange={this.handleInputChange}
-                  placeholder="وصف الكراج"
-                />
-              </div>
-            </div>
-            <div className="total-size">
-              <p>الحديقة</p>
-              <div className="size-fileds">
-                <Input
-                  name="gardenDescription"
-                  value={gardenDescription}
-                  onChange={this.handleInputChange}
-                  placeholder="وصف الحديقة"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="charts">
-            <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
-            <div className="available-charts">
-              <div>
-                <CheckBox
-                  name="gardenChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط تصميم حديقة"
-                />
-                <CheckBox
-                  name="interiorDecorationChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط ديكور داخلي"
-                />
-                <CheckBox
-                  name="HealthChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط صحي"
-                />
-                <CheckBox
-                  name="executiveCahrt"
-                  onChange={this.handleCheckboxChange}
-                  label="المخطط التنفيذي"
-                />
-              </div>
-              <div>
-                <CheckBox
-                  name="buildingChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط بناء"
-                />
-                <CheckBox
-                  name="quantityChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط كميات"
-                />
-                <CheckBox
-                  name="electricityChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط كهرباء"
-                />
-                <CheckBox
-                  name="conditioningChart"
-                  onChange={this.handleCheckboxChange}
-                  label="مخطط تكييف"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="upload-projects">
-            <p className="upload-projects__title">أضافة التصميم</p>
-            <div className="building-chart">
-              <p>مخطط البناء</p>
-              <Input />{" "}
-            </div>
-            <div className="garden-chart">
-              <p>مخطط تصميم حديقة</p>
-              <Input />{" "}
-            </div>
-          </div>
-          <div className="price">
-            <p className="price__title">سعر التصميم</p>
-
-            <div className="price-div">
-              <div className="total-price">
-                <p>سعر التصميم</p>
-                <InputNumber
-                  onChange={this.handlePriceChange}
-                  name="price"
-                  value={price}
-                  symbol="$"
-                />{" "}
-              </div>
-              <div className="platform-price">
-                <p>السعر المعروض على المنصة</p>
-                <p>{platformPrice}$</p>
-              </div>
-              <div className="eng-price">
-                <p>مستحقاتك بعض الخصم</p>
-                <p>{engineerPrice}$</p>
-              </div>
-            </div>
-          </div>
-          <div className="buttons">
-            <Button
-              label="حفظ  التصميم بدون نشر"
-              className="save-project"
-              onClick={this.handleSaveProject}
-            />
-            <Button
-              label="نشر التصميم"
-              className="publish-project"
-              onClick={this.handlePublishProject}
+          <div className="project-review">
+            <Project
+              name={projectName}
+              bedRoomsNumber={bedRoomsNumber}
+              livingRoomsNumber={livingRoomsNumber}
+              floorsNumber={floorsNumber}
+              totalSize={size}
+              src={urlArray[0]}
             />
           </div>
         </div>

@@ -1,8 +1,23 @@
+.projects-page {
+  display: flex;
+  padding: 0 6%;
+  margin-top: 3%;
+  justify-content: space-between;
+}
+
+.project-review {
+  width: 25%;
+  padding: 2%;
+  padding-top: 0;
+}
+
+.project-review div {
+  width: 100%;
+}
+
 .add-project {
   background-color: #fbfbfb;
-  width: 60%;
-  margin-top: 3%;
-  padding-right: 6%;
+  width: 70%;
 }
 
 .main-details,
@@ -173,6 +188,15 @@
 }
 
 /* Media Queries */
+
+@media only screen and (max-width: 425px) {
+  .projects-page {
+    flex-direction: column;
+  }
+  .project-review {
+    width: 100%;
+  }
+}
 
 @media only screen and (max-width: 768px) {
   .add-project {
