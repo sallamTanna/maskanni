@@ -194,15 +194,6 @@
 
 /* Media Queries */
 
-@media only screen and (max-width: 425px) {
-  .projects-page {
-    flex-direction: column;
-  }
-  .project-review {
-    width: 100%;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   .add-project {
     width: 100%;
@@ -219,6 +210,21 @@
   }
   .price-div {
     flex: none;
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .projects-page {
+    flex-direction: column;
+  }
+  .project-review {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .available-charts {
     display: block;
   }
 }

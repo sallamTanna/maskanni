@@ -13,7 +13,7 @@ import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
 import UploadImages from "../../components/UploadImages";
-import UploadOneFile from "../../components/UploadOneImage";
+import UploadOneImage from "../../components/UploadOneImage";
 import UploadFile from "../../components/UploadFile";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
@@ -305,7 +305,6 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
     } = this.state;
-    console.log(this.state.filesArray, this.state.filesUrlArray);
 
     return (
       <div>
@@ -393,7 +392,7 @@ class AddProject extends React.Component {
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
                 <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
-                <UploadOneFile projectMainImage={this.handleProjectMainImage} />
+                <UploadOneImage projectMainImage={this.handleProjectMainImage} />
               </div>
             </div>
             <div className="more-details">
