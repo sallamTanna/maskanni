@@ -5,7 +5,7 @@
   border-radius: 3%;
   padding: 2%;
   margin: 2%;
-  height: fit-content;
+  height: 70%;
 }
 
 .project__icons {
@@ -26,11 +26,12 @@
 
 .project__image {
   text-align: center;
+  height: 75%;
 }
 
 .project__image img {
+  max-height: 100%;
   width: 100%;
-  height: 30%;
 }
 
 .project__name {
@@ -52,6 +53,7 @@
 
 .project_summary div p:nth-child(2) {
   font-size: 10px;
+  margin-bottom: 0;
 }
 
 /* Media Queries */

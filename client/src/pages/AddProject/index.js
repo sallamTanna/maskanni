@@ -13,6 +13,7 @@ import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
 import Upload from "../../components/Upload";
+import UploadOneFile from "../../components/UploadOneFile";
 import icon1 from "../../assets/icon1.svg";
 import icon2 from "../../assets/icon2.svg";
 import icon3 from "../../assets/icon3.svg";
@@ -21,6 +22,7 @@ import icon5 from "../../assets/icon5.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
 import { storage } from "../../firebase";
+import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
@@ -87,6 +89,12 @@ class AddProject extends React.Component {
     });
   };
 
+  handleProjectMainImage = file => {
+    this.setState({
+      projectMainImage: file,
+    });
+  };
+
   handleSaveProject = () => {
     const {
       projectName,
@@ -119,6 +127,7 @@ class AddProject extends React.Component {
       errorMessage,
       urlArray,
       username,
+      projectMainImage,
     } = this.state;
 
     this.setState({
@@ -169,6 +178,7 @@ class AddProject extends React.Component {
         gardenDescription,
         price,
         urlArray,
+        projectMainImage,
       })
       .then(() => {
         axios
@@ -198,6 +208,7 @@ class AddProject extends React.Component {
             conditioningChart,
             price,
             urlArray,
+            projectMainImage,
           })
           .then(response => {
             if (response.status === 200) {
@@ -252,7 +263,7 @@ class AddProject extends React.Component {
       isLoading,
       errors,
       errorMessage,
-      urlArray,
+      projectMainImage,
     } = this.state;
 
     return (
@@ -341,6 +352,7 @@ class AddProject extends React.Component {
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
                 <Upload fileListProp={fileList => this.getFilesList(fileList)} />
+                <UploadOneFile projectMainImage={this.handleProjectMainImage} />
               </div>
             </div>
             <div className="more-details">
@@ -519,11 +531,11 @@ class AddProject extends React.Component {
           <div className="project-review">
             <Project
               name={projectName}
-              bedRoomsNumber={bedRoomsNumber}
-              livingRoomsNumber={livingRoomsNumber}
-              floorsNumber={floorsNumber}
-              totalSize={size}
-              src={urlArray[0]}
+              bedRoomsNumber={bedRoomsNumber || 0}
+              livingRoomsNumber={livingRoomsNumber || 0}
+              floorsNumber={floorsNumber || 0}
+              totalSize={size || 0}
+              src={projectMainImage || defaultBG}
             />
           </div>
         </div>

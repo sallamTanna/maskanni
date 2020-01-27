@@ -59,6 +59,7 @@ CREATE TABLE projects
     conditioning_chart BOOLEAN NOT NULL,
     sold BOOLEAN,
     type types,
+    project_wallpaper VARCHAR,
     images_url VARCHAR
     []
 

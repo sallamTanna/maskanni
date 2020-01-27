@@ -29,7 +29,8 @@ module.exports = async (req, res, next) => {
     electricityChart,
     conditioningChart,
     price,
-    urlArray
+    urlArray,
+    projectMainImage
   } = req.body;
 
   try {
@@ -59,7 +60,8 @@ module.exports = async (req, res, next) => {
         electricityChart,
         conditioningChart,
         price,
-        urlArray
+        urlArray,
+        projectMainImage
       )
     );
     res.json({

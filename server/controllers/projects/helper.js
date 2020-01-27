@@ -23,7 +23,8 @@ exports.addNewProject = (
   electricityChart,
   conditioningChart,
   price,
-  urlArray
+  urlArray,
+  projectMainImage
 ) => ({
   text: `INSERT INTO projects(name, description, size, width, length, height,
             livingrooms_number, bathrooms_number,
@@ -43,7 +44,8 @@ exports.addNewProject = (
             conditioning_chart, 
             price,
             images_url,
-            sold ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)`,
+            sold,
+            project_wallpaper) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)`,
   values: [
     projectName,
     projectDescription,
@@ -71,6 +73,7 @@ exports.addNewProject = (
     price,
     urlArray,
     false,
+    projectMainImage
   ]
 });
 
