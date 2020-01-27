@@ -137,6 +137,16 @@ class AddProject extends React.Component {
       username,
       projectMainImage,
     } = this.state;
+    const schema = saveProjectValidation();
+    const charts = [
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+    ].filter(chart => chart !== "");
 
     this.setState({
       isLoading: true,
@@ -166,8 +176,8 @@ class AddProject extends React.Component {
     });
 
     // Start uploading files to firebase
-    filesArray.map(obj => {
-      const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
+    filesArray.map((obj, index) => {
+      const uploadTask = storage.ref(`${username}/${charts[index]}`).put(obj.originFileObj);
       uploadTask.on(
         `state_changed`,
         snapshot => {
@@ -189,16 +199,6 @@ class AddProject extends React.Component {
       );
     });
 
-    const schema = saveProjectValidation();
-    const charts = [
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-    ].filter(chart => chart !== "");
     schema
       .validate({
         projectName,
