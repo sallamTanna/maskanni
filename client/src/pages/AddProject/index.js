@@ -61,7 +61,13 @@ class AddProject extends React.Component {
     filesArray: [],
     imagesUrlArray: [],
     filesUrlArray: [],
-    fileList1: [],
+    architecturalFileList: [],
+    constructionFileList: [],
+    gardenFileList: [],
+    interiorDecorationFileList: [],
+    HealthFileList: [],
+    electricityFileList: [],
+    conditioningFileList: [],
     username: "mohammed",
   };
 
@@ -91,9 +97,9 @@ class AddProject extends React.Component {
     });
   };
 
-  handleChange = info => {
+  handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
-
+    // const { filesArray } = this.state;
     // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
     fileList = fileList.slice(-1);
@@ -108,8 +114,8 @@ class AddProject extends React.Component {
     });
 
     this.setState({
-      filesArray: [...this.state.filesArray, ...fileList],
-      fileList1: fileList,
+      [name]: fileList,
+      // filesArray: [...this.state.filesArray.concat(fileList[0])],
     });
   };
 
@@ -143,16 +149,21 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
+      architecturalFileList,
+      constructionFileList,
+      gardenFileList,
+      interiorDecorationFileList,
+      HealthFileList,
+      electricityFileList,
+      conditioningFileList,
       price,
       imagesArray,
-      filesArray,
       isLoading,
       errors,
       errorMessage,
       imagesUrlArray,
       username,
       projectMainImage,
-      fileList,
     } = this.state;
     const schema = saveProjectValidation();
     const charts = [
@@ -164,6 +175,16 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
     ].filter(chart => chart !== "");
+
+    const filesArray = [
+      architecturalFileList,
+      constructionFileList,
+      gardenFileList,
+      interiorDecorationFileList,
+      HealthFileList,
+      electricityFileList,
+      conditioningFileList,
+    ].filter(list => list.length > 0);
 
     this.setState({
       isLoading: true,
@@ -194,7 +215,7 @@ class AddProject extends React.Component {
 
     // Start uploading files to firebase
     filesArray.map((obj, index) => {
-      const uploadTask = storage.ref(`${username}/${charts[index]}`).put(obj.originFileObj);
+      const uploadTask = storage.ref(`${username}/${charts[index]}`).put(obj[0].originFileObj);
       uploadTask.on(
         `state_changed`,
         snapshot => {
@@ -205,7 +226,7 @@ class AddProject extends React.Component {
           // complete
           storage
             .ref(`${username}`)
-            .child(`${obj.name}`)
+            .child(`${obj[0].name}`)
             .getDownloadURL()
             .then(url => {
               this.setState({
@@ -321,16 +342,21 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
-      fileList1,
+      architecturalFileList,
+      constructionFileList,
+      gardenFileList,
+      interiorDecorationFileList,
+      HealthFileList,
+      electricityFileList,
+      conditioningFileList,
     } = this.state;
-    console.log(555555555, this.state.fileList);
 
     return (
       <div>
         <Navbar />
         <Header title="أضافة تصميم جديد" />
 
-        <div className="projects-page">
+        <div className="projectsage">
           <div className="add-project">
             {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
             {errors ? (
@@ -545,8 +571,8 @@ class AddProject extends React.Component {
                   <p>المخطط المعماري</p>
                   <UploadFile
                     fileName="المخطط المعماري"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "architecturalFileList")}
+                    fileList={architecturalFileList}
                   />
                 </div>
               ) : null}
@@ -555,8 +581,8 @@ class AddProject extends React.Component {
                   <p>المخطط الانشائي</p>
                   <UploadFile
                     fileName="المخطط الانشائي"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "constructionFileList")}
+                    fileList={constructionFileList}
                   />
                 </div>
               ) : null}
@@ -565,8 +591,8 @@ class AddProject extends React.Component {
                   <p>مخطط تصميم حديقة</p>
                   <UploadFile
                     fileName="مخطط تصميم الحديقة"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "gardenFileList")}
+                    fileList={gardenFileList}
                   />
                 </div>
               ) : null}
@@ -576,8 +602,8 @@ class AddProject extends React.Component {
                   <p>مخطط ديكور داخلي</p>
                   <UploadFile
                     fileName="مخطط ديكور داخلي"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "interiorDecorationFileList")}
+                    fileList={interiorDecorationFileList}
                   />
                 </div>
               ) : null}
@@ -586,8 +612,8 @@ class AddProject extends React.Component {
                   <p>مخطط تكييف</p>
                   <UploadFile
                     fileName="مخطط تكييف"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "conditioningFileList")}
+                    fileList={conditioningFileList}
                   />
                 </div>
               ) : null}
@@ -596,8 +622,8 @@ class AddProject extends React.Component {
                   <p>المخطط الصحي</p>
                   <UploadFile
                     fileName="المخطط الصحي"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "HealthFileList")}
+                    fileList={HealthFileList}
                   />
                 </div>
               ) : null}
@@ -606,8 +632,8 @@ class AddProject extends React.Component {
                   <p>مخطط الكهرباء</p>
                   <UploadFile
                     fileName="مخطط الكهرباء"
-                    handleChange={this.handleChange}
-                    fileList={fileList1}
+                    handleChange={file => this.handleFileChange(file, "electricityFileList")}
+                    fileList={electricityFileList}
                   />
                 </div>
               ) : null}
