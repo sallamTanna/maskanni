@@ -11,6 +11,7 @@ import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
 import Projects from "../../pages/Projects";
+import Project from "../../pages/Project";
 import Navbar from "../Navbar";
 import Header from "../Header";
 
@@ -25,6 +26,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/add" component={AddProject} />
               <Route exact path="/projects" component={Projects} />
+              <Route exact path="/project" component={Project} />
               <Route exact path="/navbar" component={Navbar} />
               <Route exact path="/header" component={Header} />
               <Route exact path="/login" component={Login} />
