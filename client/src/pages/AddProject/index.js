@@ -58,7 +58,6 @@ class AddProject extends React.Component {
     platformPrice: 0,
     engineerPrice: 0,
     imagesArray: [],
-    filesArray: [],
     imagesUrlArray: [],
     filesUrlArray: [],
     architecturalFileList: [],
@@ -68,7 +67,7 @@ class AddProject extends React.Component {
     HealthFileList: [],
     electricityFileList: [],
     conditioningFileList: [],
-    username: "mohammed",
+    username: "mohammed", // should be replaced with the name of user who logged in
   };
 
   handleInputChange = e => {
@@ -99,7 +98,6 @@ class AddProject extends React.Component {
 
   handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
-    // const { filesArray } = this.state;
     // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
     fileList = fileList.slice(-1);
@@ -115,7 +113,6 @@ class AddProject extends React.Component {
 
     this.setState({
       [name]: fileList,
-      // filesArray: [...this.state.filesArray.concat(fileList[0])],
     });
   };
 
@@ -162,6 +159,7 @@ class AddProject extends React.Component {
       errors,
       errorMessage,
       imagesUrlArray,
+      filesUrlArray,
       username,
       projectMainImage,
     } = this.state;
@@ -177,41 +175,42 @@ class AddProject extends React.Component {
     ].filter(chart => chart !== "");
 
     const filesArray = [
-      architecturalFileList,
-      constructionFileList,
       gardenFileList,
       interiorDecorationFileList,
       HealthFileList,
+      architecturalFileList,
+      constructionFileList,
       electricityFileList,
       conditioningFileList,
     ].filter(list => list.length > 0);
+    console.log(7777, filesArray);
 
     this.setState({
       isLoading: true,
     });
     // Start uploading imags to firebase
-    imagesArray.map(obj => {
-      const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
-      uploadTask.on(
-        `state_changed`,
-        snapshot => {
-          // progress
-        },
-        error => {},
-        data => {
-          // complete
-          storage
-            .ref(`${username}`)
-            .child(`${obj.name}`)
-            .getDownloadURL()
-            .then(url => {
-              this.setState({
-                imagesUrlArray: [...this.state.imagesUrlArray, url],
-              });
-            });
-        }
-      );
-    });
+    // imagesArray.map(obj => {
+    //   const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
+    //   uploadTask.on(
+    //     `state_changed`,
+    //     snapshot => {
+    //       // progress
+    //     },
+    //     error => {},
+    //     data => {
+    //       // complete
+    //       storage
+    //         .ref(`${username}`)
+    //         .child(`${obj.name}`)
+    //         .getDownloadURL()
+    //         .then(url => {
+    //           this.setState({
+    //             imagesUrlArray: [...imagesUrlArray, url],
+    //           });
+    //         });
+    //     }
+    //   );
+    // });
 
     // Start uploading files to firebase
     filesArray.map((obj, index) => {
@@ -226,12 +225,17 @@ class AddProject extends React.Component {
           // complete
           storage
             .ref(`${username}`)
-            .child(`${obj[0].name}`)
+            .child(`${charts[index]}`)
             .getDownloadURL()
             .then(url => {
+              console.log("urlll", url);
               this.setState({
-                filesUrlArray: [...this.state.filesUrlArray, url],
+                filesUrlArray: [...filesUrlArray, url],
               });
+            })
+            .catch(error => {
+              console.log("errrrrror", error);
+              
             });
         }
       );
@@ -350,6 +354,7 @@ class AddProject extends React.Component {
       electricityFileList,
       conditioningFileList,
     } = this.state;
+    console.log(2222222, this.state.filesUrlArray);
 
     return (
       <div>
