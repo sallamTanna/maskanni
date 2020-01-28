@@ -61,7 +61,7 @@ class AddProject extends React.Component {
     filesArray: [],
     imagesUrlArray: [],
     filesUrlArray: [],
-    testImage: null,
+    fileList1: [],
     username: "mohammed",
   };
 
@@ -91,9 +91,25 @@ class AddProject extends React.Component {
     });
   };
 
-  handleFileUpload = files => {
+  handleChange = info => {
+    let fileList = [...info.fileList];
+
+    // 1. Limit the number of uploaded files
+    // Only to show two recent uploaded files, and old ones will be replaced by the new
+    fileList = fileList.slice(-1);
+
+    // 2. Read from response and show file link
+    fileList = fileList.map(file => {
+      if (file.response) {
+        // Component will show file.url:link
+        file.url = file.response.url;
+      }
+      return file;
+    });
+
     this.setState({
-      filesArray: files,
+      filesArray: [...this.state.filesArray, ...fileList],
+      fileList1: fileList,
     });
   };
 
@@ -136,6 +152,7 @@ class AddProject extends React.Component {
       imagesUrlArray,
       username,
       projectMainImage,
+      fileList,
     } = this.state;
     const schema = saveProjectValidation();
     const charts = [
@@ -304,7 +321,9 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
+      fileList1,
     } = this.state;
+    console.log(555555555, this.state.fileList);
 
     return (
       <div>
@@ -524,44 +543,72 @@ class AddProject extends React.Component {
               {architecturalChart ? (
                 <div className="building-chart">
                   <p>المخطط المعماري</p>
-                  <UploadFile fileName="المخطط المعماري" fileListProp={this.handleFileUpload} />
+                  <UploadFile
+                    fileName="المخطط المعماري"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
               {constructionChart ? (
                 <div className="building-chart">
                   <p>المخطط الانشائي</p>
-                  <UploadFile fileName="المخطط الانشائي" />
+                  <UploadFile
+                    fileName="المخطط الانشائي"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
               {gardenChart ? (
                 <div className="garden-chart">
                   <p>مخطط تصميم حديقة</p>
-                  <UploadFile fileName="مخطط تصميم الحديقة" />
+                  <UploadFile
+                    fileName="مخطط تصميم الحديقة"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
 
               {interiorDecorationChart ? (
                 <div className="garden-chart">
                   <p>مخطط ديكور داخلي</p>
-                  <UploadFile fileName="مخطط ديكور داخلي" />
+                  <UploadFile
+                    fileName="مخطط ديكور داخلي"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
               {conditioningChart ? (
                 <div className="garden-chart">
                   <p>مخطط تكييف</p>
-                  <UploadFile fileName="مخطط تكييف" />
+                  <UploadFile
+                    fileName="مخطط تكييف"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
               {HealthChart ? (
                 <div className="garden-chart">
                   <p>المخطط الصحي</p>
-                  <UploadFile fileName="المخطط الصحي" />
+                  <UploadFile
+                    fileName="المخطط الصحي"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
               {electricityChart ? (
                 <div className="garden-chart">
                   <p>مخطط الكهرباء</p>
-                  <UploadFile fileName="مخطط الكهرباء" />
+                  <UploadFile
+                    fileName="مخطط الكهرباء"
+                    handleChange={this.handleChange}
+                    fileList={fileList1}
+                  />
                 </div>
               ) : null}
             </div>
