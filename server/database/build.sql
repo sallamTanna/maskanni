@@ -54,7 +54,9 @@ CREATE TABLE projects
     sold BOOLEAN,
     type types,
     project_wallpaper VARCHAR,
-    images_url VARCHAR
+    images_urls VARCHAR
+    [],
+    files_urls VARCHAR
     []
 
 );

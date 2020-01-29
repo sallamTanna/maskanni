@@ -22,53 +22,104 @@ import icon4 from "../../assets/icon4.svg";
 import icon5 from "../../assets/icon5.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
-import { storage } from "../../firebase";
+import firebase, { storage } from "../../firebase";
+
 import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
+const urls = [];
+const imagesurl = [];
+
 class AddProject extends React.Component {
-  state = {
-    isLoading: false,
-    errors: false,
-    errorMessage: "",
-    projectName: "",
-    projectDescription: "",
-    size: "",
-    width: "",
-    length: "",
-    height: "",
-    bedRoomsNumber: "",
-    livingRoomsNumber: "",
-    bathRoomsNumber: "",
-    carGarageNumber: "",
-    floorsNumber: "",
-    kitchenDescription: "",
-    roomsDescription: "",
-    garageDescription: "",
-    gardenDescription: "",
-    gardenChart: "",
-    interiorDecorationChart: "",
-    HealthChart: "",
-    architecturalChart: "",
-    constructionChart: "",
-    electricityChart: "",
-    conditioningChart: "",
-    price: 0,
-    platformPrice: 0,
-    engineerPrice: 0,
-    imagesArray: [],
-    imagesUrlArray: [],
-    filesUrlArray: [],
-    architecturalFileList: [],
-    constructionFileList: [],
-    gardenFileList: [],
-    interiorDecorationFileList: [],
-    HealthFileList: [],
-    electricityFileList: [],
-    conditioningFileList: [],
-    username: "mohammed", // should be replaced with the name of user who logged in
-  };
+  constructor(props) {
+    super(props);
+    // this.state = JSON.parse(localStorage.getItem("obj")) || {
+    this.state = {
+      // this.state = {
+      isLoading: false,
+      errors: false,
+      errorMessage: "",
+      projectName: "",
+      projectDescription: "",
+      size: "",
+      width: "",
+      length: "",
+      height: "",
+      bedRoomsNumber: "",
+      livingRoomsNumber: "",
+      bathRoomsNumber: "",
+      carGarageNumber: "",
+      floorsNumber: "",
+      kitchenDescription: "",
+      roomsDescription: "",
+      garageDescription: "",
+      gardenDescription: "",
+      gardenChart: "",
+      interiorDecorationChart: "",
+      HealthChart: "",
+      architecturalChart: "",
+      constructionChart: "",
+      electricityChart: "",
+      conditioningChart: "",
+      price: 0,
+      platformPrice: 0,
+      engineerPrice: 0,
+      imagesArray: [],
+      imagesUrlArray: [],
+      filesUrlArray: [],
+      architecturalFileList: [],
+      constructionFileList: [],
+      gardenFileList: [],
+      interiorDecorationFileList: [],
+      HealthFileList: [],
+      electricityFileList: [],
+      conditioningFileList: [],
+      username: "mohammed", // should be replaced with the name of user who logged in
+    };
+  }
+
+  // state = {
+  //   isLoading: false,
+  //   errors: false,
+  //   errorMessage: "",
+  //   projectName: "",
+  //   projectDescription: "",
+  //   size: "",
+  //   width: "",
+  //   length: "",
+  //   height: "",
+  //   bedRoomsNumber: "",
+  //   livingRoomsNumber: "",
+  //   bathRoomsNumber: "",
+  //   carGarageNumber: "",
+  //   floorsNumber: "",
+  //   kitchenDescription: "",
+  //   roomsDescription: "",
+  //   garageDescription: "",
+  //   gardenDescription: "",
+  //   gardenChart: "",
+  //   interiorDecorationChart: "",
+  //   HealthChart: "",
+  //   architecturalChart: "",
+  //   constructionChart: "",
+  //   electricityChart: "",
+  //   conditioningChart: "",
+  //   price: 0,
+  //   platformPrice: 0,
+  //   engineerPrice: 0,
+  //   imagesArray: [],
+  //   imagesUrlArray: [],
+  //   filesUrlArray: [],
+  //   architecturalFileList: [],
+  //   constructionFileList: [],
+  //   gardenFileList: [],
+  //   interiorDecorationFileList: [],
+  //   HealthFileList: [],
+  //   electricityFileList: [],
+  //   conditioningFileList: [],
+  //   username: "mohammed", // should be replaced with the name of user who logged in
+  // };
 
   handleInputChange = e => {
     this.setState({
@@ -123,6 +174,146 @@ class AddProject extends React.Component {
   };
 
   handleSaveProject = () => {
+    // localStorage.setItem("obj", JSON.stringify(this.state));
+
+    const {
+      architecturalFileList,
+      constructionFileList,
+      gardenFileList,
+      interiorDecorationFileList,
+      HealthFileList,
+      electricityFileList,
+      conditioningFileList,
+    } = this.state;
+
+    const filesArray = [
+      gardenFileList,
+      interiorDecorationFileList,
+      HealthFileList,
+      architecturalFileList,
+      constructionFileList,
+      electricityFileList,
+      conditioningFileList,
+    ].filter(list => list.length > 0);
+
+    this.setState({
+      isLoading: true,
+    });
+
+    Promise.all(
+      filesArray.map(async (item, index) => {
+        await this.putStorageItem(item[0], index);
+      })
+    )
+      .then(url => {
+        this.setState(
+          {
+            filesUrlArray: [...urls],
+          },
+          () => {
+            Promise.all(
+              this.state.imagesArray.map(async item => {
+                await this.putStorageImage(item);
+              })
+            )
+              .then(url => {
+                this.setState(
+                  {
+                    imagesUrlArray: imagesurl,
+                  },
+                  () => {
+                    this.validateAndSubmit();
+                  }
+                );
+              })
+              .catch(error => {
+                console.log(`Some failed: `, error.message);
+              });
+          }
+        );
+      })
+      .catch(error => {
+        console.log(`Some failed: `, error.message);
+      });
+  };
+
+  putStorageItem = (item, index) => {
+    const {
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+      username,
+    } = this.state;
+
+    const charts = [
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+    ].filter(chart => chart !== "");
+    // the return value will be a Promise
+    return firebase
+      .storage()
+      .ref(`${username}/${charts[index]}`)
+      .put(item.originFileObj)
+      .then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+      })
+      .then(downloadURL => {
+        urls.push(downloadURL);
+        return downloadURL;
+      })
+      .catch(error => {
+        console.log("One failed:", error.message);
+      });
+  };
+
+  putStorageImage = item => {
+    const {
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+      username,
+    } = this.state;
+
+    const charts = [
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+    ].filter(chart => chart !== "");
+    // the return value will be a Promise
+    return firebase
+      .storage()
+      .ref(`${username}/${item.name}`)
+      .put(item.originFileObj)
+      .then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+      })
+      .then(downloadURL => {
+        imagesurl.push(downloadURL);
+        return downloadURL;
+      })
+      .catch(error => {
+        console.log("One failed:", error.message);
+      });
+  };
+
+  validateAndSubmit = () => {
     const {
       projectName,
       projectDescription,
@@ -146,24 +337,13 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
-      architecturalFileList,
-      constructionFileList,
-      gardenFileList,
-      interiorDecorationFileList,
-      HealthFileList,
-      electricityFileList,
-      conditioningFileList,
+
       price,
       imagesArray,
-      isLoading,
-      errors,
-      errorMessage,
       imagesUrlArray,
       filesUrlArray,
-      username,
       projectMainImage,
     } = this.state;
-    const schema = saveProjectValidation();
     const charts = [
       gardenChart,
       interiorDecorationChart,
@@ -173,74 +353,7 @@ class AddProject extends React.Component {
       electricityChart,
       conditioningChart,
     ].filter(chart => chart !== "");
-
-    const filesArray = [
-      gardenFileList,
-      interiorDecorationFileList,
-      HealthFileList,
-      architecturalFileList,
-      constructionFileList,
-      electricityFileList,
-      conditioningFileList,
-    ].filter(list => list.length > 0);
-    console.log(7777, filesArray);
-
-    this.setState({
-      isLoading: true,
-    });
-    // Start uploading imags to firebase
-    // imagesArray.map(obj => {
-    //   const uploadTask = storage.ref(`${username}/${obj.name}`).put(obj.originFileObj);
-    //   uploadTask.on(
-    //     `state_changed`,
-    //     snapshot => {
-    //       // progress
-    //     },
-    //     error => {},
-    //     data => {
-    //       // complete
-    //       storage
-    //         .ref(`${username}`)
-    //         .child(`${obj.name}`)
-    //         .getDownloadURL()
-    //         .then(url => {
-    //           this.setState({
-    //             imagesUrlArray: [...imagesUrlArray, url],
-    //           });
-    //         });
-    //     }
-    //   );
-    // });
-
-    // Start uploading files to firebase
-    filesArray.map((obj, index) => {
-      const uploadTask = storage.ref(`${username}/${charts[index]}`).put(obj[0].originFileObj);
-      uploadTask.on(
-        `state_changed`,
-        snapshot => {
-          // progress
-        },
-        error => {},
-        data => {
-          // complete
-          storage
-            .ref(`${username}`)
-            .child(`${charts[index]}`)
-            .getDownloadURL()
-            .then(url => {
-              console.log("urlll", url);
-              this.setState({
-                filesUrlArray: [...filesUrlArray, url],
-              });
-            })
-            .catch(error => {
-              console.log("errrrrror", error);
-              
-            });
-        }
-      );
-    });
-
+    const schema = saveProjectValidation();
     schema
       .validate({
         projectName,
@@ -284,6 +397,7 @@ class AddProject extends React.Component {
             price,
             imagesUrlArray,
             projectMainImage,
+            filesUrlArray,
           })
           .then(response => {
             if (response.status === 200) {
@@ -353,8 +467,8 @@ class AddProject extends React.Component {
       HealthFileList,
       electricityFileList,
       conditioningFileList,
+      filesUrlArray,
     } = this.state;
-    console.log(2222222, this.state.filesUrlArray);
 
     return (
       <div>

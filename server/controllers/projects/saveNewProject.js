@@ -22,8 +22,9 @@ module.exports = async (req, res, next) => {
     gardenDescription,
     charts,
     price,
-    urlArray,
-    projectMainImage
+    projectMainImage,
+    filesUrlArray,
+    imagesUrlArray
   } = req.body;
 
   try {
@@ -46,8 +47,9 @@ module.exports = async (req, res, next) => {
         gardenDescription,
         charts,
         price,
-        urlArray,
-        projectMainImage
+        imagesUrlArray,
+        projectMainImage,
+        filesUrlArray
       )
     );
     res.json({
