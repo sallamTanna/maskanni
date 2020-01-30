@@ -28,15 +28,14 @@ import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
-const urls = [];
-const imagesurl = [];
+const filesURLs = [];
+const imagesURLs = [];
 
 class AddProject extends React.Component {
   constructor(props) {
     super(props);
     // this.state = JSON.parse(localStorage.getItem("obj")) || {
     this.state = {
-      // this.state = {
       isLoading: false,
       errors: false,
       errorMessage: "",
@@ -66,7 +65,7 @@ class AddProject extends React.Component {
       platformPrice: 0,
       engineerPrice: 0,
       imagesArray: [],
-      imagesUrlArray: [],
+      imagesURLsArray: [],
       filesUrlArray: [],
       architecturalFileList: [],
       constructionFileList: [],
@@ -143,6 +142,25 @@ class AddProject extends React.Component {
     // localStorage.setItem("obj", JSON.stringify(this.state));
 
     const {
+      projectName,
+      projectDescription,
+      size,
+      width,
+      length,
+      height,
+      bedRoomsNumber,
+      livingRoomsNumber,
+      bathRoomsNumber,
+      carGarageNumber,
+      floorsNumber,
+      kitchenDescription,
+      roomsDescription,
+      garageDescription,
+      gardenDescription,
+      price,
+      imagesArray,
+      imagesUrlArray,
+      filesUrlArray,
       architecturalFileList,
       constructionFileList,
       gardenFileList,
@@ -150,7 +168,10 @@ class AddProject extends React.Component {
       HealthFileList,
       electricityFileList,
       conditioningFileList,
+      projectMainImage,
     } = this.state;
+
+    const charts = [].filter(chart => chart !== "");
 
     const filesArray = [
       gardenFileList,
@@ -162,44 +183,127 @@ class AddProject extends React.Component {
       conditioningFileList,
     ].filter(list => list.length > 0);
 
+    const schema = saveProjectValidation();
+
     this.setState({
       isLoading: true,
     });
 
-    Promise.all(
-      filesArray.map(async (item, index) => {
-        await this.putStorageItem(item[0], index);
+    schema
+      .validate({
+        projectName,
+        projectDescription,
+        size,
+        width,
+        length,
+        height,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
+        kitchenDescription,
+        roomsDescription,
+        garageDescription,
+        gardenDescription,
+        price,
+        imagesArray,
+        projectMainImage,
+        architecturalFileList,
       })
-    )
-      .then(url => {
-        this.setState(
-          {
-            filesUrlArray: [...urls],
-          },
-          () => {
+      .then(() => {
+        Promise.all(
+          filesArray.map(async (item, index) => {
+            await this.putStorageItem(item[0], index);
+          })
+        )
+          .then(url => {
+            // this.setState(
+            //   {
+            //     filesUrlArray: [...urls],
+            //   },
+            // () => {
             Promise.all(
               this.state.imagesArray.map(async item => {
                 await this.putStorageImage(item);
               })
             )
               .then(url => {
-                this.setState(
-                  {
-                    imagesUrlArray: imagesurl,
-                  },
-                  () => {
-                    this.validateAndSubmit();
-                  }
-                );
+                // this.setState(
+                //   {
+                //     imagesUrlArray: imagesurl,
+                //   },
+                //   () => {
+                // this.validateAndSubmit();
+                axios
+                  .post("/v1/projects", {
+                    projectName,
+                    projectDescription,
+                    size,
+                    width,
+                    length,
+                    height,
+                    livingRoomsNumber,
+                    bathRoomsNumber,
+                    carGarageNumber,
+                    floorsNumber,
+                    bedRoomsNumber,
+                    kitchenDescription,
+                    roomsDescription,
+                    garageDescription,
+                    gardenDescription,
+                    charts,
+                    price,
+                    imagesURLs,
+                    projectMainImage,
+                    filesURLs,
+                  })
+                  .then(response => {
+                    if (response.status === 200) {
+                      this.setState(
+                        {
+                          errors: false,
+                          isLoading: false,
+                        },
+                        () => {
+                          return alert(
+                            "success",
+                            "success",
+                            "تم",
+                            "تم اضافة المشروع بنجاح",
+                            1500,
+                            false
+                          );
+                        }
+                      );
+                    }
+                  })
+                  .catch(error => {
+                    this.setState({
+                      errors: true,
+                      isLoading: false,
+                      errorMessage: error.response.data.error.msg,
+                    });
+                  });
+                // }
+                // );
               })
               .catch(error => {
                 console.log(`Some failed: `, error.message);
               });
-          }
-        );
+            // }
+            // );
+          })
+          .catch(error => {
+            console.log(`Some failed: `, error.message);
+          });
       })
       .catch(error => {
-        console.log(`Some failed: `, error.message);
+        this.setState({
+          errors: true,
+          isLoading: false,
+          errorMessage: error.errors[0],
+        });
       });
   };
 
@@ -233,7 +337,7 @@ class AddProject extends React.Component {
         return snapshot.ref.getDownloadURL();
       })
       .then(downloadURL => {
-        urls.push(downloadURL);
+        filesURLs.push(downloadURL);
         return downloadURL;
       })
       .catch(error => {
@@ -253,15 +357,6 @@ class AddProject extends React.Component {
       username,
     } = this.state;
 
-    const charts = [
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-    ].filter(chart => chart !== "");
     // the return value will be a Promise
     return firebase
       .storage()
@@ -271,7 +366,7 @@ class AddProject extends React.Component {
         return snapshot.ref.getDownloadURL();
       })
       .then(downloadURL => {
-        imagesurl.push(downloadURL);
+        imagesURLs.push(downloadURL);
         return downloadURL;
       })
       .catch(error => {
@@ -279,121 +374,7 @@ class AddProject extends React.Component {
       });
   };
 
-  validateAndSubmit = () => {
-    const {
-      projectName,
-      projectDescription,
-      size,
-      width,
-      length,
-      height,
-      livingRoomsNumber,
-      bathRoomsNumber,
-      carGarageNumber,
-      floorsNumber,
-      bedRoomsNumber,
-      kitchenDescription,
-      roomsDescription,
-      garageDescription,
-      gardenDescription,
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-
-      price,
-      imagesArray,
-      imagesUrlArray,
-      filesUrlArray,
-      projectMainImage,
-    } = this.state;
-    const charts = [
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-    ].filter(chart => chart !== "");
-    const schema = saveProjectValidation();
-    schema
-      .validate({
-        projectName,
-        projectDescription,
-        size,
-        width,
-        length,
-        height,
-        livingRoomsNumber,
-        bathRoomsNumber,
-        carGarageNumber,
-        floorsNumber,
-        bedRoomsNumber,
-        kitchenDescription,
-        roomsDescription,
-        garageDescription,
-        gardenDescription,
-        price,
-        imagesArray,
-        projectMainImage,
-      })
-      .then(() => {
-        axios
-          .post("/v1/projects", {
-            projectName,
-            projectDescription,
-            size,
-            width,
-            length,
-            height,
-            livingRoomsNumber,
-            bathRoomsNumber,
-            carGarageNumber,
-            floorsNumber,
-            bedRoomsNumber,
-            kitchenDescription,
-            roomsDescription,
-            garageDescription,
-            gardenDescription,
-            charts,
-            price,
-            imagesUrlArray,
-            projectMainImage,
-            filesUrlArray,
-          })
-          .then(response => {
-            if (response.status === 200) {
-              this.setState(
-                {
-                  errors: false,
-                  isLoading: false,
-                },
-                () => {
-                  return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
-                }
-              );
-            }
-          })
-          .catch(error => {
-            this.setState({
-              errors: true,
-              isLoading: false,
-              errorMessage: error.response.data.error.msg,
-            });
-          });
-      })
-      .catch(error => {
-        this.setState({
-          errors: true,
-          isLoading: false,
-          errorMessage: error.errors[0],
-        });
-      });
-  };
+  validateAndSubmit = () => {};
 
   render() {
     const {
@@ -433,7 +414,6 @@ class AddProject extends React.Component {
       HealthFileList,
       electricityFileList,
       conditioningFileList,
-      filesUrlArray,
     } = this.state;
 
     return (
@@ -447,6 +427,7 @@ class AddProject extends React.Component {
             {errors ? (
               <Message message={errorMessage} type="error" className="login__errorMsg" />
             ) : null}
+
             <div className="main-details">
               <p className="main-details__title">معلومات أساسية</p>
               <div className="project-name">

@@ -101,6 +101,7 @@ const saveProjectValidation = () =>
       .min(1, "يرجى تحميل صور المشروع")
       .required("يرجى ارفاق صور للمشروع"),
     projectMainImage: yup.string().required("يرجى ارفاق صورة لواجهة المشروع"),
+    architecturalFileList: yup.array().min(1, "يرجى رفع ملفات التصميم"),
   });
 
 const numberInputValidation = () =>
