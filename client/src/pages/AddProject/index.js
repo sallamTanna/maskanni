@@ -79,48 +79,6 @@ class AddProject extends React.Component {
     };
   }
 
-  // state = {
-  //   isLoading: false,
-  //   errors: false,
-  //   errorMessage: "",
-  //   projectName: "",
-  //   projectDescription: "",
-  //   size: "",
-  //   width: "",
-  //   length: "",
-  //   height: "",
-  //   bedRoomsNumber: "",
-  //   livingRoomsNumber: "",
-  //   bathRoomsNumber: "",
-  //   carGarageNumber: "",
-  //   floorsNumber: "",
-  //   kitchenDescription: "",
-  //   roomsDescription: "",
-  //   garageDescription: "",
-  //   gardenDescription: "",
-  //   gardenChart: "",
-  //   interiorDecorationChart: "",
-  //   HealthChart: "",
-  //   architecturalChart: "",
-  //   constructionChart: "",
-  //   electricityChart: "",
-  //   conditioningChart: "",
-  //   price: 0,
-  //   platformPrice: 0,
-  //   engineerPrice: 0,
-  //   imagesArray: [],
-  //   imagesUrlArray: [],
-  //   filesUrlArray: [],
-  //   architecturalFileList: [],
-  //   constructionFileList: [],
-  //   gardenFileList: [],
-  //   interiorDecorationFileList: [],
-  //   HealthFileList: [],
-  //   electricityFileList: [],
-  //   conditioningFileList: [],
-  //   username: "mohammed", // should be replaced with the name of user who logged in
-  // };
-
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -128,9 +86,17 @@ class AddProject extends React.Component {
   };
 
   handleCheckboxChange = e => {
-    this.setState({
-      [e.target.name]: e.target.name,
-    });
+    const name = this.state[e.target.name];
+
+    if (name === "") {
+      this.setState({
+        [e.target.name]: e.target.name,
+      });
+    } else {
+      this.setState({
+        [e.target.name]: "",
+      });
+    }
   };
 
   handlePriceChange = value => {
