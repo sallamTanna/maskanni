@@ -70,22 +70,23 @@ function generateGallery() {
   );
 }
 
-class Project extends Component {
-  generateIcon = icon => {
-    return (
-      <div className="shortDetails-item">
-        <img src={icon} alt="icon" />
-        <span>3</span>
-        <span>مساحة</span>
-      </div>
-    );
-  };
+function generateIcon(icon) {
+  return (
+    <div className="shortDetails-item">
+      <img src={icon} alt="icon" />
+      <span>3</span>
+      <span>مساحة</span>
+    </div>
+  );
+}
 
+class Project extends Component {
   render() {
     return (
       <>
         <Navbar />
         <div className="container">
+          {/* right section */}
           <div className="right-section">
             <div className="history-tree">الرئيسية -> المشاريع -> شقق عائلية -> شقة رقم A325</div>
             <div className="share-section">
@@ -95,13 +96,23 @@ class Project extends Component {
               </p>
             </div>
             <div className="shortDetails-section shadow">
-              {[design, bed, sofa, stairClimber, carBarking].map(icon => this.generateIcon(icon))}
+              {[design, bed, sofa, stairClimber, carBarking].map(icon => generateIcon(icon))}
             </div>
             <div className="gallery">{generateGallery()}</div>
             {getProjDesc()}
             <div className="gallery shadow">Details</div>
           </div>
-          <div className="left-section">Left</div>
+          {/* left section */}
+          <div className="left-section shadow">
+            <div className="space-bt">
+              <div className="column cl-flexstart">
+                <h3>شراء المخطط</h3>
+                <p>سعر المخطط يباع بالدولار الأمريكي</p>
+              </div>
+              <h1>240 $</h1>
+            </div>
+            <div>sadasd</div>
+          </div>
         </div>
       </>
     );
