@@ -22,7 +22,7 @@ import icon4 from "../../assets/icon4.svg";
 import icon5 from "../../assets/icon5.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
-import firebase, { storage } from "../../firebase";
+import firebase from "../../firebase";
 
 import defaultBG from "../../assets/default-pg.png";
 
@@ -75,6 +75,7 @@ class AddProject extends React.Component {
       electricityFileList: [],
       conditioningFileList: [],
       username: "mohammed", // should be replaced with the name of user who logged in
+      fileListValidation: [],
     };
   }
 
@@ -114,7 +115,7 @@ class AddProject extends React.Component {
 
   handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
-    // 1. Limit the number of uploaded files
+    // 1. Limit the number of uploaded s
     // Only to show two recent uploaded files, and old ones will be replaced by the new
     fileList = fileList.slice(-1);
 
@@ -159,8 +160,6 @@ class AddProject extends React.Component {
       gardenDescription,
       price,
       imagesArray,
-      imagesUrlArray,
-      filesUrlArray,
       architecturalFileList,
       constructionFileList,
       gardenFileList,
@@ -169,9 +168,25 @@ class AddProject extends React.Component {
       electricityFileList,
       conditioningFileList,
       projectMainImage,
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+      fileListValidation,
     } = this.state;
 
-    const charts = [].filter(chart => chart !== "");
+    const charts = [
+      gardenChart,
+      interiorDecorationChart,
+      HealthChart,
+      architecturalChart,
+      constructionChart,
+      electricityChart,
+      conditioningChart,
+    ].filter(chart => chart !== "");
 
     const filesArray = [
       gardenFileList,
@@ -188,6 +203,8 @@ class AddProject extends React.Component {
     this.setState({
       isLoading: true,
     });
+
+    console.log(222222222, { ...fileListValidation });
 
     schema
       .validate({
@@ -209,32 +226,27 @@ class AddProject extends React.Component {
         price,
         imagesArray,
         projectMainImage,
-        architecturalFileList,
+        architecturalFileList: architecturalChart ? "required" : "not-required",
+        constructionFileList: constructionChart ? "required" : "not-required",
+        gardenFileList: gardenChart ? "required" : "not-required",
+        interiorDecorationFileList: interiorDecorationChart ? "required" : "not-required",
+        HealthFileList: HealthChart ? "required" : "not-required",
+        electricityFileList: electricityChart ? "required" : "not-required",
+        conditioningFileList: conditioningChart ? "required" : "not-required",
       })
       .then(() => {
         Promise.all(
           filesArray.map(async (item, index) => {
-            await this.putStorageItem(item[0], index);
+            await this.putStorageFile(item[0], index);
           })
         )
-          .then(url => {
-            // this.setState(
-            //   {
-            //     filesUrlArray: [...urls],
-            //   },
-            // () => {
+          .then(() => {
             Promise.all(
-              this.state.imagesArray.map(async item => {
+              imagesArray.map(async item => {
                 await this.putStorageImage(item);
               })
             )
-              .then(url => {
-                // this.setState(
-                //   {
-                //     imagesUrlArray: imagesurl,
-                //   },
-                //   () => {
-                // this.validateAndSubmit();
+              .then(() => {
                 axios
                   .post("/v1/projects", {
                     projectName,
@@ -285,17 +297,21 @@ class AddProject extends React.Component {
                       errorMessage: error.response.data.error.msg,
                     });
                   });
-                // }
-                // );
               })
-              .catch(error => {
-                console.log(`Some failed: `, error.message);
+              .catch(() => {
+                this.setState({
+                  errors: true,
+                  isLoading: false,
+                  errorMessage: "Something went wrong while getting uploaded images URLs",
+                });
               });
-            // }
-            // );
           })
-          .catch(error => {
-            console.log(`Some failed: `, error.message);
+          .catch(() => {
+            this.setState({
+              errors: true,
+              isLoading: false,
+              errorMessage: "Something went wrong while getting uploaded files  URLs",
+            });
           });
       })
       .catch(error => {
@@ -307,7 +323,7 @@ class AddProject extends React.Component {
       });
   };
 
-  putStorageItem = (item, index) => {
+  putStorageFile = (item, index) => {
     const {
       gardenChart,
       interiorDecorationChart,
@@ -346,16 +362,7 @@ class AddProject extends React.Component {
   };
 
   putStorageImage = item => {
-    const {
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-      username,
-    } = this.state;
+    const { username } = this.state;
 
     // the return value will be a Promise
     return firebase
