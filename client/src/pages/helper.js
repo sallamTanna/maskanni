@@ -113,52 +113,52 @@ const saveProjectValidation = () => {
       .required("يرجى ارفاق صور للمشروع"),
     projectMainImage: yup.string().required("يرجى ارفاق صورة لواجهة المشروع"),
 
-    architecturalFileList: yup.string().test({
-      name: "required",
+    architecturalFileList: yup.mixed().test({
+      name: "required-architecturalFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط العمارة",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
-    constructionFileList: yup.string().test({
-      name: "not-required",
+    constructionFileList: yup.mixed().test({
+      name: "required-constructionFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط البناء",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
 
-    gardenFileList: yup.string().test({
-      name: "not-required",
+    gardenFileList: yup.mixed().test({
+      name: "required-gardenFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط الحديقة",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
 
-    interiorDecorationFileList: yup.string().test({
-      name: "not-required",
+    interiorDecorationFileList: yup.mixed().test({
+      name: "required-interiorDecorationFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط التصميم الداخلي",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
 
-    HealthFileList: yup.string().test({
-      name: "not-required",
+    HealthFileList: yup.mixed().test({
+      name: "required-HealthFileList",
       exclusive: true,
       message: "يرجى ادخال المخطط الصحي",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
 
-    electricityFileList: yup.string().test({
-      name: "not-required",
+    electricityFileList: yup.mixed().test({
+      name: "required-electricityFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط الكهرباء",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
 
-    conditioningFileList: yup.string().test({
-      name: "not-required",
+    conditioningFileList: yup.mixed().test({
+      name: "required-conditioningFileList",
       exclusive: true,
       message: "يرجى ادخال مخطط التكييف",
-      test: value => value === "not-required",
+      test: value => value.required === "yes",
     }),
   });
 };

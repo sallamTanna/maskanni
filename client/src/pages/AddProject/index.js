@@ -226,13 +226,18 @@ class AddProject extends React.Component {
         price,
         imagesArray,
         projectMainImage,
-        architecturalFileList: architecturalChart ? "required" : "not-required",
-        constructionFileList: constructionChart ? "required" : "not-required",
-        gardenFileList: gardenChart ? "required" : "not-required",
-        interiorDecorationFileList: interiorDecorationChart ? "required" : "not-required",
-        HealthFileList: HealthChart ? "required" : "not-required",
-        electricityFileList: electricityChart ? "required" : "not-required",
-        conditioningFileList: conditioningChart ? "required" : "not-required",
+        architecturalFileList: architecturalChart ? { required: "yes", list: architecturalFileList } : {},
+        constructionFileList: constructionChart ? { required: "yes", list: constructionFileList } :{},
+        gardenFileList: gardenChart ? { required: "yes", list: gardenFileList } :{},
+        interiorDecorationFileList: interiorDecorationChart? { required: "yes", list: interiorDecorationFileList } :{},
+        HealthFileList: HealthChart ? { required: "yes", list: HealthFileList } :{},
+        electricityFileList: electricityChart ?  { required: "yes", list: electricityFileList } :{},
+        conditioningFileList: conditioningChart ? { required: "yes", list: conditioningFileList  :{},
+
+
+     
+
+
       })
       .then(() => {
         Promise.all(
