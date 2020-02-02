@@ -76,11 +76,10 @@ class AddProject extends React.Component {
     fileListValidation: [],
   };
 
-  handleInputChange = e => {
+  handleInputChange = e =>
     this.setState({
       [e.target.name]: e.target.value,
     });
-  };
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
@@ -96,19 +95,17 @@ class AddProject extends React.Component {
     }
   };
 
-  handlePriceChange = value => {
+  handlePriceChange = value =>
     this.setState({
       price: value,
       platformPrice: (0.2 * value).toFixed(2),
       engineerPrice: (0.8 * value).toFixed(2),
     });
-  };
 
-  getFilesList = files => {
+  getFilesList = files =>
     this.setState({
       imagesArray: files,
     });
-  };
 
   handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
@@ -130,11 +127,10 @@ class AddProject extends React.Component {
     });
   };
 
-  handleProjectMainImage = file => {
+  handleProjectMainImage = file =>
     this.setState({
       projectMainImage: file,
     });
-  };
 
   handleSaveProject = () => {
     const {
