@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-param-reassign */
 import React from "react";
 import axios from "axios";
 
@@ -23,7 +25,6 @@ import icon5 from "../../assets/icon5.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
-
 import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
@@ -32,52 +33,48 @@ const filesURLs = [];
 const imagesURLs = [];
 
 class AddProject extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.state = JSON.parse(localStorage.getItem("obj")) || {
-    this.state = {
-      isLoading: false,
-      errors: false,
-      errorMessage: "",
-      projectName: "",
-      projectDescription: "",
-      size: "",
-      width: "",
-      length: "",
-      height: "",
-      bedRoomsNumber: "",
-      livingRoomsNumber: "",
-      bathRoomsNumber: "",
-      carGarageNumber: "",
-      floorsNumber: "",
-      kitchenDescription: "",
-      roomsDescription: "",
-      garageDescription: "",
-      gardenDescription: "",
-      gardenChart: "",
-      interiorDecorationChart: "",
-      HealthChart: "",
-      architecturalChart: "architecturalChart",
-      constructionChart: "",
-      electricityChart: "",
-      conditioningChart: "",
-      price: 0,
-      platformPrice: 0,
-      engineerPrice: 0,
-      imagesArray: [],
-      imagesURLsArray: [],
-      filesUrlArray: [],
-      architecturalFileList: [],
-      constructionFileList: [],
-      gardenFileList: [],
-      interiorDecorationFileList: [],
-      HealthFileList: [],
-      electricityFileList: [],
-      conditioningFileList: [],
-      username: "mohammed", // should be replaced with the name of user who logged in
-      fileListValidation: [],
-    };
-  }
+  state = {
+    isLoading: false,
+    errors: false,
+    errorMessage: "",
+    projectName: "",
+    projectDescription: "",
+    size: "",
+    width: "",
+    length: "",
+    height: "",
+    bedRoomsNumber: "",
+    livingRoomsNumber: "",
+    bathRoomsNumber: "",
+    carGarageNumber: "",
+    floorsNumber: "",
+    kitchenDescription: "",
+    roomsDescription: "",
+    garageDescription: "",
+    gardenDescription: "",
+    gardenChart: "",
+    interiorDecorationChart: "",
+    HealthChart: "",
+    architecturalChart: "architecturalChart",
+    constructionChart: "",
+    electricityChart: "",
+    conditioningChart: "",
+    price: 0,
+    platformPrice: 0,
+    engineerPrice: 0,
+    imagesArray: [],
+    imagesURLsArray: [],
+    filesUrlArray: [],
+    architecturalFileList: [],
+    constructionFileList: [],
+    gardenFileList: [],
+    interiorDecorationFileList: [],
+    HealthFileList: [],
+    electricityFileList: [],
+    conditioningFileList: [],
+    username: "mohammed", // should be replaced with the name of user who logged in
+    fileListValidation: [],
+  };
 
   handleInputChange = e => {
     this.setState({
@@ -140,8 +137,6 @@ class AddProject extends React.Component {
   };
 
   handleSaveProject = () => {
-    // localStorage.setItem("obj", JSON.stringify(this.state));
-
     const {
       projectName,
       projectDescription,
@@ -171,22 +166,10 @@ class AddProject extends React.Component {
       gardenChart,
       interiorDecorationChart,
       HealthChart,
-      architecturalChart,
       constructionChart,
       electricityChart,
       conditioningChart,
-      fileListValidation,
     } = this.state;
-
-    const charts = [
-      gardenChart,
-      interiorDecorationChart,
-      HealthChart,
-      architecturalChart,
-      constructionChart,
-      electricityChart,
-      conditioningChart,
-    ].filter(chart => chart !== "");
 
     const filesArray = [
       gardenFileList,
@@ -225,25 +208,18 @@ class AddProject extends React.Component {
         imagesArray,
         projectMainImage,
         architecturalFileList,
-
         constructionFileList: constructionChart
           ? { required: true, list: constructionFileList }
-          : { required: false, list: [] },
-        gardenFileList: gardenChart
-          ? { required: true, list: gardenFileList }
-          : { required: false, list: [] },
+          : {},
+        gardenFileList: gardenChart ? { required: true, list: gardenFileList } : {},
         interiorDecorationFileList: interiorDecorationChart
           ? { required: true, list: interiorDecorationFileList }
-          : { required: false, list: [] },
-        HealthFileList: HealthChart
-          ? { required: true, list: HealthFileList }
-          : { required: false, list: [] },
-        electricityFileList: electricityChart
-          ? { required: true, list: electricityFileList }
-          : { required: false, list: [] },
+          : {},
+        HealthFileList: HealthChart ? { required: true, list: HealthFileList } : {},
+        electricityFileList: electricityChart ? { required: true, list: electricityFileList } : {},
         conditioningFileList: conditioningChart
           ? { required: true, list: conditioningFileList }
-          : { required: false, list: [] },
+          : {},
       })
       .then(() => {
         Promise.all(
@@ -258,56 +234,7 @@ class AddProject extends React.Component {
               })
             )
               .then(() => {
-                axios
-                  .post("/v1/projects", {
-                    projectName,
-                    projectDescription,
-                    size,
-                    width,
-                    length,
-                    height,
-                    livingRoomsNumber,
-                    bathRoomsNumber,
-                    carGarageNumber,
-                    floorsNumber,
-                    bedRoomsNumber,
-                    kitchenDescription,
-                    roomsDescription,
-                    garageDescription,
-                    gardenDescription,
-                    charts,
-                    price,
-                    imagesURLs,
-                    projectMainImage,
-                    filesURLs,
-                  })
-                  .then(response => {
-                    if (response.status === 200) {
-                      this.setState(
-                        {
-                          errors: false,
-                          isLoading: false,
-                        },
-                        () => {
-                          return alert(
-                            "success",
-                            "success",
-                            "تم",
-                            "تم اضافة المشروع بنجاح",
-                            1500,
-                            false
-                          );
-                        }
-                      );
-                    }
-                  })
-                  .catch(error => {
-                    this.setState({
-                      errors: true,
-                      isLoading: false,
-                      errorMessage: error.response.data.error.msg,
-                    });
-                  });
+                this.postNewProject();
               })
               .catch(() => {
                 this.setState({
@@ -392,7 +319,72 @@ class AddProject extends React.Component {
       });
   };
 
-  validateAndSubmit = () => {};
+  postNewProject = () => {
+    const {
+      projectName,
+      projectDescription,
+      size,
+      width,
+      length,
+      height,
+      livingRoomsNumber,
+      bathRoomsNumber,
+      carGarageNumber,
+      floorsNumber,
+      bedRoomsNumber,
+      kitchenDescription,
+      roomsDescription,
+      garageDescription,
+      gardenDescription,
+      charts,
+      price,
+      projectMainImage,
+    } = this.state;
+
+    axios
+      .post("/v1/projects", {
+        projectName,
+        projectDescription,
+        size,
+        width,
+        length,
+        height,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
+        kitchenDescription,
+        roomsDescription,
+        garageDescription,
+        gardenDescription,
+        charts,
+        price,
+        imagesURLs,
+        projectMainImage,
+        filesURLs,
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState(
+            {
+              errors: false,
+              isLoading: false,
+            },
+            () => {
+              return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
+            }
+          );
+        }
+      })
+      .catch(error => {
+        this.setState({
+          errors: true,
+          isLoading: false,
+          errorMessage: error.response.data.error.msg,
+        });
+      });
+  };
 
   render() {
     const {

@@ -32,17 +32,6 @@ const signupValidation = () =>
   });
 
 const saveProjectValidation = () => {
-  //   Yup.addMethod(Yup.array, ‘methodName’, function(anyArgsYouNeed) {
-  //     const { message } = anyArgsYouNeed;
-  //     return this.test(‘test-name’, message, function(value) {
-  //         const { path, createError } = this;
-  //         const { some, more, args } = anyArgsYouNeed;
-  //         // [value] - value of the property being tested
-  //         // [path]  - property name,
-  //         // ...
-  //         return someCondition || conditionTwo || createError(...);
-  //     });
-  // });
   return yup.object().shape({
     projectName: yup
       .string("يجب كتابة الاسم كاملا بشكل صحيح")
@@ -113,7 +102,6 @@ const saveProjectValidation = () => {
       .required("يرجى ارفاق صور للمشروع"),
     projectMainImage: yup.string().required("يرجى ارفاق صورة لواجهة المشروع"),
     architecturalFileList: yup.array().min(1, "يرجى ادخال ملف المخطط المعماري"),
-
     constructionFileList: yup.mixed().test({
       name: "required-constructionFileList",
       exclusive: false,
@@ -125,7 +113,6 @@ const saveProjectValidation = () => {
         return true;
       },
     }),
-
     gardenFileList: yup.mixed().test({
       name: "required-gardenFileList",
       exclusive: false,
@@ -137,11 +124,10 @@ const saveProjectValidation = () => {
         return true;
       },
     }),
-
     interiorDecorationFileList: yup.mixed().test({
       name: "required-interiorDecorationFileList",
       exclusive: false,
-      message: "يرجى ادخال مخطط التصميم الداخلي",
+      message: "يرجى ادخال مخطط الديكور الداخلي",
       test: value => {
         if (value.required === true) {
           return value.list.length > 0;
@@ -149,7 +135,6 @@ const saveProjectValidation = () => {
         return true;
       },
     }),
-
     HealthFileList: yup.mixed().test({
       name: "required-HealthFileList",
       exclusive: false,
@@ -161,7 +146,6 @@ const saveProjectValidation = () => {
         return true;
       },
     }),
-
     electricityFileList: yup.mixed().test({
       name: "required-electricityFileList",
       exclusive: false,
@@ -173,7 +157,6 @@ const saveProjectValidation = () => {
         return true;
       },
     }),
-
     conditioningFileList: yup.mixed().test({
       name: "required-conditioningFileList",
       exclusive: false,
