@@ -57,7 +57,7 @@ class AddProject extends React.Component {
       gardenChart: "",
       interiorDecorationChart: "",
       HealthChart: "",
-      architecturalChart: "",
+      architecturalChart: "architecturalChart",
       constructionChart: "",
       electricityChart: "",
       conditioningChart: "",
@@ -204,8 +204,6 @@ class AddProject extends React.Component {
       isLoading: true,
     });
 
-    console.log(222222222, { ...fileListValidation });
-
     schema
       .validate({
         projectName,
@@ -226,18 +224,26 @@ class AddProject extends React.Component {
         price,
         imagesArray,
         projectMainImage,
-        architecturalFileList: architecturalChart ? { required: "yes", list: architecturalFileList } : {},
-        constructionFileList: constructionChart ? { required: "yes", list: constructionFileList } :{},
-        gardenFileList: gardenChart ? { required: "yes", list: gardenFileList } :{},
-        interiorDecorationFileList: interiorDecorationChart? { required: "yes", list: interiorDecorationFileList } :{},
-        HealthFileList: HealthChart ? { required: "yes", list: HealthFileList } :{},
-        electricityFileList: electricityChart ?  { required: "yes", list: electricityFileList } :{},
-        conditioningFileList: conditioningChart ? { required: "yes", list: conditioningFileList  :{},
+        architecturalFileList,
 
-
-     
-
-
+        constructionFileList: constructionChart
+          ? { required: true, list: constructionFileList }
+          : { required: false, list: [] },
+        gardenFileList: gardenChart
+          ? { required: true, list: gardenFileList }
+          : { required: false, list: [] },
+        interiorDecorationFileList: interiorDecorationChart
+          ? { required: true, list: interiorDecorationFileList }
+          : { required: false, list: [] },
+        HealthFileList: HealthChart
+          ? { required: true, list: HealthFileList }
+          : { required: false, list: [] },
+        electricityFileList: electricityChart
+          ? { required: true, list: electricityFileList }
+          : { required: false, list: [] },
+        conditioningFileList: conditioningChart
+          ? { required: true, list: conditioningFileList }
+          : { required: false, list: [] },
       })
       .then(() => {
         Promise.all(
@@ -600,7 +606,8 @@ class AddProject extends React.Component {
               <div className="available-charts">
                 <div>
                   <CheckBox
-                    name="architecturalChart"
+                    defaultChecked
+                    disabled
                     onChange={this.handleCheckboxChange}
                     label="المخطط المعماري"
                   />

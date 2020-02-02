@@ -3,9 +3,15 @@ import { Checkbox } from "antd";
 
 class CheckBoxComponent extends React.Component {
   render() {
-    const { onChange, className, label, name } = this.props;
+    const { onChange, className, label, name, defaultChecked, disabled } = this.props;
     return (
-      <Checkbox name={name} className={className} onChange={onChange}>
+      <Checkbox
+        name={name}
+        className={className}
+        onChange={onChange}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+      >
         {label}
       </Checkbox>
     );
