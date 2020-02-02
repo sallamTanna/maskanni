@@ -1,8 +1,16 @@
 import React from "react";
 
+import ArchitectNavbar from "./ArchitectNavbar";
+import Navbar from "../../components/Navbar";
+
 class ArchitectHome extends React.Component {
   render() {
-    return <>ArchitectHome</>;
+    return (
+      <>
+        <Navbar />
+        <ArchitectNavbar title="ss" />
+      </>
+    );
   }
 }
 

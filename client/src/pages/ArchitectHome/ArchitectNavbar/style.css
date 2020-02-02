@@ -1,0 +1,10 @@
+.architectNavbar {
+  background-color: #404041;
+  margin: 0;
+  padding: 0;
+}
+
+.architectNavbar .ant-menu-horizontal {
+  padding: 0;
+  margin: 0;
+}
