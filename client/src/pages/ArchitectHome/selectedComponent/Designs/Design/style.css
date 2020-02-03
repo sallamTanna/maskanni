@@ -34,6 +34,17 @@
   font-size: 18px;
 }
 
+.title-and-edit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-and-edit button {
+  background-color: #ffc000;
+  border: none;
+  color: white;
+}
+
 /* media query */
 @media only screen and (max-width: 425px) {
   .design-wallpaper {

@@ -1,5 +1,6 @@
 import React from "react";
 
+import Button from "../../../../../components/Button";
 import livingRoom from "../../../../../assets/living-room.svg";
 import bedRoom from "../../../../../assets/bed-room.svg";
 import bathRoom from "../../../../../assets/bath-room.svg";
@@ -17,6 +18,7 @@ const Design = props => {
     carGarageNumber,
     floorsNumber,
     bedroomsNumber,
+    status,
   } = props;
   return (
     <div className="design">
@@ -24,7 +26,13 @@ const Design = props => {
         <img src={src} alt="wallpaper" />
       </div>
       <div className="design__details">
-        <p className="design__title">{name}</p>
+        <div className="title-and-edit">
+          <p className="design__title">{name}</p>
+          <p>{status}</p>
+          <div>
+            <Button label="تعديل" />
+          </div>
+        </div>
         <div className="design__sizes">
           <div className="main-prop__data">
             <div>

@@ -51,6 +51,7 @@ CREATE TABLE projects
     price INT NOT NULL,
     charts VARCHAR
     [],
+    statue VARCHAR,
     sold BOOLEAN,
     type types,
     project_wallpaper VARCHAR,

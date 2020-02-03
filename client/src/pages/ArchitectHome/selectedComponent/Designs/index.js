@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import Design from "./Design";
 import Spinner from "../../../../components/Spinner";
-import Button from "../../../../components/Spinner";
 import advertismentIcon from "../../../../assets/advertisment-icon.png";
 
 import "./style.css";
@@ -60,16 +59,17 @@ class Designs extends React.Component {
     if (emptyResponse) {
       DesignsBody = <p className="designs-page__noResponse">لا يوجد مشاريع لك حتى الان</p>;
     } else {
-      DesignsBody = projects.map(design => (
+      DesignsBody = projects.map(project => (
         <Design
-          name={design.name}
-          description={design.description}
-          src={design.project_wallpaper}
-          livingroomsNumber={design.livingrooms_number}
-          bathroomsNumber={design.bathrooms_number}
-          carGarageNumber={design.car_garage_number}
-          floorsNumber={design.floors_number}
-          bedroomsNumber={design.bedrooms_number}
+          name={project.name}
+          description={project.description}
+          src={project.project_wallpaper}
+          livingroomsNumber={project.livingrooms_number}
+          bathroomsNumber={project.bathrooms_number}
+          carGarageNumber={project.car_garage_number}
+          floorsNumber={project.floors_number}
+          bedroomsNumber={project.bedrooms_number}
+          statue="{project.status}"
         />
       ));
     }
