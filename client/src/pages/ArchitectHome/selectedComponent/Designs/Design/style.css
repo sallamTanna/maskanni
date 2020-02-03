@@ -45,6 +45,15 @@
   color: white;
 }
 
+.status {
+  padding: 1% 3%;
+  text-align: center;
+  color: white;
+  border-radius: 4px;
+  position: relative;
+  top: -15px;
+}
+
 /* media query */
 @media only screen and (max-width: 425px) {
   .design-wallpaper {

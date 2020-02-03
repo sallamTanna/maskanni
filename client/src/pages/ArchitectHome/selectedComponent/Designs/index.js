@@ -69,7 +69,7 @@ class Designs extends React.Component {
           carGarageNumber={project.car_garage_number}
           floorsNumber={project.floors_number}
           bedroomsNumber={project.bedrooms_number}
-          statue="{project.status}"
+          status={project.status}
         />
       ));
     }

@@ -20,6 +20,17 @@ const Design = props => {
     bedroomsNumber,
     status,
   } = props;
+  let color;
+
+  switch (status) {
+    case "معتمد": {
+      color = "green";
+      break;
+    }
+    case "غير معتمد":
+      color = "red";
+  }
+
   return (
     <div className="design">
       <div className="design-wallpaper">
@@ -27,8 +38,12 @@ const Design = props => {
       </div>
       <div className="design__details">
         <div className="title-and-edit">
-          <p className="design__title">{name}</p>
-          <p>{status}</p>
+          <div>
+            <p className="design__title">{name}</p>
+            <p className="status" style={{ backgroundColor: color }}>
+              {status}
+            </p>
+          </div>
           <div>
             <Button label="تعديل" />
           </div>
