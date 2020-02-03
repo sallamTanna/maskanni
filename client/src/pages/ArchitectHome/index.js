@@ -8,7 +8,7 @@ class ArchitectHome extends React.Component {
     return (
       <>
         <Navbar />
-        <ArchitectNavbar title="ss" />
+        <ArchitectNavbar title="المخططات والتصاميم" />
       </>
     );
   }

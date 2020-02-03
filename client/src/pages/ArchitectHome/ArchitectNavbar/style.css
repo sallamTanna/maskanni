@@ -1,10 +1,31 @@
 .architectNavbar {
   background-color: #404041;
-  margin: 0;
-  padding: 0;
+  padding: 2% 5% 0 6%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.architectNavbar .ant-menu-horizontal {
-  padding: 0;
-  margin: 0;
+.architectNavbar ul li.ant-menu-item.ant-menu-item-selected {
+  color: #fff;
+}
+
+.architectNavbar ul li.ant-menu-item.ant-menu-item-selected {
+  border-bottom: 2px solid #fff;
+}
+
+.architectNavbar__title {
+  color: white;
+  font-size: 18px;
+  font-weight: lighter;
+}
+
+.add-design {
+  display: flex;
+  align-items: center;
+}
+
+.add-design button {
+  background-color: #ffc000;
+  border: none;
+  color: white;
 }
