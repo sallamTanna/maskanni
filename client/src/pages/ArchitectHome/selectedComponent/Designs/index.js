@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Design from "./Design";
 import Spinner from "../../../../components/Spinner";
+import Button from "../../../../components/Spinner";
 import advertismentIcon from "../../../../assets/advertisment-icon.png";
 
 import "./style.css";
@@ -14,9 +16,16 @@ class Designs extends React.Component {
     errors: false,
     errorMsg: "",
     emptyResponse: false,
+    isResponsive: false,
   };
 
   componentDidMount() {
+    if (window.screen.width <= 425) {
+      this.setState({
+        isResponsive: true,
+      });
+    }
+
     axios
       .get("/v1/users/1/projects") // "id" should be replaced with the "id" of the user who logged in
       .then(response => {
@@ -40,7 +49,7 @@ class Designs extends React.Component {
   }
 
   render() {
-    const { projects, isLoading, emptyResponse, errors, errorMsg } = this.state;
+    const { projects, isLoading, emptyResponse, errors, errorMsg, isResponsive } = this.state;
     let DesignsBody = null;
     if (isLoading) {
       DesignsBody = <Spinner type="spin" width={150} height={150} color="#ffc000" />;
@@ -66,7 +75,16 @@ class Designs extends React.Component {
     }
     return (
       <div className="designs-page">
-        <div className="designs">{DesignsBody}</div>
+        <div className="designs">
+          {isResponsive ? (
+            <div className="circuler-add-design">
+              <Link to="/add">
+                <i className="fa fa-plus-circle" />
+              </Link>
+            </div>
+          ) : null}
+          {DesignsBody}
+        </div>
         <div className="designs-page__advertisment">
           <img alt="advertisment" src={advertismentIcon} />
           <p>45%</p>

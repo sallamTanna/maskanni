@@ -33,7 +33,6 @@ class ArchitectHome extends React.Component {
 
   render() {
     const { title, isResponsive } = this.state;
-    const { history } = this.props;
     return (
       <>
         <Navbar />
@@ -52,11 +51,13 @@ class ArchitectHome extends React.Component {
               <Menu.Item key="4">الاعدادات</Menu.Item>
             </Menu>
           </div>
-          <div className="add-design">
-            <Link to="/add">
-              <Button label="اضافة تصميم جديد" />
-            </Link>
-          </div>
+          {!isResponsive ? (
+            <div className="designs__add">
+              <Link to="/add">
+                <Button label="اضافة تصميم جديد" />
+              </Link>
+            </div>
+          ) : null}
         </div>
         <div className="selected-component"> {selectedComponent[this.state.key]}</div>
         <Footer />

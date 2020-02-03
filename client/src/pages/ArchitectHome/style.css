@@ -24,7 +24,7 @@
   align-items: center;
 }
 
-.add-design button.ant-btn {
+.designs__add button.ant-btn {
   background-color: #ffc000;
   border: none;
   color: white;
