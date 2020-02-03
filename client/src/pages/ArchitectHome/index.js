@@ -11,7 +11,7 @@ import "./style.css";
 class ArchitectHome extends React.Component {
   state = {
     title: "حسابي",
-    key: "1",
+    key: "2",
   };
 
   handleSubNavClick = e => {
@@ -33,7 +33,7 @@ class ArchitectHome extends React.Component {
               onClick={this.handleSubNavClick}
               mode="horizontal"
               style={{ backgroundColor: "#404041", color: "#909090" }}
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={["2"]}
             >
               <Menu.Item key="1">حسابي</Menu.Item>
               <Menu.Item key="2">التصاميم والخطط</Menu.Item>
@@ -47,7 +47,7 @@ class ArchitectHome extends React.Component {
             </Link>
           </div>
         </div>
-        <div className="selected-tab"> {selectedComponent[this.state.key]}</div>
+        <div className="selected-component"> {selectedComponent[this.state.key]}</div>
       </>
     );
   }

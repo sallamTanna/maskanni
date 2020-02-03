@@ -1,0 +1,44 @@
+.design {
+  display: flex;
+  width: 60%;
+  background-color: #fff;
+  margin-bottom: 1%;
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 4px;
+}
+
+.design-wallpaper {
+  width: 30%;
+}
+
+.design-wallpaper img {
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.design__details {
+  padding: 2%;
+  width: 70%;
+}
+
+.design__sizes div {
+  padding-right: 0;
+}
+
+.design__title {
+  color: #202020;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 768px) {
+  .login__body {
+    width: 90%;
+  }
+  .login__logo {
+    width: 23%;
+    height: 23%;
+    margin-bottom: 5%;
+  }
+}
