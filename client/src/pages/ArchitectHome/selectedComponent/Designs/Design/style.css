@@ -1,10 +1,11 @@
 .design {
   display: flex;
-  width: 60%;
   background-color: #fff;
+  margin: 0;
   margin-bottom: 1%;
   box-shadow: 0 4px 8px #dad4d4;
   border-radius: 4px;
+  padding: 0;
 }
 
 .design-wallpaper {
@@ -25,6 +26,7 @@
 
 .design__sizes div {
   padding-right: 0;
+  text-align: center;
 }
 
 .design__title {
@@ -32,13 +34,25 @@
   font-size: 18px;
 }
 
-@media only screen and (max-width: 768px) {
-  .login__body {
-    width: 90%;
+/* media query */
+@media only screen and (max-width: 425px) {
+  .design-wallpaper {
+    display: none;
   }
-  .login__logo {
-    width: 23%;
-    height: 23%;
-    margin-bottom: 5%;
+  .design__details {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .design__details div {
+    align-items: unset;
+  }
+  .design__details div p {
+    font-size: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    position: relative;
+    bottom: 0;
   }
 }

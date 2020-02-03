@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../../components/Button";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import selectedComponent from "./details";
 
 import "./style.css";
@@ -12,7 +13,16 @@ class ArchitectHome extends React.Component {
   state = {
     title: "حسابي",
     key: "2",
+    isResponsive: false,
   };
+
+  componentDidMount() {
+    if (window.screen.width <= 425) {
+      this.setState({
+        isResponsive: true,
+      });
+    }
+  }
 
   handleSubNavClick = e => {
     this.setState({
@@ -22,7 +32,8 @@ class ArchitectHome extends React.Component {
   };
 
   render() {
-    const { title } = this.state;
+    const { title, isResponsive } = this.state;
+    const { history } = this.props;
     return (
       <>
         <Navbar />
@@ -42,12 +53,13 @@ class ArchitectHome extends React.Component {
             </Menu>
           </div>
           <div className="add-design">
-            <Link to="/projects">
+            <Link to="/add">
               <Button label="اضافة تصميم جديد" />
             </Link>
           </div>
         </div>
         <div className="selected-component"> {selectedComponent[this.state.key]}</div>
+        <Footer />
       </>
     );
   }
