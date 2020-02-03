@@ -13,13 +13,14 @@ class UploadOneFile extends React.Component {
   };
 
   beforeUpload = file => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isJpgOrPng =
+      file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg";
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+      message.error("JPG/PNG يمكن صور ");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
+      message.error("حجم الصورة يجب أن يقل عن 2 ميجا بايت");
     }
     return isJpgOrPng && isLt2M;
   };

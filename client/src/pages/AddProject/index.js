@@ -374,6 +374,8 @@ class AddProject extends React.Component {
         }
       })
       .catch(error => {
+        console.log(5555555, error, error.response);
+
         this.setState({
           errors: true,
           isLoading: false,
@@ -427,7 +429,7 @@ class AddProject extends React.Component {
         <Navbar />
         <Header title="أضافة تصميم جديد" />
 
-        <div className="projectsage">
+        <div className="projects-page ">
           <div className="add-project">
             {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
             {errors ? (
