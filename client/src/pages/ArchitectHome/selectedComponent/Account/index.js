@@ -6,7 +6,7 @@ import Button from "../../../../components/Button";
 import Spinner from "../../../../components/Spinner";
 import Message from "../../../../components/Message";
 import { alert } from "../../../../utilities";
-import { passwordValidation } from "../../../helper";
+import { passwordValidation, personalDataValidation } from "../../../helper";
 
 import "./style.css";
 
@@ -22,10 +22,10 @@ class Account extends React.Component {
     paypal: "",
     src: "",
     isLoading: false,
-    errors: false,
-    errorMsg: "",
     passwordErrorMsg: "",
     passwordError: false,
+    personalDataErrorMsg: "",
+    personalDataError: false,
     user_id: 1, // "id" should be replaced with the id of user who logged in
   };
 
@@ -36,26 +36,39 @@ class Account extends React.Component {
 
   handleSavePersonalInfo = () => {
     const { fullName, email, mobile, address, user_id } = this.state;
-    this.setState({
-      isLoading: true,
-    });
-    axios
-      .put(`/v1/users/${user_id}`, { fullName, email, mobile, address })
-      .then(response =>
-        this.setState(
-          {
-            errors: false,
-            isLoading: false,
-            errorMsg: "",
-          },
-          () => alert("success", "success", "تم", "تم تعديل معلوماتك الشخصية بنجاح", 1500, false)
-        )
-      )
-      .catch(() =>
+    const schema = personalDataValidation();
+
+    schema
+      .validate({ address, mobile, email, fullName })
+      .then(() => {
         this.setState({
-          isLoading: false,
-          errors: true,
-          errorMsg: "مشكلة ما, حاول مرة اخرى",
+          isLoading: true,
+        });
+        axios
+          .put(`/v1/users/${user_id}`, { fullName, email, mobile, address })
+          .then(() =>
+            this.setState(
+              {
+                isLoading: false,
+                personalDataErrorMsg: "",
+                personalDataError: false,
+              },
+              () =>
+                alert("success", "success", "تم", "تم تعديل معلوماتك الشخصية بنجاح", 1500, false)
+            )
+          )
+          .catch(error =>
+            this.setState({
+              isLoading: false,
+              personalDataErrorMsg: error.response.data.error.msg,
+              personalDataError: true,
+            })
+          );
+      })
+      .catch(error =>
+        this.setState({
+          personalDataErrorMsg: error.errors[0],
+          personalDataError: true,
         })
       );
   };
@@ -91,7 +104,6 @@ class Account extends React.Component {
           });
       })
       .catch(error => {
-        console.log(555555, error.errors[0]);
         this.setState({
           passwordErrorMsg: error.errors[0],
           passwordError: true,
@@ -113,6 +125,8 @@ class Account extends React.Component {
       isLoading,
       passwordErrorMsg,
       passwordError,
+      personalDataErrorMsg,
+      personalDataError,
     } = this.state;
     return (
       <div className="account-page">
@@ -121,6 +135,13 @@ class Account extends React.Component {
           {/* first div */}
           <div className="personal-information">
             <p className="personal-information__title">المعلومات الشخصية</p>
+            {personalDataError ? (
+              <Message
+                type="error"
+                message={personalDataErrorMsg}
+                className="change-password__error"
+              />
+            ) : null}
             <div className="personal__fullName">
               <p>الاسم كاملا</p>
               <Input
