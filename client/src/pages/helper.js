@@ -168,6 +168,24 @@ const heightFilterValidation = () =>
       .required("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع"),
   });
 
+const passwordValidation = () =>
+  yup.object().shape({
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("newPassword"), null], "كلمتان المرور غير متطابقتان")
+      .required("يجب ادخال تاكيد كلمة المرور"),
+    newPassword: yup
+      .string()
+      .min(6, "كلمة المرور الجديدة يجب ان لا تقل عن 6 حروف")
+      .max(15, "كلمة المرور الجديدة يجب ان لا تزيد عن 15 حرف")
+      .required("يجب ادخال كلمة المرور الجديدة"),
+    password: yup
+      .string()
+      // .min(6, "كلمة المرور يجب ان لا تقل عن 6 حروف")
+      // .max(15, "كلمة المرور يجب ان لا تزيد عن 15 حرف")
+      .required("يجب ادخال كلمة المرور الحالية"),
+  });
+
 export {
   loginValidation,
   signupValidation,
@@ -176,4 +194,5 @@ export {
   sizeFilterValidation,
   lengthFilterValidation,
   heightFilterValidation,
+  passwordValidation,
 };

@@ -26,7 +26,10 @@ CREATE TABLE users
     email VARCHAR NOT NULL,
     role roles NOT NULL,
     resetPasswordToken VARCHAR,
-    resetPasswordExpires BIGINT
+    resetPasswordExpires BIGINT,
+    profile_img VARCHAR,
+    mobile VARCHAR,
+    address VARCHAR
 );
 
 CREATE TABLE projects
