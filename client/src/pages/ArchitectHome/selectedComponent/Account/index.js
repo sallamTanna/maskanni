@@ -6,7 +6,11 @@ import Button from "../../../../components/Button";
 import Spinner from "../../../../components/Spinner";
 import Message from "../../../../components/Message";
 import { alert } from "../../../../utilities";
-import { passwordValidation, personalDataValidation } from "../../../helper";
+import {
+  passwordValidation,
+  personalDataValidation,
+  paypalAccountValidation,
+} from "../../../helper";
 
 import "./style.css";
 
@@ -26,6 +30,8 @@ class Account extends React.Component {
     passwordError: false,
     personalDataErrorMsg: "",
     personalDataError: false,
+    paypayError: false,
+    paypayErrorMsg: "",
     user_id: 1, // "id" should be replaced with the id of user who logged in
   };
 
@@ -111,6 +117,45 @@ class Account extends React.Component {
       });
   };
 
+  handlePaypalAccount = () => {
+    const { paypal, user_id } = this.state;
+    const schema = paypalAccountValidation();
+
+    schema
+      .validate({ paypal })
+      .then(() => {
+        this.setState({
+          isLoading: true,
+        });
+        axios
+          .put(`/v1/users/${user_id}`, { paypal })
+          .then(() =>
+            this.setState(
+              {
+                isLoading: false,
+                paypayError: false,
+                paypayErrorMsg: "",
+              },
+              () =>
+                alert("success", "success", "تم", "تم تعديل رقك حساب البي بال بنجاح", 1500, false)
+            )
+          )
+          .catch(error =>
+            this.setState({
+              paypayError: true,
+              paypayErrorMsg: error.response.data.error.msg,
+              isLoading: false,
+            })
+          );
+      })
+      .catch(error =>
+        this.setState({
+          paypayError: true,
+          paypayErrorMsg: error.errors[0],
+        })
+      );
+  };
+
   render() {
     const {
       fullName,
@@ -127,6 +172,8 @@ class Account extends React.Component {
       passwordError,
       personalDataErrorMsg,
       personalDataError,
+      paypayError,
+      paypayErrorMsg,
     } = this.state;
     return (
       <div className="account-page">
@@ -220,6 +267,9 @@ class Account extends React.Component {
           {/* third div */}
           <div className="paypal-account">
             <p className="personal-information__title">الحسابات و الدفع</p>
+            {paypayError ? (
+              <Message type="error" message={paypayErrorMsg} className="change-password__error" />
+            ) : null}
             <div className="personal__paypal">
               <p>حساب البي بال</p>
               <Input
@@ -230,7 +280,7 @@ class Account extends React.Component {
               />
             </div>
 
-            <Button label="حفظ التغييرات" />
+            <Button label="حفظ التغييرات" onClick={this.handlePaypalAccount} />
           </div>
         </div>
         <div className="account-page__img">

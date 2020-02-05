@@ -2,10 +2,10 @@ const boom = require("boom");
 const bcrypt = require("bcrypt");
 
 const dbQuery = require("../../database/queries/dbQuery");
-const { updatePersonalData, getUserPassword, updatePassword } = require("./helper");
+const { updatePersonalData, getUserPassword, updatePassword, updatePaypal } = require("./helper");
 
 module.exports = async (req, res, next) => {
-  const { fullName, email, mobile, address, password, newPassword } = req.body;
+  const { fullName, email, mobile, address, password, newPassword, paypal } = req.body;
   const { user_id } = req.params;
 
   try {
@@ -29,6 +29,13 @@ module.exports = async (req, res, next) => {
       const updatePasswordResult = await dbQuery(updatePassword(newPasswordHash, user_id));
       res.json({
         response: { data: updatePasswordResult.rows, statusCode: 200 },
+        error: null
+      });
+    }
+    if (paypal && user_id) {
+      const updatePaypalResult = await dbQuery(updatePaypal(paypal, user_id));
+      res.json({
+        response: { data: updatePaypalResult.rows, statusCode: 200 },
         error: null
       });
     }

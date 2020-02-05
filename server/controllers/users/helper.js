@@ -22,3 +22,8 @@ exports.updatePassword = (password, user_id) => ({
   text: "UPDATE users SET password = $1 WHERE id = $2",
   values: [password, user_id]
 });
+
+exports.updatePaypal = (paypal, user_id) => ({
+  text: "UPDATE users SET paypal = $1 WHERE id = $2",
+  values: [paypal, user_id]
+});

@@ -200,6 +200,14 @@ const personalDataValidation = () =>
       .required("يجب ادخال الاسم كاملا"),
   });
 
+const paypalAccountValidation = () =>
+  yup.object().shape({
+    paypal: yup
+      .string()
+      .required("يجب ادخال رقم حساب البي بال")
+      .matches(/^[0-9]{10,11}$/, "يجب ادخال قيمة صحيحة لحساب البي بال"),
+  });
+
 export {
   loginValidation,
   signupValidation,
@@ -210,4 +218,5 @@ export {
   heightFilterValidation,
   passwordValidation,
   personalDataValidation,
+  paypalAccountValidation,
 };

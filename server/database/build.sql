@@ -29,7 +29,8 @@ CREATE TABLE users
     resetPasswordExpires BIGINT,
     profile_img VARCHAR,
     mobile VARCHAR,
-    address VARCHAR
+    address VARCHAR,
+    paypal VARCHAR
 );
 
 CREATE TABLE projects
