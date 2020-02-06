@@ -511,7 +511,7 @@ class AddProject extends React.Component {
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
                 <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
-                <UploadOneImage projectMainImage={this.handleProjectMainImage} />
+                <UploadOneImage projectMainImage={this.handleProjectMainImage} showPlus />
               </div>
             </div>
             <div className="more-details">
