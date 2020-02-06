@@ -2,10 +2,25 @@ const boom = require("boom");
 const bcrypt = require("bcrypt");
 
 const dbQuery = require("../../database/queries/dbQuery");
-const { updatePersonalData, getUserPassword, updatePassword, updatePaypal } = require("./helper");
+const {
+  updatePersonalData,
+  getUserPassword,
+  updatePassword,
+  updatePaypal,
+  updateProfileImg
+} = require("./helper");
 
 module.exports = async (req, res, next) => {
-  const { fullName, email, mobile, address, password, newPassword, paypal } = req.body;
+  const {
+    fullName,
+    email,
+    mobile,
+    address,
+    password,
+    newPassword,
+    paypal,
+    profileImage
+  } = req.body;
   const { user_id } = req.params;
 
   try {
@@ -39,7 +54,16 @@ module.exports = async (req, res, next) => {
         error: null
       });
     }
+    if (profileImage && user_id) {
+      const updateProfileImgResult = await dbQuery(updateProfileImg(profileImage, user_id));
+      res.json({
+        response: { data: updateProfileImgResult.rows, statusCode: 200 },
+        error: null
+      });
+    }
   } catch (error) {
+    console.log(55555, error);
+
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };

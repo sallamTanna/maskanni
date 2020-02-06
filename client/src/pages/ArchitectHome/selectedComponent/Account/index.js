@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import React from "react";
 import axios from "axios";
 
@@ -5,6 +6,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Spinner from "../../../../components/Spinner";
 import Message from "../../../../components/Message";
+import UploadImage from "../../../../components/UploadOneImage";
 import { alert } from "../../../../utilities";
 import {
   passwordValidation,
@@ -24,7 +26,6 @@ class Account extends React.Component {
     newPassword: "",
     confirmPassword: "",
     paypal: "",
-    src: "",
     isLoading: false,
     passwordErrorMsg: "",
     passwordError: false,
@@ -32,6 +33,9 @@ class Account extends React.Component {
     personalDataError: false,
     paypayError: false,
     paypayErrorMsg: "",
+    profileImage: "",
+    uploadingImgError: false,
+    uploadingImgErrorMsg: "",
     user_id: 1, // "id" should be replaced with the id of user who logged in
   };
 
@@ -156,6 +160,25 @@ class Account extends React.Component {
       );
   };
 
+  handleProfileChange = file => {
+    const { user_id } = this.state;
+    axios
+      .put(`/v1/users/${user_id}`, { profileImage: file })
+      .then(() =>
+        this.setState({
+          profileImage: file,
+          uploadingImgError: false,
+          uploadingImgErrorMsg: "",
+        })
+      )
+      .catch(error =>
+        this.setState({
+          uploadingImgError: true,
+          uploadingImgErrorMsg: error.response.data.error.msg,
+        })
+      );
+  };
+
   render() {
     const {
       fullName,
@@ -166,7 +189,6 @@ class Account extends React.Component {
       newPassword,
       confirmPassword,
       paypal,
-      src,
       isLoading,
       passwordErrorMsg,
       passwordError,
@@ -174,6 +196,8 @@ class Account extends React.Component {
       personalDataError,
       paypayError,
       paypayErrorMsg,
+      uploadingImgError,
+      uploadingImgErrorMsg,
     } = this.state;
     return (
       <div className="account-page">
@@ -284,7 +308,19 @@ class Account extends React.Component {
           </div>
         </div>
         <div className="account-page__img">
-          <img src={src} alt="profileImg" />
+          {uploadingImgError ? (
+            <Message
+              type="error"
+              message={uploadingImgErrorMsg}
+              className="change-password__error"
+            />
+          ) : null}
+          <UploadImage
+            label="تعديل صورة الملف الشخصي"
+            buttonStyleClassname="account-page__uploadImage"
+            projectMainImage={this.handleProfileChange}
+            currentImage="https://image.shutterstock.com/image-photo/beautiful-baby-toys-made-rubber-260nw-1573701394.jpg"
+          />
         </div>
       </div>
     );

@@ -15,9 +15,17 @@
 
 .account-page__img {
   width: 25%;
-  background-color: rebeccapurple;
   height: fit-content;
-  padding: 2%;
+}
+
+.account-page__img .ant-upload.ant-upload-select-picture-card {
+  background-color: none;
+  margin: 0;
+}
+
+.account-page__img .ant-upload.ant-upload-select-picture-card {
+  width: 100%;
+  border: none;
 }
 
 .personal-information,
@@ -37,6 +45,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .personal-information button,
 .change-password button,
 .paypal-account button {
@@ -80,4 +89,56 @@
 .personal__paypal p {
   font-size: 12px;
   width: 50%;
+}
+
+.account-page__uploadImage {
+  background-color: #ffc000;
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 5%;
+  padding: 3% 0;
+}
+
+.account-page__img img {
+  border-radius: 50%;
+  width: 150px;
+  height: 250px;
+  padding: 5%;
+}
+
+.account-page__img {
+  color: white !important;
+}
+
+.account-page__uploadImagec div {
+  color: #ffffff;
+}
+
+.account-page__uploadImage .anticon {
+  display: none;
+}
+
+.account-page__uploadImage .ant-upload-select-picture-card .ant-upload-text {
+  margin: 0;
+  padding: 0;
+}
+
+/* media query */
+@media only screen and (max-width: 768px) {
+  .account-page {
+    flex-direction: column;
+  }
+  .account-page__data {
+    width: 100%;
+  }
+  .account-page__img {
+    width: 35%;
+    align-self: center;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .account-page__img {
+    width: 70%;
+  }
 }
