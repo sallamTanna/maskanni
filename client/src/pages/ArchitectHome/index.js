@@ -12,7 +12,7 @@ import "./style.css";
 class ArchitectHome extends React.Component {
   state = {
     title: "حسابي",
-    key: "2",
+    key: "3",
     isResponsive: false,
   };
 
@@ -43,12 +43,11 @@ class ArchitectHome extends React.Component {
               onClick={this.handleSubNavClick}
               mode="horizontal"
               style={{ backgroundColor: "#404041", color: "#909090" }}
-              defaultSelectedKeys={["2"]}
+              defaultSelectedKeys={["3"]}
             >
               <Menu.Item key="1">حسابي</Menu.Item>
               <Menu.Item key="2">التصاميم والخطط</Menu.Item>
               <Menu.Item key="3">المبيعات</Menu.Item>
-              <Menu.Item key="4">الاعدادات</Menu.Item>
             </Menu>
           </div>
           {!isResponsive ? (
