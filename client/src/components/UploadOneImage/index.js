@@ -45,10 +45,12 @@ class UploadOneFile extends React.Component {
   };
 
   render() {
+    const { currentImage, buttonStyleClassname, label, showPlus } = this.props;
+    const { loading } = this.state;
     const uploadButton = (
-      <div>
-        <Icon type={this.state.loading ? "loading" : "plus"} />
-        <div className="ant-upload-text">ارفع صورة الواجهة</div>
+      <div className={buttonStyleClassname}>
+        <Icon type={loading ? "loading" : showPlus ? "plus" : ""} />
+        <div className="ant-upload-text">{label}</div>
       </div>
     );
     const { imageUrl } = this.state;
@@ -62,7 +64,8 @@ class UploadOneFile extends React.Component {
         beforeUpload={this.beforeUpload}
         onChange={this.handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
+        <img src={imageUrl || currentImage} alt="avatar" style={{ width: "100%" }} />
+        {uploadButton}
       </Upload>
     );
   }
