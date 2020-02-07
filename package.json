@@ -54,5 +54,12 @@
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "pg": "^7.14.0"
+  },
+"husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test",
+      "...": "..."
+    }
   }
 }
