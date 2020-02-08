@@ -3,9 +3,9 @@ import { Button } from "antd";
 
 class ButtonComponent extends React.Component {
   render() {
-    const { label, onClick, className } = this.props;
+    const { label, onClick, className, block } = this.props;
     return (
-      <Button className={className} onClick={onClick}>
+      <Button block={block} className={className} onClick={onClick}>
         {label}
       </Button>
     );
