@@ -26,7 +26,11 @@ CREATE TABLE users
     email VARCHAR NOT NULL,
     role roles NOT NULL,
     resetPasswordToken VARCHAR,
-    resetPasswordExpires BIGINT
+    resetPasswordExpires BIGINT,
+    profile_img VARCHAR,
+    mobile VARCHAR,
+    address VARCHAR,
+    paypal VARCHAR
 );
 
 CREATE TABLE projects
@@ -51,7 +55,7 @@ CREATE TABLE projects
     price INT NOT NULL,
     total_price INT NOT NULL,
     buyer_name VARCHAR,
-    date Data,
+    date Date,
     charts VARCHAR
     [],
     status VARCHAR,

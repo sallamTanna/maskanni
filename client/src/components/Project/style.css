@@ -5,12 +5,13 @@
   border-radius: 3%;
   padding: 2%;
   margin: 2%;
-  height: fit-content;
+  height: 400px;
 }
 
 .project__icons {
   display: flex;
   justify-content: space-between;
+  height: 10%;
 }
 
 .fa-ellipsis-h,
@@ -26,11 +27,13 @@
 
 .project__image {
   text-align: center;
+  height: 70%;
 }
 
 .project__image img {
+  max-height: 100%;
   width: 100%;
-  height: 30%;
+  height: 100%;
 }
 
 .project__name {
@@ -43,6 +46,7 @@
 .project_summary {
   display: flex;
   justify-content: space-around;
+  height: 20%;
 }
 
 .project_summary div p:nth-child(1) {
@@ -52,6 +56,7 @@
 
 .project_summary div p:nth-child(2) {
   font-size: 10px;
+  margin-bottom: 0;
 }
 
 /* Media Queries */

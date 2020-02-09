@@ -16,7 +16,6 @@ import {
   lengthFilterValidation,
   heightFilterValidation,
 } from "../helper";
-import test from "../../assets/test.png";
 
 import "./style.css";
 
@@ -209,7 +208,7 @@ class Projects extends React.Component {
                     bedRoomsNumber={project.bedrooms_number}
                     floorsNumber={project.floors_number}
                     totalSize={project.size}
-                    src={test}
+                    src={project.project_wallpaper}
                     name={project.name}
                     roomsNumber={project.roomsNumber}
                   />
