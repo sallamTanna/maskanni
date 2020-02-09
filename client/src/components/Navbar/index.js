@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
@@ -18,16 +19,15 @@ class Navbar extends React.Component {
   };
 
   componentDidMount() {
-    if (window.screen.width <= 768) {
-      this.setState(prevState => ({
+    if (window.screen.width <= 1024)
+      this.setState({
         isResponsive: true,
-      }));
-    }
-    if (window.screen.width <= 425) {
-      this.setState(prevState => ({
+      });
+
+    if (window.screen.width <= 425)
+      this.setState({
         showLinks: false,
-      }));
-    }
+      });
   }
 
   handleBurgerMenu = () => {
@@ -59,7 +59,7 @@ class Navbar extends React.Component {
               <Link>الرئيسية</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link>المشاريع</Link>
+              <Link to="/projects">المشاريع</Link>
             </Menu.Item>
             <Menu.Item key="4">
               <Link>كيف نعمل</Link>
@@ -80,12 +80,12 @@ class Navbar extends React.Component {
             ) : null}
             {!showLinks ? (
               <Menu.Item key="9">
-                <Link>تسجيل الدخول</Link>
+                <Link to="/login">تسجيل الدخول</Link>
               </Menu.Item>
             ) : null}
             {!showLinks ? (
               <Menu.Item key="10">
-                <Link>تسجيل حساب جديد</Link>
+                <Link to="/signup">تسجيل حساب جديد</Link>
               </Menu.Item>
             ) : null}
           </Menu>
