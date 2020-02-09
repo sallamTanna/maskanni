@@ -55,43 +55,43 @@ class Navbar extends React.Component {
               <img src={logo} alt="logo" />
             </Menu.Item>
             <Menu.Item key="2">
-              <Link>الرئيسية</Link>
+              <Link to="/">الرئيسية</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link>المشاريع</Link>
+              <Link to="/projects">المشاريع</Link>
             </Menu.Item>
             <Menu.Item key="4">
-              <Link>كيف نعمل</Link>
+              <Link to="">كيف نعمل</Link>
             </Menu.Item>
             <Menu.Item key="5">
-              <Link>المدونة</Link>
+              <Link to="">المدونة</Link>
             </Menu.Item>
             <Menu.Item key="6">
-              <Link>من نحن</Link>
+              <Link to="">من نحن</Link>
             </Menu.Item>
             <Menu.Item key="7">
-              <Link>اتصل بنا</Link>
+              <Link to="">اتصل بنا</Link>
             </Menu.Item>
             {!showLinks ? (
               <Menu.Item key="8">
-                <Link>طلب تصميم خاص</Link>
+                <Link to="">طلب تصميم خاص</Link>
               </Menu.Item>
             ) : null}
             {!showLinks ? (
               <Menu.Item key="9">
-                <Link>تسجيل الدخول</Link>
+                <Link to="/login">تسجيل الدخول</Link>
               </Menu.Item>
             ) : null}
             {!showLinks ? (
               <Menu.Item key="10">
-                <Link>تسجيل حساب جديد</Link>
+                <Link to="/signup">تسجيل حساب جديد</Link>
               </Menu.Item>
             ) : null}
           </Menu>
         </div>
         {showLinks ? (
           <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
-            <Link>طلب تصميم خاص</Link>
+            <Link to="">طلب تصميم خاص</Link>
             <Link to="/login">
               <Button label="تسجيل الدخول" className="Navbar__links-login" />
             </Link>
@@ -100,12 +100,12 @@ class Navbar extends React.Component {
             </Link>
           </div>
         ) : (
-          <Menu className="Navbar__item" theme="#fff" mode="horizontal">
-            <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
-              <img src={logo} alt="logo" />
-            </Menu.Item>
-          </Menu>
-        )}
+            <Menu className="Navbar__item" theme="#fff" mode="horizontal">
+              <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
+                <img src={logo} alt="logo" />
+              </Menu.Item>
+            </Menu>
+          )}
       </Header>
     );
   }

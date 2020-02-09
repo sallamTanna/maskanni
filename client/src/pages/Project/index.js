@@ -11,16 +11,19 @@ import carBarking from "../../assets/car-parking.svg";
 import design from "../../assets/design.svg";
 import sofa from "../../assets/sofa.svg";
 import map from "../../assets/map.png";
-import placeHolder from "../../assets/place-holder.png";
+
+import Gallery from "./Gallery";
 
 import "./style.css";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
+const smallIcons = [design, bed, sofa, stairClimber, carBarking];
+
 function getProjDesc() {
   return (
-    <div className="project-desc line-hy">
+    <>
       <h3>وصف المشروع</h3>
       <ul>
         <li>
@@ -41,43 +44,20 @@ function getProjDesc() {
         </li>
         <li>يشمل المرآب المكون من سيارتين غرفة تخزين للمساعدة في تنظيم لوازم ومعدات.</li>
       </ul>
-    </div>
-  );
-}
-
-function generateGallery() {
-  // if idx === 0 -> large
-  // if idx === 1 -> up
-  return (
-    // right main pic
-    <>
-      <div className="tall shadow">
-        <img src={map} alt="main pic" />
-      </div>
-      <div className="wide shadow">
-        <img src={map} alt="main pic" className="rotateimg" />
-      </div>
-      <div className="half-tall shadow">
-        <img src={map} alt="main pic" />
-      </div>
-      <div className="shadow ">
-        <img src={placeHolder} alt="main pic" />
-      </div>
-      <div className="shadow">
-        <p>عرض المزيد</p>
-      </div>
     </>
   );
 }
 
-function generateIcon(icon) {
-  return (
-    <div className="shortDetails-item">
-      <img src={icon} alt="icon" />
-      <span>3</span>
-      <span>مساحة</span>
-    </div>
-  );
+function generateIcons(icons) {
+  return icons.map(icon => {
+    return (
+      <div className="shortDetails-item" key={Date.now() / Math.random()}>
+        <img src={icon} alt="icon" />
+        <span>3</span>
+        <span>مساحة</span>
+      </div>
+    );
+  });
 }
 
 const generateLeftSection = () => {
@@ -97,6 +77,7 @@ const generateLeftSection = () => {
             id="selectCopy"
             className="form-select"
             defaultValue="pdf"
+            size="large"
             onChange={() => console.log(1)}
           >
             <Option value="pdf">PDF نسخة واحد الكتروني</Option>
@@ -117,6 +98,7 @@ const generateLeftSection = () => {
             id="selectMore"
             className="form-select"
             placeholder="حدد التعديلات المطلوبة"
+            size="large"
             disabled
             onChange={() => console.log(1)}
           >
@@ -151,6 +133,15 @@ const generateLeftSection = () => {
   );
 };
 
+const getProjectDetails = () => {
+  return (
+    <>
+      <h3>المواصفات والمميزات بالتفصيل</h3>
+      <div>باقي المواصفات</div>
+    </>
+  );
+};
+
 class Project extends Component {
   render() {
     return (
@@ -168,16 +159,16 @@ class Project extends Component {
               </p>
             </div>
 
-            <div className="shortDetails-section shadow">
-              {[design, bed, sofa, stairClimber, carBarking].map(icon => generateIcon(icon))}
-            </div>
+            <div className="shortDetails-section shadow center">{generateIcons(smallIcons)}</div>
 
-            <div className="gallery">{generateGallery()}</div>
-            {getProjDesc()}
-            <div className="gallery shadow">Details</div>
+            <Gallery images={[map, map]} />
+
+            <div className="margin-top-2rem line-hy">{getProjDesc()}</div>
+
+            <div className="shadow project-desc">{getProjectDetails()}</div>
           </div>
           {/* left section */}
-          <div className="left-section left-sec-shadow">{generateLeftSection()}</div>
+          <div className="left-section shadow">{generateLeftSection()}</div>
         </div>
       </>
     );
