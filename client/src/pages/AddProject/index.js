@@ -17,11 +17,11 @@ import Project from "../../components/Project";
 import UploadImages from "../../components/UploadImages";
 import UploadOneImage from "../../components/UploadOneImage";
 import UploadFile from "../../components/UploadFile";
-import icon1 from "../../assets/icon1.svg";
-import icon2 from "../../assets/icon2.svg";
-import icon3 from "../../assets/icon3.svg";
-import icon4 from "../../assets/icon4.svg";
-import icon5 from "../../assets/icon5.svg";
+import livingRoom from "../../assets/living-room.svg";
+import bedRoom from "../../assets/bed-room.svg";
+import bathRoom from "../../assets/bath-room.svg";
+import stairs from "../../assets/stairs.svg";
+import carGarage from "../../assets/car-garage.svg";
 import { saveProjectValidation } from "../helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
@@ -461,7 +461,7 @@ class AddProject extends React.Component {
               <p className="main-prop__title">المواصفات الرئيسية</p>
               <div className="main-prop__data">
                 <div>
-                  <img src={icon1} alt="icon1" />
+                  <img src={livingRoom.} alt="livingRoom." />
                   <Input
                     name="livingRoomsNumber"
                     value={livingRoomsNumber}
@@ -470,7 +470,7 @@ class AddProject extends React.Component {
                   />
                 </div>
                 <div>
-                  <img src={icon2} alt="icon2" />
+                  <img src={bedRoom} alt="bedRoom" />
                   <Input
                     name="bedRoomsNumber"
                     value={bedRoomsNumber}
@@ -479,7 +479,7 @@ class AddProject extends React.Component {
                   />
                 </div>
                 <div>
-                  <img src={icon3} alt="icon3" />
+                  <img src={bathRoom} alt="bathRoom" />
                   <Input
                     name="bathRoomsNumber"
                     value={bathRoomsNumber}
@@ -488,7 +488,7 @@ class AddProject extends React.Component {
                   />
                 </div>
                 <div>
-                  <img src={icon4} alt="icon4" />
+                  <img src={stairs} alt="stairs" />
                   <Input
                     name="floorsNumber"
                     value={floorsNumber}
@@ -497,7 +497,7 @@ class AddProject extends React.Component {
                   />
                 </div>
                 <div>
-                  <img src={icon5} alt="icon5" />
+                  <img src={carGarage} alt="carGarage" />
                   <Input
                     name="carGarageNumber"
                     value={carGarageNumber}
