@@ -55,7 +55,7 @@ class Sales extends React.Component {
         <Table dataSource={projects} onChange={this.onChange} className="sales-table">
           <Column title="إسم الخطة\التصميم" dataIndex="name" key="name" />
           <Column title="المبلغ الكلي" dataIndex="total_price" key="total_price" />
-          <Column title="المبلغ المستحق" dataIndex="price" key="price" />
+          <Column title="المبلغ المستحق" dataIndex="engineer_price" key="engineer_price" />
           <Column title="تاريخ البيع" dataIndex="date" key="date" />
           <Column title="المشتري" dataIndex="buyer_name" key="buyer_name" />
         </Table>

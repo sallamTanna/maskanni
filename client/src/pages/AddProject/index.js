@@ -334,6 +334,7 @@ class AddProject extends React.Component {
       gardenDescription,
       charts,
       price,
+      engineerPrice,
       projectMainImage,
     } = this.state;
 
@@ -356,6 +357,7 @@ class AddProject extends React.Component {
         gardenDescription,
         charts,
         price,
+        engineerPrice,
         imagesURLs,
         projectMainImage,
         filesURLs,
