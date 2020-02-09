@@ -38,6 +38,7 @@ class Navbar extends React.Component {
 
   render() {
     const { isResponsive, showLinks } = this.state;
+    const { isLogged } = this.props;
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
         <div className="Navbar__menu">
@@ -89,23 +90,25 @@ class Navbar extends React.Component {
             ) : null}
           </Menu>
         </div>
-        {showLinks ? (
-          <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
-            <Link>طلب تصميم خاص</Link>
-            <Link to="/login">
-              <Button label="تسجيل الدخول" className="Navbar__links-login" />
-            </Link>
-            <Link to="/signup">
-              <Button label="تسجيل حساب جديد" className="Navbar__links-signup" />
-            </Link>
-          </div>
-        ) : (
-          <Menu className="Navbar__item" theme="#fff" mode="horizontal">
-            <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
-              <img src={logo} alt="logo" />
-            </Menu.Item>
-          </Menu>
-        )}
+        {!isLogged ? (
+          showLinks ? (
+            <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
+              <Link>طلب تصميم خاص</Link>
+              <Link to="/login">
+                <Button label="تسجيل الدخول" className="Navbar__links-login" />
+              </Link>
+              <Link to="/signup">
+                <Button label="تسجيل حساب جديد" className="Navbar__links-signup" />
+              </Link>
+            </div>
+          ) : (
+            <Menu className="Navbar__item" theme="#fff" mode="horizontal">
+              <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
+                <img src={logo} alt="logo" />
+              </Menu.Item>
+            </Menu>
+          )
+        ) : null}
       </Header>
     );
   }
