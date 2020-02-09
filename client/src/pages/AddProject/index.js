@@ -374,8 +374,6 @@ class AddProject extends React.Component {
         }
       })
       .catch(error => {
-        console.log(5555555, error, error.response);
-
         this.setState({
           errors: true,
           isLoading: false,
@@ -461,7 +459,7 @@ class AddProject extends React.Component {
               <p className="main-prop__title">المواصفات الرئيسية</p>
               <div className="main-prop__data">
                 <div>
-                  <img src={livingRoom.} alt="livingRoom." />
+                  <img src={livingRoom} alt="livingRoom." />
                   <Input
                     name="livingRoomsNumber"
                     value={livingRoomsNumber}
