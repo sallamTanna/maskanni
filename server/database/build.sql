@@ -55,7 +55,7 @@ CREATE TABLE projects
     price INT NOT NULL,
     total_ INT NOT NULL,
     buyer_name VARCHAR,
-    date Data,
+    date Date,
     charts VARCHAR
     [],
     status VARCHAR,
