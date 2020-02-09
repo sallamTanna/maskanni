@@ -45,7 +45,7 @@ class Login extends React.Component {
                 errors: false,
                 isLoading: false,
               });
-              if (response.data.response.role === "arch") {
+              if (response.data.response.role === "architect") {
                 return history.push("/architect-home");
               }
               return history.push("/consumer-home");
