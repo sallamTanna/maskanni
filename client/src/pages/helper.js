@@ -9,7 +9,7 @@ const loginValidation = () =>
     password: yup
       .string()
       .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
-      .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
+      .required(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
       .required("يرجى كتابة كلمة المرور"),
   });
 
@@ -22,17 +22,17 @@ const signupValidation = () =>
     password: yup
       .string()
       .min(6, "كلمة المرور يجب أن لا تقل عن 6 أحرف")
-      .max(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
+      .required(15, "كلمة المرور يجب أن لا تزيد عن 15 حرف")
       .required("يرجى كتابة كلمة المرور"),
     fullName: yup
       .string()
       .min(6, "الاسم كاملا لا يقل عن 6 أحرف")
-      .max(20, "الاسم كاملا لا يزيد عن 20 حرفا")
+      .required(20, "الاسم كاملا لا يزيد عن 20 حرفا")
       .required("يرجى كتابة الاسم كاملا"),
   });
 
-const saveProjectValidation = () =>
-  yup.object().shape({
+const saveProjectValidation = () => {
+  return yup.object().shape({
     projectName: yup
       .string("يجب كتابة الاسم كاملا بشكل صحيح")
       .min(10, "الاسم كاملا يجب أن لا يقل عن عشرة حروف")
@@ -96,11 +96,80 @@ const saveProjectValidation = () =>
       .number("يجب ادخال قيمة صحيحة لسعر المشروع")
       .required("يرجى ادخال قيمة سعر المشروع")
       .positive("يرجى ادخال قيمة صحيحة لسعر المشروع"),
-    urlArray: yup
+    imagesArray: yup
       .array()
       .min(1, "يرجى تحميل صور المشروع")
       .required("يرجى ارفاق صور للمشروع"),
+    projectMainImage: yup.string().required("يرجى ارفاق صورة لواجهة المشروع"),
+    architecturalFileList: yup.array().min(1, "يرجى ادخال ملف المخطط المعماري"),
+    constructionFileList: yup.mixed().test({
+      name: "required-constructionFileList",
+      exclusive: false,
+      message: "يرجى ادخال مخطط البناء",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
+    gardenFileList: yup.mixed().test({
+      name: "required-gardenFileList",
+      exclusive: false,
+      message: "يرجى ادخال مخطط الحديقة",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
+    interiorDecorationFileList: yup.mixed().test({
+      name: "required-interiorDecorationFileList",
+      exclusive: false,
+      message: "يرجى ادخال مخطط الديكور الداخلي",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
+    HealthFileList: yup.mixed().test({
+      name: "required-HealthFileList",
+      exclusive: false,
+      message: "يرجى ادخال المخطط الصحي",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
+    electricityFileList: yup.mixed().test({
+      name: "required-electricityFileList",
+      exclusive: false,
+      message: "يرجى ادخال مخطط الكهرباء",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
+    conditioningFileList: yup.mixed().test({
+      name: "required-conditioningFileList",
+      exclusive: false,
+      message: "يرجى ادخال مخطط التكييف",
+      test: value => {
+        if (value.required === true) {
+          return value.list.length > 0;
+        }
+        return true;
+      },
+    }),
   });
+};
 
 const numberInputValidation = () =>
   yup.object().shape({
@@ -133,7 +202,7 @@ const sizeFilterValidation = () =>
       .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة")
       .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة")
       .required("يرجى ادخال قيمة صحيحة لاصغر قيمة للمساحة"),
-    sizeMax: yup
+    sizerequired: yup
       .number()
       .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة للمساحة")
       .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة للمساحة")
@@ -147,7 +216,7 @@ const lengthFilterValidation = () =>
       .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة")
       .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة")
       .required("يرجى ادخال قيمة صحيحة لاصغر قيمة لطول الواجهة"),
-    lengthMax: yup
+    lengthrequired: yup
       .number()
       .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة لطول الواجهة")
       .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة لطول الواجهة")
@@ -161,7 +230,7 @@ const heightFilterValidation = () =>
       .typeError("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع")
       .positive("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع")
       .required("يرجى ادخال قيمة صحيحة لاصغر قيمة للارتفاع"),
-    heightMax: yup
+    heightrequired: yup
       .number()
       .typeError("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع")
       .positive("يرجى ادخال قيمة صحيحة لأكبر قيمة للارتفاع")

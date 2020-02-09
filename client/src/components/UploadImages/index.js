@@ -44,7 +44,7 @@ class UploadComponent extends React.Component {
     const uploadButton = (
       <div>
         <Icon type="plus" />
-        <div className="ant-upload-text">ارفع صورة</div>
+        <div className="ant-upload-text">ارفع صور المشروع</div>
       </div>
     );
     return (
