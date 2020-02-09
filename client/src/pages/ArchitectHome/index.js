@@ -44,11 +44,11 @@ class ArchitectHome extends React.Component {
               mode="horizontal"
               style={{ backgroundColor: "#404041", color: "#909090" }}
               defaultSelectedKeys={["1"]}
+
             >
               <Menu.Item key="1">حسابي</Menu.Item>
               <Menu.Item key="2">التصاميم والخطط</Menu.Item>
               <Menu.Item key="3">المبيعات</Menu.Item>
-              <Menu.Item key="4">الاعدادات</Menu.Item>
             </Menu>
           </div>
           {!isResponsive ? (
