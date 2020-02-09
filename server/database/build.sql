@@ -53,9 +53,6 @@ CREATE TABLE projects
     garage_description TEXT NOT NULL,
     garden_description TEXT NOT NULL,
     price INT NOT NULL,
-    total_ INT NOT NULL,
-    buyer_name VARCHAR,
-    date Data,
     charts VARCHAR
     [],
     status VARCHAR,
