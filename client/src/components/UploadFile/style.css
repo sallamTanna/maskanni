@@ -1,0 +1,20 @@
+.upload-file {
+  width: 100%;
+}
+
+.upload-file .anticon-download {
+  display: none;
+}
+
+.upload-file .anticon-upload {
+  margin: 0 2%;
+}
+
+.upload-file .ant-upload,
+.upload-file .ant-btn {
+  width: 100%;
+}
+
+.upload-file .ant-upload-list-item-name {
+  margin-right: 5%;
+}

@@ -20,16 +20,11 @@ module.exports = async (req, res, next) => {
     roomsDescription,
     garageDescription,
     gardenDescription,
-    gardenChart,
-    interiorDecorationChart,
-    HealthChart,
-    executiveCahrt,
-    buildingChart,
-    quantityChart,
-    electricityChart,
-    conditioningChart,
+    charts,
     price,
-    urlArray
+    projectMainImage,
+    filesURLs,
+    imagesURLs
   } = req.body;
 
   try {
@@ -50,16 +45,11 @@ module.exports = async (req, res, next) => {
         roomsDescription,
         garageDescription,
         gardenDescription,
-        gardenChart,
-        interiorDecorationChart,
-        HealthChart,
-        executiveCahrt,
-        buildingChart,
-        quantityChart,
-        electricityChart,
-        conditioningChart,
+        charts,
         price,
-        urlArray
+        imagesURLs,
+        projectMainImage,
+        filesURLs
       )
     );
     res.json({
@@ -67,7 +57,7 @@ module.exports = async (req, res, next) => {
       error: null
     });
   } catch (error) {
-    console.log(555555, error);
+    console.log(999999, error);
 
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }

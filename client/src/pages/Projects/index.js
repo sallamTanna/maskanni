@@ -16,7 +16,6 @@ import {
   lengthFilterValidation,
   heightFilterValidation,
 } from "../helper";
-import test from "../../assets/test.png";
 
 import "./style.css";
 
@@ -204,16 +203,16 @@ class Projects extends React.Component {
           <div className="projects_body">
             {projects.length > 0
               ? projects.map(project => (
-                  <Project
-                    livingRoomsNumber={project.livingrooms_number}
-                    bedRoomsNumber={project.bedrooms_number}
-                    floorsNumber={project.floors_number}
-                    totalSize={project.size}
-                    src={test}
-                    name={project.name}
-                    roomsNumber={project.roomsNumber}
-                  />
-                ))
+                <Project
+                  livingRoomsNumber={project.livingrooms_number}
+                  bedRoomsNumber={project.bedrooms_number}
+                  floorsNumber={project.floors_number}
+                  totalSize={project.size}
+                  src={project.project_wallpaper}
+                  name={project.name}
+                  roomsNumber={project.roomsNumber}
+                />
+              ))
               : null}
             {isEmptyProjects ? <p className="no-projects">لا يوجد مشاريع لعرضها</p> : null}
           </div>

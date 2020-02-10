@@ -14,16 +14,11 @@ exports.addNewProject = (
   roomsDescription,
   garageDescription,
   gardenDescription,
-  gardenChart,
-  interiorDecorationChart,
-  HealthChart,
-  executiveCahrt,
-  buildingChart,
-  quantityChart,
-  electricityChart,
-  conditioningChart,
+  charts,
   price,
-  urlArray
+  urlArray,
+  projectMainImage,
+  filesUrlArray
 ) => ({
   text: `INSERT INTO projects(name, description, size, width, length, height,
             livingrooms_number, bathrooms_number,
@@ -33,17 +28,13 @@ exports.addNewProject = (
             kitchen_description ,
             rooms_description ,
             garage_description ,
-            garden_description, garden_chart,
-            interior_decoration_chart,
-            health_chart,
-            executive_cahrt,
-            building_chart,
-            quantity_chart,
-            electricity_chart,
-            conditioning_chart,
+            garden_description,
+            charts,
             price,
-            images_url,
-            sold ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)`,
+            images_urls,
+            sold,
+            project_wallpaper,
+            files_urls) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 , $17, $18, $19, $20, $21)`,
   values: [
     projectName,
     projectDescription,
@@ -60,17 +51,12 @@ exports.addNewProject = (
     roomsDescription,
     garageDescription,
     gardenDescription,
-    gardenChart,
-    interiorDecorationChart,
-    HealthChart,
-    executiveCahrt,
-    buildingChart,
-    quantityChart,
-    electricityChart,
-    conditioningChart,
+    charts,
     price,
     urlArray,
     false,
+    projectMainImage,
+    filesUrlArray
   ]
 });
 
@@ -83,4 +69,3 @@ exports.getProject = (id) => ({
   text: 'SELECT * FROM projects WHERE id = $1',
   values: [id]
 })
-

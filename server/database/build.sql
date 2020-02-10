@@ -26,7 +26,11 @@ CREATE TABLE users
     email VARCHAR NOT NULL,
     role roles NOT NULL,
     resetPasswordToken VARCHAR,
-    resetPasswordExpires BIGINT
+    resetPasswordExpires BIGINT,
+    profile_img VARCHAR,
+    mobile VARCHAR,
+    address VARCHAR,
+    paypal VARCHAR
 );
 
 CREATE TABLE projects
@@ -49,17 +53,18 @@ CREATE TABLE projects
     garage_description TEXT NOT NULL,
     garden_description TEXT NOT NULL,
     price INT NOT NULL,
-    garden_chart BOOLEAN NOT NULL,
-    interior_decoration_chart BOOLEAN NOT NULL,
-    health_chart BOOLEAN NOT NULL,
-    executive_cahrt BOOLEAN NOT NULL,
-    building_chart BOOLEAN NOT NULL,
-    quantity_chart BOOLEAN NOT NULL,
-    electricity_chart BOOLEAN NOT NULL,
-    conditioning_chart BOOLEAN NOT NULL,
+    total_price INT NOT NULL,
+    buyer_name VARCHAR,
+    date Date,
+    charts VARCHAR
+    [],
+    status VARCHAR,
     sold BOOLEAN,
     type types,
-    images_url VARCHAR
+    project_wallpaper VARCHAR,
+    images_urls VARCHAR
+    [],
+    files_urls VARCHAR
     []
 
 );

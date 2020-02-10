@@ -1,0 +1,10 @@
+.sales-page p {
+  color: #202020;
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.sales-table {
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 5px;
+}

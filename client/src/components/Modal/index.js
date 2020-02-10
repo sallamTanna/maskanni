@@ -10,23 +10,20 @@ class ModalComponent extends React.Component {
     visible: false,
   };
 
-  showModal = () => {
+  showModal = () =>
     this.setState({
       visible: true,
     });
-  };
 
-  handleOk = () => {
+  handleOk = () =>
     this.setState({
       visible: false,
     });
-  };
 
-  handleCancel = () => {
+  handleCancel = () =>
     this.setState({
       visible: false,
     });
-  };
 
   render() {
     const { buttonLabel, modalTitle, children } = this.props;
