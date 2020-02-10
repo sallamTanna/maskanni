@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
 import React from "react";
@@ -31,6 +32,7 @@ import "./style.css";
 
 const filesURLs = [];
 const imagesURLs = [];
+let concatenatedRoomsDescription = "";
 
 class AddProject extends React.Component {
   state = {
@@ -74,12 +76,16 @@ class AddProject extends React.Component {
     conditioningFileList: [],
     username: "mohammed", // should be replaced with the name of user who logged in
     fileListValidation: [],
+    bedRoomInputsNumber: 0,
   };
 
-  handleInputChange = e =>
+  handleInputChange = (e, concatString) => {
+    concatenatedRoomsDescription = concatenatedRoomsDescription.concat(`-${e.target.value} `);
     this.setState({
       [e.target.name]: e.target.value,
+      // [concatString]: lastConcatString.concat(`-${e.target.value} `),
     });
+  };
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
@@ -382,6 +388,12 @@ class AddProject extends React.Component {
       });
   };
 
+  handleAddInputField = inputsNumber => {
+    this.setState(prevState => ({
+      [inputsNumber]: prevState[inputsNumber] + 1,
+    }));
+  };
+
   render() {
     const {
       projectName,
@@ -420,7 +432,32 @@ class AddProject extends React.Component {
       HealthFileList,
       electricityFileList,
       conditioningFileList,
+      bedRoomInputsNumber,
     } = this.state;
+
+    const bedRoomDescriptionInputs = [
+      <Input
+        name="roomsDescription"
+        value={this.state.roomsDescription}
+        onChange={e => this.handleInputChange(e, "concatenatedRoomsDescription")}
+        placeholder="وصف غرفة النوم"
+      />,
+    ];
+
+    for (let i = 0; i < bedRoomInputsNumber; i++) {
+      bedRoomDescriptionInputs.push(
+        <Input
+          name={`roomsDescription${i}`}
+          value={this.state[`roomsDescription${i}`]}
+          onChange={e => this.handleInputChange(e, "concatenatedRoomsDescription")}
+          placeholder="وصف غرفة النوم"
+        />
+      );
+    }
+
+    bedRoomDescriptionInputs.map(input => {
+      console.log(555, input.props.value);
+    });
 
     return (
       <div>
@@ -546,12 +583,12 @@ class AddProject extends React.Component {
 
               <div className="total-size">
                 <p>غرف النوم</p>
-                <div className="size-fileds">
-                  <Input
-                    name="roomsDescription"
-                    value={roomsDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف غرفة النوم"
+                <div className="size-fileds" id="bedroom-description">
+                  {bedRoomDescriptionInputs}
+                  <Button
+                    label="اضافة حقل جديد"
+                    name="bedroom-description"
+                    onClick={() => this.handleAddInputField("bedRoomInputsNumber")}
                   />
                 </div>
               </div>

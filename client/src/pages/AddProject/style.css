@@ -36,6 +36,16 @@
   margin-bottom: 2%;
 }
 
+.more-details button {
+  color: #909090;
+}
+
+.more-details button:hover {
+  background-color: #ffc000;
+  border: none;
+  color: white;
+}
+
 .main-details__title,
 .main-prop__title,
 .project-pic__title,
