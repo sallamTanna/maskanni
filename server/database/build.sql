@@ -52,8 +52,8 @@ CREATE TABLE projects
     rooms_description TEXT NOT NULL,
     garage_description TEXT NOT NULL,
     garden_description TEXT NOT NULL,
-    price INT NOT NULL,
-    total_price INT NOT NULL,
+    engineer_price FLOAT8 NOT NULL,
+    total_price FLOAT8 NOT NULL,
     buyer_name VARCHAR,
     date Date,
     charts VARCHAR

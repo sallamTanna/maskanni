@@ -334,6 +334,7 @@ class AddProject extends React.Component {
       gardenDescription,
       charts,
       price,
+      engineerPrice,
       projectMainImage,
     } = this.state;
 
@@ -356,6 +357,7 @@ class AddProject extends React.Component {
         gardenDescription,
         charts,
         price,
+        engineerPrice,
         imagesURLs,
         projectMainImage,
         filesURLs,
@@ -509,7 +511,11 @@ class AddProject extends React.Component {
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
                 <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
-                <UploadOneImage projectMainImage={this.handleProjectMainImage} showPlus />
+                <UploadOneImage
+                  projectMainImage={this.handleProjectMainImage}
+                  showPlus
+                  label="ارفع صورة الواجهة"
+                />
               </div>
             </div>
             <div className="more-details">

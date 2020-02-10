@@ -190,11 +190,29 @@
 
 /* Media Queries */
 
+@media only screen and (max-width: 1024px) {
+  .projects-page {
+    padding: 0;
+    margin: 0;
+  }
+  .add-project {
+    margin: 0;
+    padding: 0;
+    width: 65%;
+  }
+  .project-review {
+    width: 32%;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .add-project {
     width: 100%;
     padding: 0;
     margin: 0;
+  }
+  .project-review {
+    display: none;
   }
   .buttons {
     padding: 3% !important;

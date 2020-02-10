@@ -41,12 +41,6 @@
 
 /* Media Queries */
 
-@media only screen and (max-width: 1024px) {
-  .Navbar__links {
-    margin: 0 0 0 -5%;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   .Navbar {
     padding: 0 5%;

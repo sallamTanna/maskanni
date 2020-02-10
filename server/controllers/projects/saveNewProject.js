@@ -22,6 +22,7 @@ module.exports = async (req, res, next) => {
     gardenDescription,
     charts,
     price,
+    engineerPrice,
     projectMainImage,
     filesURLs,
     imagesURLs
@@ -47,6 +48,7 @@ module.exports = async (req, res, next) => {
         gardenDescription,
         charts,
         price,
+        engineerPrice,
         imagesURLs,
         projectMainImage,
         filesURLs
@@ -58,7 +60,7 @@ module.exports = async (req, res, next) => {
     });
   } catch (error) {
     console.log(999999, error);
-    
+
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
