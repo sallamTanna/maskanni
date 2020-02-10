@@ -36,14 +36,20 @@
   margin-bottom: 2%;
 }
 
-.more-details button {
+.more-details .anticon svg {
+  margin-right: 58%;
   color: #909090;
 }
 
-.more-details button:hover {
+.more-details button {
+  color: white;
   background-color: #ffc000;
   border: none;
-  color: white;
+}
+
+.more-details button:hover {
+  color: #909090;
+  background-color: white;
 }
 
 .main-details__title,

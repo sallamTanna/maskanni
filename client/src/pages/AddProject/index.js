@@ -4,6 +4,7 @@
 import React from "react";
 import axios from "axios";
 
+import { Typography } from "antd";
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
 import CheckBox from "../../components/CheckBox";
@@ -30,9 +31,18 @@ import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
+const { Paragraph } = Typography;
 const filesURLs = [];
 const imagesURLs = [];
-let concatenatedRoomsDescription = "";
+const style = {
+  padding: "2px",
+  border: "1px solid #d9d9d9",
+  borderRadius: "3px",
+  boxShadow: "0 2px 0 rgba(0, 0, 0, 0.015)",
+  marginBottom: "3%",
+  color: "#909090",
+  paddingRight: "3%",
+};
 
 class AddProject extends React.Component {
   state = {
@@ -50,7 +60,6 @@ class AddProject extends React.Component {
     bathRoomsNumber: "",
     carGarageNumber: "",
     floorsNumber: "",
-    kitchenDescription: "",
     roomsDescription: "",
     garageDescription: "",
     gardenDescription: "",
@@ -77,14 +86,9 @@ class AddProject extends React.Component {
     username: "mohammed", // should be replaced with the name of user who logged in
     fileListValidation: [],
     bedRoomInputsNumber: 0,
-  };
-
-  handleInputChange = (e, concatString) => {
-    concatenatedRoomsDescription = concatenatedRoomsDescription.concat(`-${e.target.value} `);
-    this.setState({
-      [e.target.name]: e.target.value,
-      // [concatString]: lastConcatString.concat(`-${e.target.value} `),
-    });
+    kitchensNumber: 0,
+    bedRoomsDescription: [],
+    kitchenDescription: [],
   };
 
   handleCheckboxChange = e => {
@@ -394,6 +398,16 @@ class AddProject extends React.Component {
     }));
   };
 
+  handleInputChange = (str, descriptionArray, stateValue) => {
+    // str: is the the value we got aflter clicking "enter"
+    // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
+    // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
+    this.setState({
+      [descriptionArray]: this.state[descriptionArray].concat(str),
+      [stateValue]: str,
+    });
+  };
+
   render() {
     const {
       projectName,
@@ -407,8 +421,6 @@ class AddProject extends React.Component {
       carGarageNumber,
       floorsNumber,
       bedRoomsNumber,
-      kitchenDescription,
-      roomsDescription,
       garageDescription,
       gardenDescription,
       price,
@@ -433,31 +445,58 @@ class AddProject extends React.Component {
       electricityFileList,
       conditioningFileList,
       bedRoomInputsNumber,
+      kitchensNumber,
     } = this.state;
 
     const bedRoomDescriptionInputs = [
-      <Input
-        name="roomsDescription"
-        value={this.state.roomsDescription}
-        onChange={e => this.handleInputChange(e, "concatenatedRoomsDescription")}
-        placeholder="وصف غرفة النوم"
-      />,
+      <Paragraph
+        style={style}
+        editable={{
+          onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
+        }}
+      >
+        {this.state.roomsDescription0 || "وصف غرف النوم"}
+      </Paragraph>,
     ];
 
-    for (let i = 0; i < bedRoomInputsNumber; i++) {
+    const kitchenDescriptionInputs = [
+      <Paragraph
+        style={style}
+        editable={{
+          onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
+        }}
+      >
+        {this.state.ketchenDescription0 || "وصف المطبخ"}
+      </Paragraph>,
+    ];
+
+    for (let i = 1; i <= bedRoomInputsNumber; i++) {
       bedRoomDescriptionInputs.push(
-        <Input
-          name={`roomsDescription${i}`}
-          value={this.state[`roomsDescription${i}`]}
-          onChange={e => this.handleInputChange(e, "concatenatedRoomsDescription")}
-          placeholder="وصف غرفة النوم"
-        />
+        <Paragraph
+          style={style}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
+          }}
+        >
+          {this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
+        </Paragraph>
       );
     }
 
-    bedRoomDescriptionInputs.map(input => {
-      console.log(555, input.props.value);
-    });
+    for (let i = 1; i <= kitchensNumber; i++) {
+      kitchenDescriptionInputs.push(
+        <Paragraph
+          style={style}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
+          }}
+        >
+          {this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
+        </Paragraph>
+      );
+    }
 
     return (
       <div>
@@ -583,11 +622,10 @@ class AddProject extends React.Component {
 
               <div className="total-size">
                 <p>غرف النوم</p>
-                <div className="size-fileds" id="bedroom-description">
+                <div className="size-fileds">
                   {bedRoomDescriptionInputs}
                   <Button
                     label="اضافة حقل جديد"
-                    name="bedroom-description"
                     onClick={() => this.handleAddInputField("bedRoomInputsNumber")}
                   />
                 </div>
@@ -595,11 +633,10 @@ class AddProject extends React.Component {
               <div className="total-size">
                 <p>المطبخ</p>
                 <div className="size-fileds">
-                  <Input
-                    name="kitchenDescription"
-                    value={kitchenDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف المطبخ"
+                  {kitchenDescriptionInputs}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("kitchensNumber")}
                   />
                 </div>
               </div>
