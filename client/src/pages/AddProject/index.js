@@ -327,12 +327,10 @@ class AddProject extends React.Component {
       garageDescription,
       gardenDescription,
       charts,
-      price,
       engineerPrice,
       projectMainImage,
       bedRoomsDescription,
       price,
-      engineerPrice,
     } = this.state;
 
     axios
@@ -358,7 +356,6 @@ class AddProject extends React.Component {
         imagesURLs,
         projectMainImage,
         filesURLs,
-        engineerPrice,
       })
       .then(response => {
         if (response.status === 200) {
@@ -647,7 +644,10 @@ class AddProject extends React.Component {
             <div className="project-pic">
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
-                <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
+                <UploadImages
+                  imagesNumber={10}
+                  fileListProp={fileList => this.getFilesList(fileList)}
+                />
                 <UploadOneImage
                   projectMainImage={this.handleProjectMainImage}
                   showPlus
