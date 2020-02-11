@@ -13,6 +13,8 @@ module.exports = (req, res, next) => {
       return next(boom.unauthorized("لا يملك صلاحيات"));
     }
     const { role, id, username, email } = decoded;
-    return res.status(200).json({ response: { role, id, username, email }, error: null });
+    return res
+      .status(200)
+      .json({ response: { role, id, username, email, isLogged: true }, error: null });
   });
 };

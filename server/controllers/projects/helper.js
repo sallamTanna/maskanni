@@ -21,7 +21,13 @@ exports.addNewProject = (
   projectMainImage,
   filesUrlArray
 ) => ({
-  text: `INSERT INTO projects(name, description, size, width, length, height,
+  text: `INSERT INTO projects(
+            name, 
+            description, 
+            size, 
+            width, 
+            length, 
+            height,
             livingrooms_number, bathrooms_number,
             car_garage_number,
             floors_number,

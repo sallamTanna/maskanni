@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
@@ -18,16 +19,15 @@ class Navbar extends React.Component {
   };
 
   componentDidMount() {
-    if (window.screen.width <= 768) {
-      this.setState(prevState => ({
+    if (window.screen.width <= 1024)
+      this.setState({
         isResponsive: true,
-      }));
-    }
-    if (window.screen.width <= 425) {
-      this.setState(prevState => ({
+      });
+
+    if (window.screen.width <= 425)
+      this.setState({
         showLinks: false,
-      }));
-    }
+      });
   }
 
   handleBurgerMenu = () => {
@@ -38,6 +38,7 @@ class Navbar extends React.Component {
 
   render() {
     const { isResponsive, showLinks } = this.state;
+    const { isLogged } = this.props;
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
         <div className="Navbar__menu">
@@ -58,7 +59,7 @@ class Navbar extends React.Component {
               <Link>الرئيسية</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link>المشاريع</Link>
+              <Link to="/projects">المشاريع</Link>
             </Menu.Item>
             <Menu.Item key="4">
               <Link>كيف نعمل</Link>
@@ -79,33 +80,35 @@ class Navbar extends React.Component {
             ) : null}
             {!showLinks ? (
               <Menu.Item key="9">
-                <Link>تسجيل الدخول</Link>
+                <Link to="/login">تسجيل الدخول</Link>
               </Menu.Item>
             ) : null}
             {!showLinks ? (
               <Menu.Item key="10">
-                <Link>تسجيل حساب جديد</Link>
+                <Link to="/signup">تسجيل حساب جديد</Link>
               </Menu.Item>
             ) : null}
           </Menu>
         </div>
-        {showLinks ? (
-          <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
-            <Link>طلب تصميم خاص</Link>
-            <Link to="/login">
-              <Button label="تسجيل الدخول" className="Navbar__links-login" />
-            </Link>
-            <Link to="/signup">
-              <Button label="تسجيل حساب جديد" className="Navbar__links-signup" />
-            </Link>
-          </div>
-        ) : (
-          <Menu className="Navbar__item" theme="#fff" mode="horizontal">
-            <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
-              <img src={logo} alt="logo" />
-            </Menu.Item>
-          </Menu>
-        )}
+        {!isLogged ? (
+          showLinks ? (
+            <div className="Navbar__links" style={{ display: `${showLinks ? "block" : "none"}` }}>
+              <Link>طلب تصميم خاص</Link>
+              <Link to="/login">
+                <Button label="تسجيل الدخول" className="Navbar__links-login" />
+              </Link>
+              <Link to="/signup">
+                <Button label="تسجيل حساب جديد" className="Navbar__links-signup" />
+              </Link>
+            </div>
+          ) : (
+            <Menu className="Navbar__item" theme="#fff" mode="horizontal">
+              <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
+                <img src={logo} alt="logo" />
+              </Menu.Item>
+            </Menu>
+          )
+        ) : null}
       </Header>
     );
   }

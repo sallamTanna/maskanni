@@ -65,6 +65,7 @@ class UploadOneFile extends React.Component {
         onChange={this.handleChange}
       >
         <img src={imageUrl || currentImage} alt="avatar" style={{ width: "100%" }} />
+
         {uploadButton}
       </Upload>
     );

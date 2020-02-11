@@ -17,6 +17,7 @@ class ArchitectHome extends React.Component {
   };
 
   componentDidMount() {
+    // eslint-disable-next-line no-undef
     if (window.screen.width <= 425) {
       this.setState({
         isResponsive: true,
@@ -32,10 +33,12 @@ class ArchitectHome extends React.Component {
   };
 
   render() {
-    const { title, isResponsive } = this.state;
+    const { user } = this.props;
+    const { isLogged } = user;
+    const { title, isResponsive, key } = this.state;
     return (
       <>
-        <Navbar />
+        <Navbar isLogged={isLogged} />
         <div className="architectNavbar">
           <div>
             <h1 className="architectNavbar__title">{title}</h1>
@@ -44,7 +47,6 @@ class ArchitectHome extends React.Component {
               mode="horizontal"
               style={{ backgroundColor: "#404041", color: "#909090" }}
               defaultSelectedKeys={["1"]}
-
             >
               <Menu.Item key="1">حسابي</Menu.Item>
               <Menu.Item key="2">التصاميم والخطط</Menu.Item>
@@ -59,7 +61,7 @@ class ArchitectHome extends React.Component {
             </div>
           ) : null}
         </div>
-        <div className="selected-component"> {selectedComponent[this.state.key]}</div>
+        <div className="selected-component"> {selectedComponent[key]}</div>
         <Footer />
       </>
     );
