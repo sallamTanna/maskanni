@@ -15,7 +15,7 @@ import {
   sizeFilterValidation,
   lengthFilterValidation,
   heightFilterValidation,
-} from "../helper";
+} from "./helper";
 
 import "./style.css";
 
