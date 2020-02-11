@@ -7,19 +7,10 @@ import placeHolder from "../../assets/place-holder.png";
 
 import "./style.css";
 
-function generateGallery(images, openImageViewer) {
+function generateGallery(mapImages, openImageViewer) {
   // if idx === 0 -> tall
   // if idx === 1 -> wide
   const imageSize = ["tall", "wide", "half-tall"];
-
-  let mapImages = images;
-
-  if (images.length < 4) {
-    const diff = 4 - images.length;
-    for (let i = 0; i < diff; i++) {
-      mapImages = [...mapImages, placeHolder];
-    }
-  }
 
   return (
     // right main pic
@@ -55,15 +46,24 @@ function Gallery({ images }) {
     setIsViewerOpen(false);
   };
 
+  let mapImages = images;
+
+  if (images.length < 4) {
+    const diff = 4 - images.length;
+    for (let i = 0; i < diff; i++) {
+      mapImages = [...mapImages, placeHolder];
+    }
+  }
+
   return (
     <div className="gallery">
-      {generateGallery(images, openImageViewer)}
+      {generateGallery(mapImages, openImageViewer)}
       {isViewerOpen && (
         <ImageViewer
           backgroundStyle={{
             backgroundColor: "rgba(0,0,0,0.4)",
           }}
-          src={images}
+          src={mapImages}
           currentIndex={currentImage}
           onClose={closeImageViewer}
         />

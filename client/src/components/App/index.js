@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ConfigProvider } from "antd";
-import ar from "antd/es/locale/ar_EG";
 
 import NotFoundPage from "../../pages/NotFound";
 import Unauthorized from "../../pages/Unauthorized";
@@ -19,21 +17,21 @@ import "./style.css";
 class App extends Component {
   render() {
     return (
-        <div className="App">
-          <Router>
-            <Switch>
-              <Route exact path="/add" component={AddProject} />
-              <Route exact path="/projects" component={Projects} />
-              <Route exact path="/project" component={Project} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
-              <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
-              <Route exact path="/unauthorized" component={Unauthorized} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </Router>
-        </div>
+      <div className="App">
+        <Router>
+          <Switch>
+            <Route exact path="/add" component={AddProject} />
+            <Route exact path="/projects" component={Projects} />
+            <Route exact path="/projects/:projectId" component={Project} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
+            <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
+            <Route exact path="/unauthorized" component={Unauthorized} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

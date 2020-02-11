@@ -1,13 +1,22 @@
 :root {
   --primary: #ffc000;
+  --gray: #909090;
 }
 
 .pointer {
   cursor: pointer;
 }
 
+.bold {
+  font-size: 1.3rem;
+}
+
 .margin-top-2rem{
   margin-top: 2rem;
+}
+
+.margin-top-halfrem{
+  margin-top: .5rem;
 }
 
 .margin-top-1{
@@ -17,6 +26,11 @@
 
 .margin-1-5-right{
   margin-right: 1.5rem;
+}
+
+.gray-small {
+  color: var(--gray);
+  font-size: .8rem;
 }
 
 .container {
@@ -90,17 +104,18 @@
   /* margin-bottom: 2%; */
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
-
+  height: 139px;
 }
 
 .shortDetails-item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 2% 0;
+  padding: 3% 0;
+
 }
 
 .gallery {
