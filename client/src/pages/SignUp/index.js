@@ -11,7 +11,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
-import { signupValidation } from "../helper";
+import { signupValidation } from "./helper";
 
 import "./style.css";
 
@@ -137,7 +137,7 @@ class SignUp extends React.Component {
               style={{
                 border: `${
                   this.state.role === "architect" ? "2px solid #ffc000" : "2px solid #dcdcdc"
-                }`,
+                  }`,
               }}
             >
               <img
@@ -148,7 +148,7 @@ class SignUp extends React.Component {
                     this.state.role === "architect"
                       ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
                       : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
-                  }`,
+                    }`,
                 }}
               />
               <h4
@@ -157,7 +157,7 @@ class SignUp extends React.Component {
                     this.state.role === "architect"
                       ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
                       : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
-                  }`,
+                    }`,
                 }}
               >
                 مهندس
@@ -170,7 +170,7 @@ class SignUp extends React.Component {
               style={{
                 border: `${
                   this.state.role === "consumer" ? "2px solid #ffc000" : "2px solid #dcdcdc"
-                }`,
+                  }`,
               }}
             >
               <img
@@ -181,7 +181,7 @@ class SignUp extends React.Component {
                     this.state.role === "consumer"
                       ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
                       : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
-                  }`,
+                    }`,
                 }}
               />
               <h4
@@ -190,7 +190,7 @@ class SignUp extends React.Component {
                     this.state.role === "consumer"
                       ? "invert(63%) sepia(97%) saturate(485%) hue-rotate(360deg) brightness(103%) contrast(102%)"
                       : "invert(100%) sepia(0%) saturate(7477%) hue-rotate(117deg) brightness(123%) contrast(73%)"
-                  }`,
+                    }`,
                 }}
               >
                 عميل

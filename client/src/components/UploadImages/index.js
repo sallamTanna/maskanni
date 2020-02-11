@@ -40,6 +40,7 @@ class UploadComponent extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
+    const { imagesNumber } = this.props;
 
     const uploadButton = (
       <div>
@@ -56,7 +57,7 @@ class UploadComponent extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
-          {fileList.length >= 8 ? null : uploadButton}
+          {fileList.length >= imagesNumber ? null : uploadButton}
         </Upload>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: "100%" }} src={previewImage} />

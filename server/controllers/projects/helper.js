@@ -16,11 +16,18 @@ exports.addNewProject = (
   gardenDescription,
   charts,
   price,
+  engineerPrice,
   urlArray,
   projectMainImage,
   filesUrlArray
 ) => ({
-  text: `INSERT INTO projects(name, description, size, width, length, height,
+  text: `INSERT INTO projects(
+            name,
+            description,
+            size,
+            width,
+            length,
+            height,
             livingrooms_number, bathrooms_number,
             car_garage_number,
             floors_number,
@@ -30,11 +37,12 @@ exports.addNewProject = (
             garage_description ,
             garden_description,
             charts,
-            price,
+            total_price,
+            engineer_price,
             images_urls,
             sold,
             project_wallpaper,
-            files_urls) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 , $17, $18, $19, $20, $21)`,
+            files_urls) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 , $17, $18, $19, $20, $21, $22)`,
   values: [
     projectName,
     projectDescription,
@@ -53,6 +61,7 @@ exports.addNewProject = (
     gardenDescription,
     charts,
     price,
+    engineerPrice,
     urlArray,
     false,
     projectMainImage,
@@ -69,3 +78,4 @@ exports.getProject = (id) => ({
   text: 'SELECT * FROM projects WHERE id = $1',
   values: [id]
 })
+

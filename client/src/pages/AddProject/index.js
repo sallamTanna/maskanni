@@ -1,8 +1,10 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
 import React from "react";
 import axios from "axios";
 
+import { Typography } from "antd";
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
 import CheckBox from "../../components/CheckBox";
@@ -22,13 +24,14 @@ import bedRoom from "../../assets/bed-room.svg";
 import bathRoom from "../../assets/bath-room.svg";
 import stairs from "../../assets/stairs.svg";
 import carGarage from "../../assets/car-garage.svg";
-import { saveProjectValidation } from "../helper";
+import { saveProjectValidation, edibleInputValidation, edibleInputStyle } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
 import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
+const { Paragraph } = Typography;
 const filesURLs = [];
 const imagesURLs = [];
 
@@ -48,10 +51,7 @@ class AddProject extends React.Component {
     bathRoomsNumber: "",
     carGarageNumber: "",
     floorsNumber: "",
-    kitchenDescription: "",
     roomsDescription: "",
-    garageDescription: "",
-    gardenDescription: "",
     gardenChart: "",
     interiorDecorationChart: "",
     HealthChart: "",
@@ -74,12 +74,15 @@ class AddProject extends React.Component {
     conditioningFileList: [],
     username: "mohammed", // should be replaced with the name of user who logged in
     fileListValidation: [],
+    bedRoomInputsNumber: 0,
+    kitchensNumber: 0,
+    garagesNumber: 0,
+    gardensNumber: 0,
+    bedRoomsDescription: [],
+    kitchenDescription: [],
+    garageDescription: [],
+    gardenDescription: [],
   };
-
-  handleInputChange = e =>
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
@@ -145,10 +148,6 @@ class AddProject extends React.Component {
       bathRoomsNumber,
       carGarageNumber,
       floorsNumber,
-      kitchenDescription,
-      roomsDescription,
-      garageDescription,
-      gardenDescription,
       price,
       imagesArray,
       architecturalFileList,
@@ -196,10 +195,6 @@ class AddProject extends React.Component {
         carGarageNumber,
         floorsNumber,
         bedRoomsNumber,
-        kitchenDescription,
-        roomsDescription,
-        garageDescription,
-        gardenDescription,
         price,
         imagesArray,
         projectMainImage,
@@ -329,12 +324,13 @@ class AddProject extends React.Component {
       floorsNumber,
       bedRoomsNumber,
       kitchenDescription,
-      roomsDescription,
       garageDescription,
       gardenDescription,
       charts,
-      price,
+      engineerPrice,
       projectMainImage,
+      bedRoomsDescription,
+      price,
     } = this.state;
 
     axios
@@ -351,11 +347,12 @@ class AddProject extends React.Component {
         floorsNumber,
         bedRoomsNumber,
         kitchenDescription,
-        roomsDescription,
+        bedRoomsDescription,
         garageDescription,
         gardenDescription,
         charts,
         price,
+        engineerPrice,
         imagesURLs,
         projectMainImage,
         filesURLs,
@@ -382,6 +379,41 @@ class AddProject extends React.Component {
       });
   };
 
+  handleAddInputField = inputsNumber => {
+    this.setState(prevState => ({
+      [inputsNumber]: prevState[inputsNumber] + 1,
+    }));
+  };
+
+  handleInputChange = (str, descriptionArray, stateValue) => {
+    // str: is the the value we got aflter clicking "enter"
+    // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
+    // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
+    // inputValidation
+    const schema = edibleInputValidation();
+    schema
+      .validate({ str })
+      .then(() =>
+        this.setState({
+          [descriptionArray]: this.state[descriptionArray].concat(str),
+          [stateValue]: str,
+          isOneInputEmpty: false,
+          inputEmptyErrorMsg: "",
+        })
+      )
+      .catch(error =>
+        this.setState({
+          isOneInputEmpty: true,
+          inputEmptyErrorMsg: error.errors[0],
+        })
+      );
+  };
+
+  handleNormalInputChange = e =>
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+
   render() {
     const {
       projectName,
@@ -395,10 +427,6 @@ class AddProject extends React.Component {
       carGarageNumber,
       floorsNumber,
       bedRoomsNumber,
-      kitchenDescription,
-      roomsDescription,
-      garageDescription,
-      gardenDescription,
       price,
       platformPrice,
       engineerPrice,
@@ -420,7 +448,115 @@ class AddProject extends React.Component {
       HealthFileList,
       electricityFileList,
       conditioningFileList,
+      bedRoomInputsNumber,
+      kitchensNumber,
+      garagesNumber,
+      gardensNumber,
+      isOneInputEmpty,
+      inputEmptyErrorMsg,
     } = this.state;
+
+    const bedRoomDescriptionInputs = [
+      <Paragraph
+        style={edibleInputStyle()}
+        editable={{
+          onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
+        }}
+      >
+        {this.state.roomsDescription0 || "وصف غرف النوم"}
+      </Paragraph>,
+    ];
+
+    const kitchenDescriptionInputs = [
+      <Paragraph
+        style={edibleInputStyle()}
+        editable={{
+          onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
+        }}
+      >
+        {this.state.ketchenDescription0 || "وصف المطبخ"}
+      </Paragraph>,
+    ];
+
+    const garageDescriptionsInput = [
+      <Paragraph
+        style={edibleInputStyle()}
+        editable={{
+          onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
+        }}
+      >
+        {this.state.garageDescription0 || "وصف الكراج"}
+      </Paragraph>,
+    ];
+
+    const gardenDescriptionInputs = [
+      <Paragraph
+        style={edibleInputStyle()}
+        editable={{
+          onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
+        }}
+      >
+        {this.state.gardenDescription0 || "وصف الحديقة"}
+      </Paragraph>,
+    ];
+
+    for (let i = 1; i <= bedRoomInputsNumber; i++) {
+      bedRoomDescriptionInputs.push(
+        <Paragraph
+          style={edibleInputStyle()}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
+          }}
+        >
+          {this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
+        </Paragraph>
+      );
+    }
+
+    for (let i = 1; i <= kitchensNumber; i++) {
+      kitchenDescriptionInputs.push(
+        <Paragraph
+          style={edibleInputStyle()}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
+          }}
+        >
+          {this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
+        </Paragraph>
+      );
+    }
+
+    for (let i = 1; i <= garagesNumber; i++) {
+      garageDescriptionsInput.push(
+        <Paragraph
+          style={edibleInputStyle()}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
+          }}
+        >
+          {this.state[`garageDescription${i}`] || "وصف الكراج"}
+        </Paragraph>
+      );
+    }
+
+    for (let i = 1; i <= gardensNumber; i++) {
+      gardenDescriptionInputs.push(
+        <Paragraph
+          style={edibleInputStyle()}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),
+          }}
+        >
+          {this.state[`gardenDescription${i}`] || "وصف الحديقة"}
+        </Paragraph>
+      );
+    }
+
+    console.log(77777, this.state.gardenDescription);
 
     return (
       <div>
@@ -439,7 +575,7 @@ class AddProject extends React.Component {
               <div className="project-name">
                 <p>اسم المشروع</p>
                 <Input
-                  onChange={this.handleInputChange}
+                  onChange={this.handleNormalInputChange}
                   name="projectName"
                   value={projectName}
                   placeholder="ادخل اسم المشروع"
@@ -448,7 +584,7 @@ class AddProject extends React.Component {
               <div className="project-description">
                 <p>وصف المشروع</p>
                 <TextArea
-                  onChange={this.handleInputChange}
+                  onChange={this.handleNormalInputChange}
                   name="projectDescription"
                   value={projectDescription}
                   placeholder="أكتب وصفاً جدياً لهذا المشروع"
@@ -463,7 +599,7 @@ class AddProject extends React.Component {
                   <Input
                     name="livingRoomsNumber"
                     value={livingRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="غرف المعيشة"
                   />
                 </div>
@@ -472,7 +608,7 @@ class AddProject extends React.Component {
                   <Input
                     name="bedRoomsNumber"
                     value={bedRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="غرف النوم"
                   />
                 </div>
@@ -481,7 +617,7 @@ class AddProject extends React.Component {
                   <Input
                     name="bathRoomsNumber"
                     value={bathRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الحمامات"
                   />
                 </div>
@@ -490,7 +626,7 @@ class AddProject extends React.Component {
                   <Input
                     name="floorsNumber"
                     value={floorsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الأدوار"
                   />
                 </div>
@@ -499,7 +635,7 @@ class AddProject extends React.Component {
                   <Input
                     name="carGarageNumber"
                     value={carGarageNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="كراج السيارات"
                   />
                 </div>
@@ -508,8 +644,15 @@ class AddProject extends React.Component {
             <div className="project-pic">
               <p className="project-pic__title">صور التصميم\المشروع</p>
               <div className="project-pic__pictures">
-                <UploadImages fileListProp={fileList => this.getFilesList(fileList)} />
-                <UploadOneImage projectMainImage={this.handleProjectMainImage} showPlus />
+                <UploadImages
+                  imagesNumber={10}
+                  fileListProp={fileList => this.getFilesList(fileList)}
+                />
+                <UploadOneImage
+                  projectMainImage={this.handleProjectMainImage}
+                  showPlus
+                  label="ارفع صورة الواجهة"
+                />
               </div>
             </div>
             <div className="more-details">
@@ -517,28 +660,35 @@ class AddProject extends React.Component {
               <div className="total-size">
                 <p>المساحة الكلية</p>
                 <div className="size-fileds">
+                  {isOneInputEmpty ? (
+                    <Message
+                      message={inputEmptyErrorMsg}
+                      type="error"
+                      className="login__errorMsg"
+                    />
+                  ) : null}
                   <Input
                     name="size"
                     value={size}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="المساحة"
                   />
                   <Input
                     name="length"
                     value={length}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الطول"
                   />
                   <Input
                     name="width"
                     value={width}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="العرض"
                   />
                   <Input
                     name="height"
                     value={height}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الارتفاع"
                   />
                 </div>
@@ -547,44 +697,46 @@ class AddProject extends React.Component {
               <div className="total-size">
                 <p>غرف النوم</p>
                 <div className="size-fileds">
-                  <Input
-                    name="roomsDescription"
-                    value={roomsDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف غرفة النوم"
+                  {bedRoomDescriptionInputs}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("bedRoomInputsNumber")}
                   />
                 </div>
               </div>
               <div className="total-size">
                 <p>المطبخ</p>
                 <div className="size-fileds">
-                  <Input
-                    name="kitchenDescription"
-                    value={kitchenDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف المطبخ"
+                  {kitchenDescriptionInputs}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("kitchensNumber")}
                   />
                 </div>
               </div>
               <div className="total-size">
                 <p>الكراج</p>
                 <div className="size-fileds">
-                  <Input
-                    name="garageDescription"
-                    value={garageDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف الكراج"
+                  {garageDescriptionsInput}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("garagesNumber")}
                   />
                 </div>
               </div>
               <div className="total-size">
                 <p>الحديقة</p>
                 <div className="size-fileds">
-                  <Input
+                  {gardenDescriptionInputs}
+                  {/* <Input
                     name="gardenDescription"
                     value={gardenDescription}
                     onChange={this.handleInputChange}
                     placeholder="وصف الحديقة"
+                  /> */}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("gardensNumber")}
                   />
                 </div>
               </div>

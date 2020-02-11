@@ -7,7 +7,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
-import { loginValidation } from "../helper";
+import { loginValidation } from "./helper";
 
 import "./style.css";
 
@@ -45,7 +45,7 @@ class Login extends React.Component {
                 errors: false,
                 isLoading: false,
               });
-              if (response.data.response.role === "arch") {
+              if (response.data.response.role === "architect") {
                 return history.push("/architect-home");
               }
               return history.push("/consumer-home");

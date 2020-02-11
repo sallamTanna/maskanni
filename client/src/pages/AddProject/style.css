@@ -36,6 +36,23 @@
   margin-bottom: 2%;
 }
 
+.more-details .anticon svg {
+  margin-right: 58%;
+  color: #909090;
+}
+
+.more-details button {
+  color: white;
+  background-color: #ffc000;
+  border: none;
+}
+
+.more-details button:hover {
+  color: #ffc000;
+  background-color: white;
+  border: 1px solid #ffc000;
+}
+
 .main-details__title,
 .main-prop__title,
 .project-pic__title,
@@ -190,11 +207,29 @@
 
 /* Media Queries */
 
+@media only screen and (max-width: 1024px) {
+  .projects-page {
+    padding: 0;
+    margin: 0;
+  }
+  .add-project {
+    margin: 0;
+    padding: 0;
+    width: 65%;
+  }
+  .project-review {
+    width: 32%;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .add-project {
     width: 100%;
     padding: 0;
     margin: 0;
+  }
+  .project-review {
+    display: none;
   }
   .buttons {
     padding: 3% !important;
