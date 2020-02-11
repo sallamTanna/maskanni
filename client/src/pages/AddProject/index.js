@@ -24,7 +24,7 @@ import bedRoom from "../../assets/bed-room.svg";
 import bathRoom from "../../assets/bath-room.svg";
 import stairs from "../../assets/stairs.svg";
 import carGarage from "../../assets/car-garage.svg";
-import { saveProjectValidation, edibleInputValidation } from "./helper";
+import { saveProjectValidation, edibleInputValidation, edibleInputStyle } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
 import defaultBG from "../../assets/default-pg.png";
@@ -34,15 +34,6 @@ import "./style.css";
 const { Paragraph } = Typography;
 const filesURLs = [];
 const imagesURLs = [];
-const style = {
-  padding: "2px",
-  border: "1px solid #d9d9d9",
-  borderRadius: "3px",
-  boxShadow: "0 2px 0 rgba(0, 0, 0, 0.015)",
-  marginBottom: "3%",
-  color: "#909090",
-  paddingRight: "3%",
-};
 
 class AddProject extends React.Component {
   state = {
@@ -157,10 +148,6 @@ class AddProject extends React.Component {
       bathRoomsNumber,
       carGarageNumber,
       floorsNumber,
-      kitchenDescription,
-      roomsDescription,
-      garageDescription,
-      gardenDescription,
       price,
       imagesArray,
       architecturalFileList,
@@ -208,10 +195,6 @@ class AddProject extends React.Component {
         carGarageNumber,
         floorsNumber,
         bedRoomsNumber,
-        kitchenDescription,
-        roomsDescription,
-        garageDescription,
-        gardenDescription,
         price,
         imagesArray,
         projectMainImage,
@@ -341,12 +324,13 @@ class AddProject extends React.Component {
       floorsNumber,
       bedRoomsNumber,
       kitchenDescription,
-      roomsDescription,
       garageDescription,
       gardenDescription,
       charts,
-      price,
       projectMainImage,
+      bedRoomsDescription,
+      price,
+      engineerPrice,
     } = this.state;
 
     axios
@@ -363,7 +347,7 @@ class AddProject extends React.Component {
         floorsNumber,
         bedRoomsNumber,
         kitchenDescription,
-        roomsDescription,
+        bedRoomsDescription,
         garageDescription,
         gardenDescription,
         charts,
@@ -371,6 +355,7 @@ class AddProject extends React.Component {
         imagesURLs,
         projectMainImage,
         filesURLs,
+        engineerPrice,
       })
       .then(response => {
         if (response.status === 200) {
@@ -473,7 +458,7 @@ class AddProject extends React.Component {
 
     const bedRoomDescriptionInputs = [
       <Paragraph
-        style={style}
+        style={edibleInputStyle()}
         editable={{
           onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
         }}
@@ -484,7 +469,7 @@ class AddProject extends React.Component {
 
     const kitchenDescriptionInputs = [
       <Paragraph
-        style={style}
+        style={edibleInputStyle()}
         editable={{
           onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
         }}
@@ -495,7 +480,7 @@ class AddProject extends React.Component {
 
     const garageDescriptionsInput = [
       <Paragraph
-        style={style}
+        style={edibleInputStyle()}
         editable={{
           onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
         }}
@@ -506,7 +491,7 @@ class AddProject extends React.Component {
 
     const gardenDescriptionInputs = [
       <Paragraph
-        style={style}
+        style={edibleInputStyle()}
         editable={{
           onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
         }}
@@ -518,7 +503,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= bedRoomInputsNumber; i++) {
       bedRoomDescriptionInputs.push(
         <Paragraph
-          style={style}
+          style={edibleInputStyle()}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
@@ -532,7 +517,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= kitchensNumber; i++) {
       kitchenDescriptionInputs.push(
         <Paragraph
-          style={style}
+          style={edibleInputStyle()}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
@@ -546,7 +531,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= garagesNumber; i++) {
       garageDescriptionsInput.push(
         <Paragraph
-          style={style}
+          style={edibleInputStyle()}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
@@ -560,7 +545,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= gardensNumber; i++) {
       gardenDescriptionInputs.push(
         <Paragraph
-          style={style}
+          style={edibleInputStyle()}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),

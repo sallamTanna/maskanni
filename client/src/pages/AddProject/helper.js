@@ -55,12 +55,6 @@ const saveProjectValidation = () => {
       .typeError("يجب ادخال قيمة صحيحة لعدد غرف النوم")
       .positive("يجب ادخال قيمة صحيحة لعدد غرف النوم")
       .required("يرجى ادخال عدد غرف النوم"),
-    kitchenDescription: yup.string("يرجى ادخال وصف صحيح للمطبخ").required("يجب ادخال وصف للمطبخ"),
-    roomsDescription: yup.string("يرجى ادخال وصف صحيح للغرف").required("يجب ادخال وصف للغرف"),
-    garageDescription: yup
-      .string("يرجى ادخال وصف صحيح لكراج السيارات")
-      .required("يجب ادخال وصف لكراج السيارات"),
-    gardenDescription: yup.string("يرجى ادخال وصف صحيح للحديقة").required("يجب ادخال وصف للحديقة"),
     price: yup
       .number("يجب ادخال قيمة صحيحة لسعر المشروع")
       .required("يرجى ادخال قيمة سعر المشروع")
@@ -145,4 +139,14 @@ const edibleInputValidation = () =>
     str: yup.string().required("يرجى اضافة الوصف"),
   });
 
-export { saveProjectValidation, edibleInputValidation };
+const edibleInputStyle = () => ({
+  padding: "2px",
+  border: "1px solid #d9d9d9",
+  borderRadius: "3px",
+  boxShadow: "0 2px 0 rgba(0, 0, 0, 0.015)",
+  marginBottom: "3%",
+  color: "#909090",
+  paddingRight: "3%",
+});
+
+export { saveProjectValidation, edibleInputValidation, edibleInputStyle };
