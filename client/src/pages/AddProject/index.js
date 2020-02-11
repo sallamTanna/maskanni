@@ -3,6 +3,7 @@
 /* eslint-disable no-param-reassign */
 import React from "react";
 import axios from "axios";
+import * as yup from "yup";
 
 import { Typography } from "antd";
 import Input from "../../components/Input";
@@ -24,7 +25,7 @@ import bedRoom from "../../assets/bed-room.svg";
 import bathRoom from "../../assets/bath-room.svg";
 import stairs from "../../assets/stairs.svg";
 import carGarage from "../../assets/car-garage.svg";
-import { saveProjectValidation } from "../helper";
+import { saveProjectValidation, edibleInputValidation } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
 import defaultBG from "../../assets/default-pg.png";
@@ -404,11 +405,30 @@ class AddProject extends React.Component {
     // str: is the the value we got aflter clicking "enter"
     // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
     // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
-    this.setState({
-      [descriptionArray]: this.state[descriptionArray].concat(str),
-      [stateValue]: str,
-    });
+    // inputValidation
+    const schema = edibleInputValidation();
+    schema
+      .validate({ str })
+      .then(() =>
+        this.setState({
+          [descriptionArray]: this.state[descriptionArray].concat(str),
+          [stateValue]: str,
+          isOneInputEmpty: false,
+          inputEmptyErrorMsg: "",
+        })
+      )
+      .catch(error =>
+        this.setState({
+          isOneInputEmpty: true,
+          inputEmptyErrorMsg: error.errors[0],
+        })
+      );
   };
+
+  handleNormalInputChange = e =>
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
 
   render() {
     const {
@@ -448,6 +468,8 @@ class AddProject extends React.Component {
       kitchensNumber,
       garagesNumber,
       gardensNumber,
+      isOneInputEmpty,
+      inputEmptyErrorMsg,
     } = this.state;
 
     const bedRoomDescriptionInputs = [
@@ -569,7 +591,7 @@ class AddProject extends React.Component {
               <div className="project-name">
                 <p>اسم المشروع</p>
                 <Input
-                  onChange={this.handleInputChange}
+                  onChange={this.handleNormalInputChange}
                   name="projectName"
                   value={projectName}
                   placeholder="ادخل اسم المشروع"
@@ -578,7 +600,7 @@ class AddProject extends React.Component {
               <div className="project-description">
                 <p>وصف المشروع</p>
                 <TextArea
-                  onChange={this.handleInputChange}
+                  onChange={this.handleNormalInputChange}
                   name="projectDescription"
                   value={projectDescription}
                   placeholder="أكتب وصفاً جدياً لهذا المشروع"
@@ -593,7 +615,7 @@ class AddProject extends React.Component {
                   <Input
                     name="livingRoomsNumber"
                     value={livingRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="غرف المعيشة"
                   />
                 </div>
@@ -602,7 +624,7 @@ class AddProject extends React.Component {
                   <Input
                     name="bedRoomsNumber"
                     value={bedRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="غرف النوم"
                   />
                 </div>
@@ -611,7 +633,7 @@ class AddProject extends React.Component {
                   <Input
                     name="bathRoomsNumber"
                     value={bathRoomsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الحمامات"
                   />
                 </div>
@@ -620,7 +642,7 @@ class AddProject extends React.Component {
                   <Input
                     name="floorsNumber"
                     value={floorsNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الأدوار"
                   />
                 </div>
@@ -629,7 +651,7 @@ class AddProject extends React.Component {
                   <Input
                     name="carGarageNumber"
                     value={carGarageNumber}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="كراج السيارات"
                   />
                 </div>
@@ -647,28 +669,35 @@ class AddProject extends React.Component {
               <div className="total-size">
                 <p>المساحة الكلية</p>
                 <div className="size-fileds">
+                  {isOneInputEmpty ? (
+                    <Message
+                      message={inputEmptyErrorMsg}
+                      type="error"
+                      className="login__errorMsg"
+                    />
+                  ) : null}
                   <Input
                     name="size"
                     value={size}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="المساحة"
                   />
                   <Input
                     name="length"
                     value={length}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الطول"
                   />
                   <Input
                     name="width"
                     value={width}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="العرض"
                   />
                   <Input
                     name="height"
                     value={height}
-                    onChange={this.handleInputChange}
+                    onChange={this.handleNormalInputChange}
                     placeholder="الارتفاع"
                   />
                 </div>
