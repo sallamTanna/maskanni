@@ -61,8 +61,6 @@ class AddProject extends React.Component {
     carGarageNumber: "",
     floorsNumber: "",
     roomsDescription: "",
-    garageDescription: "",
-    gardenDescription: "",
     gardenChart: "",
     interiorDecorationChart: "",
     HealthChart: "",
@@ -87,8 +85,12 @@ class AddProject extends React.Component {
     fileListValidation: [],
     bedRoomInputsNumber: 0,
     kitchensNumber: 0,
+    garagesNumber: 0,
+    gardensNumber: 0,
     bedRoomsDescription: [],
     kitchenDescription: [],
+    garageDescription: [],
+    gardenDescription: [],
   };
 
   handleCheckboxChange = e => {
@@ -421,8 +423,6 @@ class AddProject extends React.Component {
       carGarageNumber,
       floorsNumber,
       bedRoomsNumber,
-      garageDescription,
-      gardenDescription,
       price,
       platformPrice,
       engineerPrice,
@@ -446,6 +446,8 @@ class AddProject extends React.Component {
       conditioningFileList,
       bedRoomInputsNumber,
       kitchensNumber,
+      garagesNumber,
+      gardensNumber,
     } = this.state;
 
     const bedRoomDescriptionInputs = [
@@ -467,6 +469,28 @@ class AddProject extends React.Component {
         }}
       >
         {this.state.ketchenDescription0 || "وصف المطبخ"}
+      </Paragraph>,
+    ];
+
+    const garageDescriptionsInput = [
+      <Paragraph
+        style={style}
+        editable={{
+          onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
+        }}
+      >
+        {this.state.garageDescription0 || "وصف الكراج"}
+      </Paragraph>,
+    ];
+
+    const gardenDescriptionInputs = [
+      <Paragraph
+        style={style}
+        editable={{
+          onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
+        }}
+      >
+        {this.state.gardenDescription0 || "وصف الحديقة"}
       </Paragraph>,
     ];
 
@@ -497,6 +521,36 @@ class AddProject extends React.Component {
         </Paragraph>
       );
     }
+
+    for (let i = 1; i <= garagesNumber; i++) {
+      garageDescriptionsInput.push(
+        <Paragraph
+          style={style}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
+          }}
+        >
+          {this.state[`garageDescription${i}`] || "وصف الكراج"}
+        </Paragraph>
+      );
+    }
+
+    for (let i = 1; i <= gardensNumber; i++) {
+      gardenDescriptionInputs.push(
+        <Paragraph
+          style={style}
+          editable={{
+            onChange: str =>
+              this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),
+          }}
+        >
+          {this.state[`gardenDescription${i}`] || "وصف الحديقة"}
+        </Paragraph>
+      );
+    }
+
+    console.log(77777, this.state.gardenDescription);
 
     return (
       <div>
@@ -643,22 +697,26 @@ class AddProject extends React.Component {
               <div className="total-size">
                 <p>الكراج</p>
                 <div className="size-fileds">
-                  <Input
-                    name="garageDescription"
-                    value={garageDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف الكراج"
+                  {garageDescriptionsInput}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("garagesNumber")}
                   />
                 </div>
               </div>
               <div className="total-size">
                 <p>الحديقة</p>
                 <div className="size-fileds">
-                  <Input
+                  {gardenDescriptionInputs}
+                  {/* <Input
                     name="gardenDescription"
                     value={gardenDescription}
                     onChange={this.handleInputChange}
                     placeholder="وصف الحديقة"
+                  /> */}
+                  <Button
+                    label="اضافة حقل جديد"
+                    onClick={() => this.handleAddInputField("gardensNumber")}
                   />
                 </div>
               </div>

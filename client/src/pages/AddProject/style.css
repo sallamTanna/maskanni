@@ -48,8 +48,9 @@
 }
 
 .more-details button:hover {
-  color: #909090;
+  color: #ffc000;
   background-color: white;
+  border: 1px solid #ffc000;
 }
 
 .main-details__title,
