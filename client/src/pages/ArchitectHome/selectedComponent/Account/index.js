@@ -8,11 +8,7 @@ import Spinner from "../../../../components/Spinner";
 import Message from "../../../../components/Message";
 import UploadImage from "../../../../components/UploadOneImage";
 import { alert } from "../../../../utilities";
-import {
-  passwordValidation,
-  personalDataValidation,
-  paypalAccountValidation,
-} from "../../../helper";
+import { passwordValidation, personalDataValidation, paypalAccountValidation } from "../../helper";
 
 import "./style.css";
 

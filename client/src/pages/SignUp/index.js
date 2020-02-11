@@ -11,7 +11,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
-import { signupValidation } from "../helper";
+import { signupValidation } from "./helper";
 
 import "./style.css";
 

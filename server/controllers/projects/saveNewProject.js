@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
     floorsNumber,
     bedRoomsNumber,
     kitchenDescription,
-    roomsDescription,
+    bedRoomsDescription,
     garageDescription,
     gardenDescription,
     charts,
@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
         floorsNumber,
         bedRoomsNumber,
         kitchenDescription,
-        roomsDescription,
+        bedRoomsDescription,
         garageDescription,
         gardenDescription,
         charts,
@@ -59,8 +59,6 @@ module.exports = async (req, res, next) => {
       error: null
     });
   } catch (error) {
-    console.log(999999, error);
-
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
