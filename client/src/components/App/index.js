@@ -13,7 +13,7 @@ import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
 import Projects from "../../pages/Projects";
 import withAuth from "../../hoc/withAuth";
-import Navbar from "../Navbar";
+import withNav from "../../hoc/withNav";
 
 import "./style.css";
 
@@ -51,21 +51,15 @@ class App extends Component {
   }
 
   render() {
-    const { isLogged, username, avatar, role } = this.state;
-
+    const { isLogged, username, role, avatar } = this.state;
+    const navProps = { isLogged, username, role, avatar };
     return (
       <ConfigProvider locale={ar}>
         <div className="App">
           <Router>
-            <Navbar
-              isLogged={isLogged}
-              username={username}
-              avatar={avatar}
-              userHome={role === "architect" ? "/architect-home" : "/consumer-home"}
-            />
             <Switch>
               <Route exact path="/add" component={withAuth(AddProject)} />
-              <Route exact path="/projects" component={Projects} />
+              <Route exact path="/projects" component={withNav(Projects, navProps)} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />

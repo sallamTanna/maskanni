@@ -40,7 +40,7 @@ class Navbar extends React.Component {
     const { isResponsive, showLinks } = this.state;
     const { isLogged, username, avatar, userHome } = this.props;
 
-    return isLogged ? (
+    return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
         <div className="Navbar__menu">
           <Menu
@@ -116,7 +116,7 @@ class Navbar extends React.Component {
           </div>
         )}
       </Header>
-    ) : null;
+    );
   }
 }
 

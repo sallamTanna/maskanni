@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
+import Navbar from "../components/Navbar";
+
 export default function withAuth(ComponentToprotect) {
   class AuthenticatedComponent extends Component {
     state = {
@@ -49,6 +51,12 @@ export default function withAuth(ComponentToprotect) {
       }
       return (
         <>
+          <Navbar
+            isLogged
+            username={username}
+            avatar={avatar}
+            userHome={role === "architect" ? "/architect-home" : "/consumer-home"}
+          />
           <ComponentToprotect
             {...this.props}
             user={{ id, username, role, isLogged, email, avatar }}
