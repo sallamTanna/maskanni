@@ -32,7 +32,8 @@ class Account extends React.Component {
     profileImage: "",
     uploadingImgError: false,
     uploadingImgErrorMsg: "",
-    user_id: 1, // "id" should be replaced with the id of user who logged in
+    user: this.props.user,
+    user_id: this.props.user.id,
   };
 
   handleInputChange = e =>

@@ -67,7 +67,7 @@ class ArchitectHome extends React.Component {
             </div>
           ) : null}
         </div>
-        <div className="selected-component"> {selectedComponent[key]}</div>
+        <div className="selected-component"> {selectedComponent(key, user)}</div>
         <Footer />
       </>
     );
