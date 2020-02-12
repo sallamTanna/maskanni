@@ -35,15 +35,15 @@ class ArchitectHome extends React.Component {
 
   render() {
     const { user } = this.props;
-    const { isLogged, username, avatar } = user;
+    const { isLogged, username, avatar, role } = user;
     const { title, isResponsive, key } = this.state;
     return (
       <>
         <Navbar
           isLogged={isLogged}
           username={username}
-          // avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
           avatar={avatar}
+          userHome={role === "architect" ? "/architect-home" : "/consumer-home"}
         />
         <div className="architectNavbar">
           <div>

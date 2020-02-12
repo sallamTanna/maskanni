@@ -38,8 +38,7 @@ class Navbar extends React.Component {
 
   render() {
     const { isResponsive, showLinks } = this.state;
-    const { isLogged, username, avatar } = this.props;
-    console.log(4444444, avatar);
+    const { isLogged, username, avatar, userHome } = this.props;
 
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
@@ -112,7 +111,7 @@ class Navbar extends React.Component {
           )
         ) : (
           <div className="navbar-logged">
-            <p>{username}</p>
+            <Link to={userHome}>{username}</Link>
             <Avatar src={avatar} />
           </div>
         )}
