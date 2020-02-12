@@ -20,7 +20,6 @@ import "./style.css";
 class App extends Component {
   state = {
     loading: true,
-    redirect: false,
     id: "",
     username: "",
     role: "",
@@ -47,7 +46,6 @@ class App extends Component {
       .catch(() => {
         this.setState({
           loading: false,
-          redirect: true,
         });
       });
   }
