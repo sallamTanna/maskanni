@@ -28,12 +28,20 @@ module.exports = async (req, res, next) => {
           username: loginResult.rows[0].full_name,
           id: loginResult.rows[0].id,
           email: loginResult.rows[0].email,
-          role: loginResult.rows[0].role
+          role: loginResult.rows[0].role,
+          avatar: loginResult.rows[0].profile_img
         },
         process.env.SECRET
       );
       res.cookie("jwt", cookie, { httpOnly: true });
-      return res.json({ response: { role: loginResult.rows[0].role }, error: null });
+      return res.json({
+        response: {
+          role: loginResult.rows[0].role,
+          username: loginResult.rows[0].username,
+          avatar: loginResult.rows[0].avatar
+        },
+        error: null
+      });
     });
   } catch (error) {
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));

@@ -72,7 +72,7 @@ class AddProject extends React.Component {
     HealthFileList: [],
     electricityFileList: [],
     conditioningFileList: [],
-    username: "mohammed", // should be replaced with the name of user who logged in
+    username: this.props.user.username, // should be replaced with the name of user who logged in
     fileListValidation: [],
     bedRoomInputsNumber: 0,
     kitchensNumber: 0,

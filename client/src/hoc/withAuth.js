@@ -12,6 +12,8 @@ export default function withAuth(ComponentToprotect) {
       username: "",
       role: "",
       isLogged: false,
+      email: "",
+      avatar: "",
     };
 
     componentDidMount() {
@@ -25,6 +27,8 @@ export default function withAuth(ComponentToprotect) {
             username: response.data.response.username,
             role: response.data.response.role,
             isLogged: response.data.response.isLogged,
+            email: response.data.response.email,
+            avatar: response.data.response.avatar,
           });
         })
         .catch(() => {
@@ -36,7 +40,7 @@ export default function withAuth(ComponentToprotect) {
     }
 
     render() {
-      const { loading, redirect, id, username, role, isLogged } = this.state;
+      const { loading, redirect, id, username, role, isLogged, email, avatar } = this.state;
       if (loading) {
         return null;
       }
@@ -45,7 +49,10 @@ export default function withAuth(ComponentToprotect) {
       }
       return (
         <>
-          <ComponentToprotect {...this.props} user={{ id, username, role, isLogged }} />
+          <ComponentToprotect
+            {...this.props}
+            user={{ id, username, role, isLogged, email, avatar }}
+          />
         </>
       );
     }

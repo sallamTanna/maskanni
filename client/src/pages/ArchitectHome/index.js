@@ -14,6 +14,7 @@ class ArchitectHome extends React.Component {
     title: "حسابي",
     key: "1",
     isResponsive: false,
+    username: this.props.username,
   };
 
   componentDidMount() {
@@ -34,11 +35,16 @@ class ArchitectHome extends React.Component {
 
   render() {
     const { user } = this.props;
-    const { isLogged } = user;
+    const { isLogged, username, avatar } = user;
     const { title, isResponsive, key } = this.state;
     return (
       <>
-        <Navbar isLogged={isLogged} />
+        <Navbar
+          isLogged={isLogged}
+          username={username}
+          // avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          avatar={avatar}
+        />
         <div className="architectNavbar">
           <div>
             <h1 className="architectNavbar__title">{title}</h1>

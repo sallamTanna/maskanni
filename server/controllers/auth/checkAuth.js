@@ -12,9 +12,9 @@ module.exports = (req, res, next) => {
       res.clearCookie("jwt");
       return next(boom.unauthorized("لا يملك صلاحيات"));
     }
-    const { role, id, username, email } = decoded;
+    const { role, id, username, email, avatar } = decoded;
     return res
       .status(200)
-      .json({ response: { role, id, username, email, isLogged: true }, error: null });
+      .json({ response: { role, id, username, email, avatar, isLogged: true }, error: null });
   });
 };

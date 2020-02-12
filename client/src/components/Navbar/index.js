@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Avatar } from "antd";
 import { Link } from "react-router-dom";
 
 import Button from "../Button";
@@ -38,7 +38,9 @@ class Navbar extends React.Component {
 
   render() {
     const { isResponsive, showLinks } = this.state;
-    const { isLogged } = this.props;
+    const { isLogged, username, avatar } = this.props;
+    console.log(4444444, avatar);
+
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
         <div className="Navbar__menu">
@@ -108,7 +110,12 @@ class Navbar extends React.Component {
               </Menu.Item>
             </Menu>
           )
-        ) : null}
+        ) : (
+          <div className="navbar-logged">
+            <p>{username}</p>
+            <Avatar src={avatar} />
+          </div>
+        )}
       </Header>
     );
   }

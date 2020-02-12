@@ -19,12 +19,6 @@ class Designs extends React.Component {
   };
 
   componentDidMount() {
-    if (window.screen.width <= 425) {
-      this.setState({
-        isResponsive: true,
-      });
-    }
-
     axios
       .get("/v1/users/1/projects") // "id" should be replaced with the "id" of the user who logged in
       .then(response => {
@@ -45,6 +39,12 @@ class Designs extends React.Component {
           isLoading: false,
         })
       );
+
+    if (window.screen.width <= 425) {
+      this.setState({
+        isResponsive: true,
+      });
+    }
   }
 
   render() {
