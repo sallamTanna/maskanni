@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
 import selectedComponent from "./details";
 
 import "./style.css";

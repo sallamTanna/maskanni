@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -53,8 +52,6 @@ class Login extends React.Component {
             }
           })
           .catch(error => {
-            console.log(999999, error.response.data.error.msg);
-
             this.setState({
               errors: true,
               isLoading: false,

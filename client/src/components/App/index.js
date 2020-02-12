@@ -8,6 +8,7 @@ import NotFoundPage from "../../pages/NotFound";
 import Unauthorized from "../../pages/Unauthorized";
 import Login from "../../pages/Login";
 import SignUp from "../../pages/SignUp";
+import Spinner from "../Spinner";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
@@ -19,12 +20,10 @@ import "./style.css";
 
 class App extends Component {
   state = {
-    loading: true,
-    id: "",
+    isLoading: true,
     username: "",
     role: "",
     isLogged: false,
-    email: "",
     avatar: "",
   };
 
@@ -33,29 +32,27 @@ class App extends Component {
       .get("/v1/check")
       .then(response => {
         this.setState({
-          loading: false,
-          redirect: false,
-          id: response.data.response.id,
+          isLoading: false,
           username: response.data.response.username,
           role: response.data.response.role,
           isLogged: response.data.response.isLogged,
-          email: response.data.response.email,
           avatar: response.data.response.avatar,
         });
       })
       .catch(() => {
         this.setState({
-          loading: false,
+          isLoading: false,
         });
       });
   }
 
   render() {
-    const { isLogged, username, role, avatar } = this.state;
+    const { isLogged, username, role, avatar, isLoading } = this.state;
     const navProps = { isLogged, username, role, avatar };
     return (
       <ConfigProvider locale={ar}>
         <div className="App">
+          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
           <Router>
             <Switch>
               <Route exact path="/add" component={withAuth(AddProject)} />

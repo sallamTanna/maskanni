@@ -8,7 +8,6 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
-import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { alert } from "../../utilities";
 import {
@@ -25,8 +24,6 @@ class Projects extends React.Component {
     isLoading: true,
     projects: [],
     allProjects: [],
-    errors: false,
-    errorMsg: "",
     sizeMin: "",
     sizeMax: "",
     lengthMin: "",
