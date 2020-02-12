@@ -23,6 +23,7 @@ module.exports = async (req, res, next) => {
       if (!result) {
         return next(boom.unauthorized("كلمة المرور المدخلة غير صحيحة"));
       }
+
       const cookie = sign(
         {
           username: loginResult.rows[0].full_name,
@@ -38,7 +39,7 @@ module.exports = async (req, res, next) => {
         response: {
           role: loginResult.rows[0].role,
           username: loginResult.rows[0].username,
-          avatar: loginResult.rows[0].avatar
+          avatar: loginResult.rows[0].profile_img
         },
         error: null
       });

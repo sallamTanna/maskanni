@@ -12,7 +12,6 @@ import InputNumber from "../../components/InputNumber";
 import Button from "../../components/Button";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
@@ -560,7 +559,6 @@ class AddProject extends React.Component {
 
     return (
       <div>
-        <Navbar />
         <Header title="أضافة تصميم جديد" />
 
         <div className="projects-page ">

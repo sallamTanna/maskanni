@@ -2,7 +2,6 @@
 import React from "react";
 import axios from "axios";
 
-import Navbar from "../../components/Navbar";
 import Header from "../../components/Header";
 import Project from "../../components/Project";
 import Input from "../../components/Input";
@@ -198,7 +197,6 @@ class Projects extends React.Component {
       <div className="projects">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
 
-        <Navbar />
         <Header title="المشاريع" />
         <div className="projects__page">
           <div className="projects_body">

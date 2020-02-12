@@ -24,9 +24,10 @@ class Designs extends React.Component {
   componentDidMount() {
     const { user_id } = this.state;
     axios
-      .get(`/v1/users/${user_id}/projects`) // "id" should be replaced with the "id" of the user who logged in
+      .get(`/v1/users/${user_id}/projects`)
       .then(response => {
-        if (response.data.response.data.length === 0) this.setState({ emptyResponse: true });
+        if (response.data.response.data.length === 0)
+          this.setState({ isLoading: false, emptyResponse: true });
         else {
           this.setState({
             projects: response.data.response.data,
@@ -39,7 +40,7 @@ class Designs extends React.Component {
       .catch(() =>
         this.setState({
           errors: true,
-          errorMsg: "Something went wrong while getting project",
+          errorMsg: "حدثت مشكلة ما، حاول مرة أخرى",
           isLoading: false,
         })
       );

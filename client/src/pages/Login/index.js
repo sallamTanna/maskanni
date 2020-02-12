@@ -46,7 +46,6 @@ class Login extends React.Component {
                 errors: false,
                 isLoading: false,
               });
-              localStorage.setItem("username", response.data.response.username);
               if (response.data.response.role === "architect") {
                 return history.push("/architect-home");
               }
@@ -54,6 +53,8 @@ class Login extends React.Component {
             }
           })
           .catch(error => {
+            console.log(999999, error.response.data.error.msg);
+
             this.setState({
               errors: true,
               isLoading: false,
