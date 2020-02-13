@@ -89,6 +89,11 @@ class Navbar extends React.Component {
                 <Link to="/signup">تسجيل حساب جديد</Link>
               </Menu.Item>
             ) : null}
+            {isLogged ? (
+              <Menu.Item key="11">
+                <Link to="/v1/logout">تسجيل خروج </Link>
+              </Menu.Item>
+            ) : null}
           </Menu>
         </div>
         {!isLogged ? (

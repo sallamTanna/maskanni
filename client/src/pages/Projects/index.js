@@ -24,6 +24,8 @@ class Projects extends React.Component {
     isLoading: true,
     projects: [],
     allProjects: [],
+    errors: false,
+    errorzzzMsg: "",
     sizeMin: "",
     sizeMax: "",
     lengthMin: "",

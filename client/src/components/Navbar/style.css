@@ -2,6 +2,9 @@
   display: flex;
   justify-content: space-between;
 }
+.Navbar .ant-layout-header {
+  line-height: 0;
+}
 
 .Navbar__links {
   margin: 0 0 0 5%;

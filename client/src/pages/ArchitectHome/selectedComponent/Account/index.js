@@ -33,7 +33,7 @@ class Account extends React.Component {
     uploadingImgError: false,
     uploadingImgErrorMsg: "",
     user: this.props.user,
-    user_id: this.props.user.id,
+    avatar: this.props.user.avatar,
   };
 
   handleInputChange = e =>
@@ -158,14 +158,16 @@ class Account extends React.Component {
   };
 
   handleProfileChange = file => {
-    const { user_id } = this.state;
+    const { user } = this.state;
+    const { id } = user;
     axios
-      .put(`/v1/users/${user_id}`, { profileImage: file })
+      .put(`/v1/users/${id}`, { profileImage: file })
       .then(() =>
         this.setState({
           profileImage: file,
           uploadingImgError: false,
           uploadingImgErrorMsg: "",
+          avatar: file,
         })
       )
       .catch(error =>
@@ -195,7 +197,11 @@ class Account extends React.Component {
       paypayErrorMsg,
       uploadingImgError,
       uploadingImgErrorMsg,
+      avatar,
     } = this.state;
+
+    console.log("avatarr", avatar);
+
     return (
       <div className="account-page">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
@@ -316,7 +322,7 @@ class Account extends React.Component {
             label="تعديل صورة الملف الشخصي"
             buttonStyleClassname="account-page__uploadImage"
             projectMainImage={this.handleProfileChange}
-            currentImage="https://image.shutterstock.com/image-photo/beautiful-baby-toys-made-rubber-260nw-1573701394.jpg"
+            currentImage={avatar}
           />
         </div>
       </div>

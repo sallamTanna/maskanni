@@ -1,6 +1,20 @@
 import React from "react";
 import { Upload, Icon, message } from "antd";
 
+import avatar from "../../assets/user-avatar.png";
+
+const style = {
+  objectFit: "cover",
+  objectPosition: "80% 80%",
+  display: "inline",
+  width: "200px",
+  height: "200px",
+  margin: "0 auto",
+  borderRadius: "50%",
+  backgroundSize: "cover",
+  backgrounPosition: "center",
+};
+
 class UploadOneFile extends React.Component {
   state = {
     loading: false,
@@ -12,6 +26,7 @@ class UploadOneFile extends React.Component {
     reader.readAsDataURL(img);
   };
 
+  // To check type and size before updating
   beforeUpload = file => {
     const isJpgOrPng =
       file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg";
@@ -53,7 +68,7 @@ class UploadOneFile extends React.Component {
         <div className="ant-upload-text">{label}</div>
       </div>
     );
-    const { imageUrl } = this.state;
+    // const { imageUrl } = this.state;
     return (
       <Upload
         name="avatar"
@@ -64,8 +79,8 @@ class UploadOneFile extends React.Component {
         beforeUpload={this.beforeUpload}
         onChange={this.handleChange}
       >
-        <img src={imageUrl || currentImage} alt="avatar" style={{ width: "100%" }} />
-
+        {/* <img src={currentImage || avatar} alt="avatar" style={style} /> */}
+        <img src={currentImage} alt="avatar" style={style} />
         {uploadButton}
       </Upload>
     );

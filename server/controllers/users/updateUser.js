@@ -62,8 +62,6 @@ module.exports = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(55555, error);
-
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
