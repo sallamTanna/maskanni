@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-state */
 import React from "react";
 import axios from "axios";
@@ -32,7 +33,8 @@ class Account extends React.Component {
     profileImage: "",
     uploadingImgError: false,
     uploadingImgErrorMsg: "",
-    user_id: 1, // "id" should be replaced with the id of user who logged in
+    user: this.props.user,
+    avatar: this.props.user.avatar,
   };
 
   handleInputChange = e =>
@@ -157,14 +159,16 @@ class Account extends React.Component {
   };
 
   handleProfileChange = file => {
-    const { user_id } = this.state;
+    const { user } = this.state;
+    const { id } = user;
     axios
-      .put(`/v1/users/${user_id}`, { profileImage: file })
+      .put(`/v1/users/${id}`, { profileImage: file })
       .then(() =>
         this.setState({
           profileImage: file,
           uploadingImgError: false,
           uploadingImgErrorMsg: "",
+          avatar: file,
         })
       )
       .catch(error =>
@@ -194,7 +198,9 @@ class Account extends React.Component {
       paypayErrorMsg,
       uploadingImgError,
       uploadingImgErrorMsg,
+      avatar,
     } = this.state;
+
     return (
       <div className="account-page">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
@@ -315,7 +321,7 @@ class Account extends React.Component {
             label="تعديل صورة الملف الشخصي"
             buttonStyleClassname="account-page__uploadImage"
             projectMainImage={this.handleProfileChange}
-            currentImage="https://image.shutterstock.com/image-photo/beautiful-baby-toys-made-rubber-260nw-1573701394.jpg"
+            currentImage={avatar}
           />
         </div>
       </div>

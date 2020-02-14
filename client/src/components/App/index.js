@@ -11,6 +11,7 @@ import AddProject from "../../pages/AddProject";
 import Projects from "../../pages/Projects";
 import Project from "../../pages/Project";
 import withAuth from "../../hoc/withAuth";
+import withNav from "../../hoc/withNav";
 
 import "./style.css";
 
@@ -20,9 +21,9 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/add" component={AddProject} />
-            <Route exact path="/projects" component={Projects} />
-            <Route exact path="/projects/:projectId" component={Project} />
+            <Route exact path="/add" component={withAuth(AddProject)} />
+            <Route exact path="/projects" component={withNav(Projects)} />
+            <Route exact path="/projects/:projectId" component={withNav(Project)} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />

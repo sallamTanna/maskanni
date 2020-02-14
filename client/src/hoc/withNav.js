@@ -1,20 +1,16 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
+import Spinner from "../components/Spinner";
 
-export default function withAuth(ComponentToprotect) {
-  class AuthenticatedComponent extends Component {
+export default function withNav(ComponentToAddNav) {
+  class WithNavComponent extends Component {
     state = {
-      loading: true,
-      redirect: false,
-      id: "",
+      isLoading: true,
       username: "",
       role: "",
       isLogged: false,
-      email: "",
       avatar: "",
     };
 
@@ -23,47 +19,37 @@ export default function withAuth(ComponentToprotect) {
         .get("/v1/check")
         .then(response => {
           this.setState({
-            loading: false,
-            redirect: false,
-            id: response.data.response.id,
+            isLoading: false,
             username: response.data.response.username,
             role: response.data.response.role,
             isLogged: response.data.response.isLogged,
-            email: response.data.response.email,
             avatar: response.data.response.avatar,
           });
         })
         .catch(() => {
           this.setState({
-            loading: false,
-            redirect: true,
+            isLoading: false,
           });
         });
     }
 
     render() {
-      const { loading, redirect, id, username, role, isLogged, email, avatar } = this.state;
-      if (loading) {
-        return null;
-      }
-      if (redirect) {
-        return <Redirect to="/login" />;
-      }
+      const { isLogged, username, role, avatar, isLoading } = this.state;
+
       return (
         <>
+          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+
           <Navbar
-            isLogged
+            isLogged={isLogged}
             username={username}
             avatar={avatar}
             userHome={role === "architect" ? "/architect-home" : "/consumer-home"}
           />
-          <ComponentToprotect
-            {...this.props}
-            user={{ id, username, role, isLogged, email, avatar }}
-          />
+          <ComponentToAddNav />
         </>
       );
     }
   }
-  return AuthenticatedComponent;
+  return WithNavComponent;
 }

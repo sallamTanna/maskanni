@@ -3,6 +3,7 @@ const router = require("express").Router();
 const login = require("../controllers/auth/login");
 const signUp = require("../controllers/auth/signUp");
 const checkAuth = require("../controllers/auth/checkAuth");
+const logout = require("../controllers/auth/logout");
 const saveNewProject = require("../controllers/projects/saveNewProject");
 const getAllProjects = require("../controllers/projects/getAllProjects");
 const getProject = require("../controllers/projects/getProject");
@@ -13,6 +14,7 @@ const updateUserData = require("../controllers/users/updateUser");
 router.post("/login", login);
 router.post("/signup", signUp);
 router.get("/check", checkAuth);
+router.get("/logout", logout);
 
 // Users
 router.get("/users/:user_id/projects/:project_id?", getUserProjects); // return project/s of specific user

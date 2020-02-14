@@ -3,7 +3,6 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 
 import Button from "../../components/Button";
-import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import selectedComponent from "./details";
 
@@ -34,11 +33,11 @@ class ArchitectHome extends React.Component {
 
   render() {
     const { user } = this.props;
-    const { isLogged } = user;
     const { title, isResponsive, key } = this.state;
+    console.log("props in archHome", this.props);
+
     return (
       <>
-        <Navbar isLogged={isLogged} />
         <div className="architectNavbar">
           <div>
             <h1 className="architectNavbar__title">{title}</h1>
@@ -61,7 +60,7 @@ class ArchitectHome extends React.Component {
             </div>
           ) : null}
         </div>
-        <div className="selected-component"> {selectedComponent[key]}</div>
+        <div className="selected-component"> {selectedComponent(key, user)}</div>
         <Footer />
       </>
     );

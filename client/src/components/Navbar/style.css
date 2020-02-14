@@ -2,6 +2,9 @@
   display: flex;
   justify-content: space-between;
 }
+.Navbar .ant-layout-header {
+  line-height: 0;
+}
 
 .Navbar__links {
   margin: 0 0 0 5%;
@@ -37,6 +40,23 @@
 
 .Navbar__item > li.ant-menu-item.ant-menu-item-selected a {
   color: #202020;
+}
+
+.navbar-logged {
+  display: flex;
+  margin-left: 5%;
+}
+
+.navbar-logged a {
+  color: #606060;
+}
+
+.navbar-logged a:hover {
+  color: #ffc000;
+}
+
+.navbar-logged .ant-avatar-image {
+  align-self: center;
 }
 
 /* Media Queries */

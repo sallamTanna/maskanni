@@ -29,6 +29,6 @@ exports.updatePaypal = (paypal, user_id) => ({
 });
 
 exports.updateProfileImg = (img, user_id) => ({
-  text: "UPDATE users SET profile_img = $1 WHERE id = $2",
+  text: "UPDATE users SET avatar = $1 WHERE id = $2",
   values: [img, user_id]
 });

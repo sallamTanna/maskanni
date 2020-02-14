@@ -27,7 +27,7 @@ CREATE TABLE users
     role roles NOT NULL,
     resetPasswordToken VARCHAR,
     resetPasswordExpires BIGINT,
-    profile_img VARCHAR,
+    avatar TEXT,
     mobile VARCHAR,
     address VARCHAR,
     paypal VARCHAR

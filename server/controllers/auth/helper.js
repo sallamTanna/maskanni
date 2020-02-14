@@ -14,6 +14,11 @@ exports.addNewUser = (fullName, email, password, role) => ({
   values: [fullName, email, password, role]
 });
 
+exports.getUserAvatar = (user_id) => ({
+  text: `SELECT avatar FROM users WHERE id = $1`,
+  values: [user_id]
+});
+
 exports.validateCredentials = () =>
   Joi.object().keys({
     email: Joi.string()

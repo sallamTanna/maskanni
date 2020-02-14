@@ -13,7 +13,8 @@ class Sales extends React.Component {
     isLoading: true,
     tableError: false,
     tableErrorMsg: "",
-    user_id: 1, // should be replaced with id of user who logged in
+    user_id: this.props.user.id,
+    user: this.props.user,
   };
 
   componentDidMount() {
@@ -21,8 +22,6 @@ class Sales extends React.Component {
     axios
       .get(`/v1/users/${user_id}/projects`)
       .then(response => {
-        console.log(444444, response);
-
         const soldProjects = response.data.response.data.filter(project => project.sold === true);
         this.setState({
           projects: soldProjects,

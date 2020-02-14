@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -16,19 +17,17 @@ class Designs extends React.Component {
     errorMsg: "",
     emptyResponse: false,
     isResponsive: false,
+    user_id: this.props.user.id,
+    user: this.props.user,
   };
 
   componentDidMount() {
-    if (window.screen.width <= 425) {
-      this.setState({
-        isResponsive: true,
-      });
-    }
-
+    const { user_id } = this.state;
     axios
-      .get("/v1/users/1/projects") // "id" should be replaced with the "id" of the user who logged in
+      .get(`/v1/users/${user_id}/projects`)
       .then(response => {
-        if (response.data.response.data.length === 0) this.setState({ emptyResponse: true });
+        if (response.data.response.data.length === 0)
+          this.setState({ isLoading: false, emptyResponse: true });
         else {
           this.setState({
             projects: response.data.response.data,
@@ -41,10 +40,16 @@ class Designs extends React.Component {
       .catch(() =>
         this.setState({
           errors: true,
-          errorMsg: "Something went wrong while getting project",
+          errorMsg: "حدثت مشكلة ما، حاول مرة أخرى",
           isLoading: false,
         })
       );
+
+    if (window.screen.width <= 425) {
+      this.setState({
+        isResponsive: true,
+      });
+    }
   }
 
   render() {
@@ -52,11 +57,9 @@ class Designs extends React.Component {
     let DesignsBody = null;
     if (isLoading) {
       DesignsBody = <Spinner type="spin" width={150} height={150} color="#ffc000" />;
-    }
-    if (errors) {
+    } else if (errors) {
       DesignsBody = <p className="designs-page__error">{errorMsg}</p>;
-    }
-    if (emptyResponse) {
+    } else if (emptyResponse) {
       DesignsBody = <p className="designs-page__noResponse">لا يوجد مشاريع لك حتى الان</p>;
     } else {
       DesignsBody = projects.map(project => (
