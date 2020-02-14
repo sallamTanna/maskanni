@@ -1,37 +1,39 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from "react";
 import axios from "axios";
-import { Select, Checkbox, Input } from "antd";
+import { Breadcrumb } from "antd";
 
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 
-import Button from "../../components/Button";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
+import ProjectEx from "../../components/Project";
+
+import defaultBG from "../../assets/default-pg.png";
+
+import share from "../../assets/share.svg";
 import floors_number from "../../assets/stair-climber.svg";
-import bathrooms_number from "../../assets/bed-09.svg";
+import bedrooms_number from "../../assets/bed-09.svg";
 import car_garage_number from "../../assets/car-parking.svg";
 import size from "../../assets/design.svg";
 import livingrooms_number from "../../assets/sofa.svg";
 
 import Gallery from "./Gallery";
+import LeftSection from "./LeftSection";
 
 import "./style.css";
 
-const { Option } = Select;
-const { TextArea } = Input;
-
-// these is the names of the database columns
-// const smallIcons = [size, bathrooms_number, livingrooms_number, floors_number, car_garage_number];
+// these are the names of the database columns
 const smallIcons = {
   size: {
     name: "مساحة البناء",
     icon: size,
   },
-  bathrooms_number: {
+  bedrooms_number: {
     name: "غرف النوم",
-    icon: bathrooms_number,
+    icon: bedrooms_number,
   },
   livingrooms_number: {
     name: "غرف المعيشة",
@@ -54,7 +56,7 @@ function getProjDesc(description) {
       <ul>
         {description.split(".").map(sentence => {
           if (sentence.trim() !== "") return <li key={Date.now() / Math.random()}>{sentence}</li>;
-          return "";
+          return null;
         })}
       </ul>
     </>
@@ -67,112 +69,107 @@ function generateIcons(project) {
     return (
       <div className="shortDetails-item" key={Date.now() / Math.random()}>
         <img src={smallIcons[key].icon} alt="icon" />
-        <span className="bold">{key === "size" ? `م${project[key]}` : project[key]}</span>
+        <span className="bold">{key === "size" ? `${project[key]}م` : project[key]}</span>
         <span className="gray-small">{smallIcons[key].name}</span>
       </div>
     );
   });
 }
 
-const generateLeftSection = ({ total_price, files_urls }) => {
-  return (
-    <>
-      <div className="space-bt">
-        <div className="column cl-flexstart line-hy">
-          <b>شراء المخطط</b>
-          <p className="gray-small">سعر المخطط يباع بالدولار الأمريكي</p>
-        </div>
-        <p className="f-big3">{total_price}$</p>
-      </div>
-      <form className="form">
-        <div>
-          <label className="gray-small" htmlFor="selectCopy">
-            حدد طبيعة النسخة
-          </label>
-          <Select
-            id="selectCopy"
-            className="form-select"
-            defaultValue="pdf"
-            size="large"
-            onChange={() => console.log(1)}
-          >
-            <Option value="pdf">
-              <a href={files_urls[0]} download>
-                PDF نسخة واحد الكتروني
-              </a>
-            </Option>
-            <Option value="wdg">
-              <a href={files_urls[1]} download>
-                WDG نسخة واحد الكتروني
-              </a>
-            </Option>
-          </Select>
-        </div>
-
-        <div className="margin-top-2rem">
-          <Checkbox onChange={() => console.log(1)}>
-            <b>هل تريد تخصيص هذا المخطط</b>
-          </Checkbox>
-          <p className="gray-small margin-1-5-right">
-            إضغط هنا لتفعيل التعديل على المخطط قبل الشراء
-          </p>
-        </div>
-
-        <div>
-          <label className="gray-small" htmlFor="selectMore">
-            التعديلات الاضافية
-          </label>
-          <Select
-            id="selectMore"
-            className="form-select"
-            placeholder="حدد التعديلات المطلوبة"
-            size="large"
-            disabled
-            onChange={() => console.log(1)}
-          >
-            <Option value="edit">تعديل على المخطط المعماري</Option>
-            <Option value="additional">طلب مخطط اضافي تابع للمخطط المعماري</Option>
-          </Select>
-        </div>
-
-        <div className="margin-top-2rem">
-          <label className="gray-small" htmlFor="msg">
-            رسالة
-          </label>
-          <TextArea
-            className="margin-top-halfrem"
-            id="msg"
-            rows={4}
-            placeholder="أكتب رسالتك للمهندس أو مصمم هذا المخطط"
-          />
-        </div>
-
-        <div className="warn margin-top-2rem">
-          <div className="edit-time">
-            <p>
-              <span className="warn-msg">فترة السماح بالتعديلات المجانية</span>
-              <br />
-              <span className="mid-font-size">
-                يسمح بالتعديل على المخططات بعد شرائها مجانا لفترة لا تزيد عن أسبوع واحد فقط من تاريخ
-                الشراء.
-              </span>
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <Button block label={`شراء المخطط - $ ${total_price}`} className="buy-btn" />
-        </div>
-      </form>
-    </>
-  );
-};
-
 const getProjectDetails = project => {
+  const {
+    size,
+    length,
+    width,
+    height,
+    livingrooms_number,
+    bathrooms_number,
+    car_garage_number,
+    floors_number,
+    bedrooms_number,
+    kitchen_description,
+    rooms_description,
+    garage_description,
+    garden_description,
+  } = project;
+
   return (
     <>
       <h3>المواصفات والمميزات بالتفصيل</h3>
-      <div>باقي المواصفات</div>
+      <div className="details-info">
+        <p className="dt-info-title">المساحة الكلية</p>
+        <ul className="dt-info-list smaller-width">
+          <li>
+            <div>المساحة</div> <div>{size}م</div>
+          </li>
+          <li>
+            <div>الطول</div> <div>{length}م</div>
+          </li>
+          <li>
+            <div>العرض</div> <div>{width}م</div>
+          </li>
+          <li>
+            <div>الارتفاع</div> <div>{height}م</div>
+          </li>
+        </ul>
+      </div>
+
+      <div className="details-info">
+        <p className="dt-info-title">المواصفات الرئيسية</p>
+        <ul className="dt-info-list small-width">
+          <li>
+            <div>غرف النوم</div> <div>{bedrooms_number}</div>
+          </li>
+          <li>
+            <div>غرف المعيشة</div> <div>{livingrooms_number}</div>
+          </li>
+          <li>
+            <div>الحمامات</div> <div>{bathrooms_number}</div>
+          </li>
+          <li>
+            <div>كراج السيارات</div> <div>{car_garage_number}</div>
+          </li>
+          <li>
+            <div>الأدوار</div> <div>{floors_number}</div>
+          </li>
+        </ul>
+      </div>
+
+      <div className="details-info">
+        <p className="dt-info-title">غرف النوم</p>
+        <div className="dt-info-list wrap">
+          {rooms_description.map(desc => (
+            <div key={Date.now() / Math.random()}>{desc}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className="details-info">
+        <p className="dt-info-title">المطبخ</p>
+        <div className="dt-info-list wrap">
+          {kitchen_description.map(desc => (
+            <div key={Date.now() / Math.random()}>{desc}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className="details-info">
+        <p className="dt-info-title">الكراج</p>
+        <div className="dt-info-list wrap">
+          {garage_description.map(desc => (
+            <div key={Date.now() / Math.random()}>{desc}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className="details-info">
+        <p className="dt-info-title">الحديقة</p>
+        <div className="dt-info-list wrap">
+          {garden_description.map(desc => (
+            <div key={Date.now() / Math.random()}>{desc}</div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };
@@ -191,6 +188,9 @@ class Project extends Component {
         match: { params },
       } = this.props;
       const { projectId } = params;
+
+      console.log({ projectId });
+
       const {
         data: {
           response: { data },
@@ -205,10 +205,12 @@ class Project extends Component {
         };
       });
     } catch (err) {
+      console.log(111, { err });
+      const error = err.response && err.response.data && err.response.data.error;
       this.setState({
         errs: true,
         isLoading: false,
-        errMsg: err.response.data.error.msg,
+        errMsg: error.msg,
       });
     }
   }
@@ -217,7 +219,7 @@ class Project extends Component {
     const { isLoading, errs, errMsg, project } = this.state;
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         {errs ? <Message message={errMsg} type="error" /> : null}
 
@@ -225,12 +227,21 @@ class Project extends Component {
           <div className="container">
             {/* right section */}
             <div className="right-section">
-              <div className="history-tree">الرئيسية -> المشاريع -> شقق عائلية -> شقة رقم A325</div>
+              <div className="history-tree">
+                <Breadcrumb separator=">  ">
+                  <Breadcrumb.Item href="/">الرئيسية</Breadcrumb.Item>
+                  <Breadcrumb.Item href="/projects">المشاريع</Breadcrumb.Item>
+                  {/* this could come from category or from category or previous page as props
+                   but won't work if the user went directly to this page by the url */}
+                  <Breadcrumb.Item href="">شقق عائلية</Breadcrumb.Item>
+                  <Breadcrumb.Item>{project.name}</Breadcrumb.Item>
+                </Breadcrumb>
+              </div>
 
               <div className="share-section">
-                <p>{project.name}</p>
+                <b>{project.name}</b>
                 <p>
-                  مشاركة <span>share</span>
+                  مشاركة &nbsp; <img src={share} alt="share" />
                 </p>
               </div>
 
@@ -238,14 +249,35 @@ class Project extends Component {
 
               <Gallery images={project.images_urls} />
 
-              <div className="margin-top-2rem line-hy">{getProjDesc(project.description)}</div>
+              <div className="margin-top-2rem line-hy margin-bot-2">
+                {getProjDesc(project.description)}
+              </div>
 
               <div className="shadow project-desc">{getProjectDetails(project)}</div>
             </div>
             {/* left section */}
-            <div className="left-section shadow">{generateLeftSection(project)}</div>
+            <div className="left-section shadow">
+              <LeftSection project={project} />
+            </div>
           </div>
         )}
+        {!isLoading && !errs && (
+          <div className="bottom-container">
+            {/* 4 Random Projects should come from the db */}
+            {[1, 2, 3, 4].map(_ => (
+              <ProjectEx
+                key={Date.now() / Math.random()}
+                name="مخطط"
+                bedRoomsNumber={4}
+                livingRoomsNumber={3}
+                floorsNumber={1}
+                totalSize={260}
+                src={defaultBG}
+              />
+            ))}
+          </div>
+        )}
+        <Footer />
       </>
     );
   }

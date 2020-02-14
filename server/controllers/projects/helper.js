@@ -79,3 +79,8 @@ exports.getProject = (id) => ({
   values: [id]
 })
 
+exports.getRandomProjects = (id) => ({
+  text: 'SELECT * FROM projects WHERE id != $1 ORDER BY random() LIMIT=4',
+  values: [id]
+})
+

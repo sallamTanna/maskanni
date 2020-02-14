@@ -16,6 +16,10 @@ a{
   font-size: 1.3rem;
 }
 
+.margin-bot-2{
+  margin-bottom: 2rem;
+}
+
 .margin-top-2rem{
   margin-top: 2rem;
 }
@@ -44,6 +48,19 @@ a{
   justify-content: space-between;
   align-items: flex-start;
   /* flex-wrap: wrap; */
+}
+
+.bottom-container {
+  padding: 3% 5%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.bottom-container > div {
+  margin-right: 0;
+  width: 23%;
 }
 
 .center {
@@ -111,7 +128,7 @@ a{
   justify-content: space-around;
   align-items: stretch;
   flex-wrap: wrap;
-  height: 139px;
+  /* height: 139px; */
 }
 
 .shortDetails-item {
@@ -122,20 +139,6 @@ a{
   padding: 3% 0;
 
 }
-
-.gallery {
-  /* display: flex; */
-  /* min-height: 400px; */
-  /* height: 600px; */
-  /* margin: 4% 0;
-  justify-content: space-between; */
-}
-
-
-/* .gallery-sec img {
-  max-width: 100%;
-  max-height: 100%;
-} */
 
 .gallery-sec{
   width: 48%;
@@ -154,7 +157,6 @@ a{
 .gallery-left-up {
   height: 48%;
   width: 100%;
-  /* margin-bottom: 2%; */
 }
 
 .rotateimg {
@@ -261,6 +263,34 @@ a{
 
 .project-desc {
   padding: 1rem;
+  line-height: 2;
+}
+
+.details-info {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.dt-info-title {
+  width: 40%;
+}
+
+.dt-info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 60%;
+  text-align: right;
+}
+
+.dt-info-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.dt-info-list.dt-info-list__wrap li {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 /* antd custom style */
@@ -282,15 +312,6 @@ a{
   right: initial;
   left: 11px;
 }
-
-/* .ant-select-selection-selected-value::after{
-  content: url("../../assets/selector-arrows.svg");
-  position: absolute;
-  top: 50%;
-  left: -70%;
-  line-height: 1;
-  margin-top: -6px;
-} */
 
 .ant-checkbox-checked
 .ant-checkbox-inner
@@ -327,7 +348,7 @@ a{
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
 
   .gallery {
     display: block;
@@ -338,4 +359,40 @@ a{
     margin-bottom: 1rem;
   }
 
+  .bottom-container > div {
+    margin-right: 0;
+    width: 45%;
+  }
 }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .bottom-container > div {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+  .dt-info-list.wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dt-info-list.smaller-width{
+    width: 18%;
+  }
+
+  .dt-info-list.small-width{
+    width: 30%;
+  }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }
