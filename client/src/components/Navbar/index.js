@@ -49,7 +49,10 @@ class Navbar extends React.Component {
           {
             isLoading: false,
           },
-          () => history.push("/projects")
+          () => {
+            return history.push("/login");
+            // return (window.location.href = "/login");
+          }
         )
       )
       .catch(() =>
