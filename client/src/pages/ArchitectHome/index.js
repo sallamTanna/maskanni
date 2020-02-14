@@ -34,6 +34,8 @@ class ArchitectHome extends React.Component {
   render() {
     const { user } = this.props;
     const { title, isResponsive, key } = this.state;
+    console.log("props in archHome", this.props);
+
     return (
       <>
         <div className="architectNavbar">

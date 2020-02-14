@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-state */
 import React from "react";
 import axios from "axios";
@@ -199,8 +200,6 @@ class Account extends React.Component {
       uploadingImgErrorMsg,
       avatar,
     } = this.state;
-
-    console.log("avatarr", avatar);
 
     return (
       <div className="account-page">

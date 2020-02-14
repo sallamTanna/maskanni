@@ -3,9 +3,11 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from "react";
 import { Layout, Menu, Avatar } from "antd";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+import axios from "axios";
 
 import Button from "../Button";
+import Spinner from "../Spinner";
 import logo from "../../assets/navbar-logo.png";
 
 import "./style.css";
@@ -16,6 +18,7 @@ class Navbar extends React.Component {
   state = {
     isResponsive: false,
     showLinks: true,
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -37,15 +40,32 @@ class Navbar extends React.Component {
   };
 
   handleLogout = () => {
-    console.log(444444);
+    const { history } = this.props;
+    this.setState({ isLoading: true });
+    axios
+      .get("/v1/logout")
+      .then(() =>
+        this.setState(
+          {
+            isLoading: false,
+          },
+          () => history.push("/projects")
+        )
+      )
+      .catch(() =>
+        this.setState({
+          isLoading: false,
+        })
+      );
   };
 
   render() {
-    const { isResponsive, showLinks } = this.state;
+    const { isResponsive, showLinks, isLoading } = this.state;
     const { isLogged, username, avatar, userHome } = this.props;
 
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         <div className="Navbar__menu">
           <Menu
             className="Navbar__item"
@@ -129,4 +149,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);

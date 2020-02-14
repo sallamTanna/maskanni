@@ -24,7 +24,6 @@ module.exports = async (req, res, next) => {
           id: loginResult.rows[0].id,
           email: loginResult.rows[0].email,
           role: loginResult.rows[0].role
-          // avatar: loginResult.rows[0].avatar
         },
         process.env.SECRET
       );
