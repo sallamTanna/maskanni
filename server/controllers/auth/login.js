@@ -23,8 +23,8 @@ module.exports = async (req, res, next) => {
           username: loginResult.rows[0].full_name,
           id: loginResult.rows[0].id,
           email: loginResult.rows[0].email,
-          role: loginResult.rows[0].role,
-          avatar: loginResult.rows[0].avatar
+          role: loginResult.rows[0].role
+          // avatar: loginResult.rows[0].avatar
         },
         process.env.SECRET
       );
@@ -32,8 +32,8 @@ module.exports = async (req, res, next) => {
       return res.json({
         response: {
           role: loginResult.rows[0].role,
-          username: loginResult.rows[0].username
-          // avatar: loginResult.rows[0].avatar
+          username: loginResult.rows[0].username,
+          avatar: loginResult.rows[0].avatar
         },
         error: null
       });

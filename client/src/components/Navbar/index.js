@@ -36,6 +36,10 @@ class Navbar extends React.Component {
     }));
   };
 
+  handleLogout = () => {
+    console.log(444444);
+  };
+
   render() {
     const { isResponsive, showLinks } = this.state;
     const { isLogged, username, avatar, userHome } = this.props;
@@ -91,7 +95,7 @@ class Navbar extends React.Component {
             ) : null}
             {isLogged ? (
               <Menu.Item key="11">
-                <Link to="/v1/logout">تسجيل خروج </Link>
+                <Link onClick={this.handleLogout}>تسجيل خروج </Link>
               </Menu.Item>
             ) : null}
           </Menu>
