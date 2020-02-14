@@ -23,7 +23,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/add" component={withAuth(AddProject)} />
             <Route exact path="/projects" component={withNav(Projects)} />
-            <Route exact path="/projects/:projectId" component={withNav(Project)} />
+            <Route exact path="/projects/:projectId" component={Project} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />

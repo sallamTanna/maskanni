@@ -189,8 +189,6 @@ class Project extends Component {
       } = this.props;
       const { projectId } = params;
 
-      console.log({ projectId });
-
       const {
         data: {
           response: { data },
