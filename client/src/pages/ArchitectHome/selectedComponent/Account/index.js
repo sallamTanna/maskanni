@@ -159,6 +159,7 @@ class Account extends React.Component {
   };
 
   handleProfileChange = file => {
+    // const { avbarAvatar } = this.props;
     const { user } = this.state;
     const { id } = user;
     axios

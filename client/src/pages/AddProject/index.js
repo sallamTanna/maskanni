@@ -10,7 +10,6 @@ import TextArea from "../../components/TextArea";
 import CheckBox from "../../components/CheckBox";
 import InputNumber from "../../components/InputNumber";
 import Button from "../../components/Button";
-import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
@@ -23,7 +22,12 @@ import bedRoom from "../../assets/bed-room.svg";
 import bathRoom from "../../assets/bath-room.svg";
 import stairs from "../../assets/stairs.svg";
 import carGarage from "../../assets/car-garage.svg";
-import { saveProjectValidation, edibleInputValidation, edibleInputStyle } from "./helper";
+import {
+  saveProjectValidation,
+  edibleInputValidation,
+  edibleInputStyle,
+  initalState,
+} from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
 import defaultBG from "../../assets/default-pg.png";
@@ -35,53 +39,7 @@ const filesURLs = [];
 const imagesURLs = [];
 
 class AddProject extends React.Component {
-  state = {
-    isLoading: false,
-    errors: false,
-    errorMessage: "",
-    projectName: "",
-    projectDescription: "",
-    size: "",
-    width: "",
-    length: "",
-    height: "",
-    bedRoomsNumber: "",
-    livingRoomsNumber: "",
-    bathRoomsNumber: "",
-    carGarageNumber: "",
-    floorsNumber: "",
-    roomsDescription: "",
-    gardenChart: "",
-    interiorDecorationChart: "",
-    HealthChart: "",
-    architecturalChart: "architecturalChart",
-    constructionChart: "",
-    electricityChart: "",
-    conditioningChart: "",
-    price: 0,
-    platformPrice: 0,
-    engineerPrice: 0,
-    imagesArray: [],
-    imagesURLsArray: [],
-    filesUrlArray: [],
-    architecturalFileList: [],
-    constructionFileList: [],
-    gardenFileList: [],
-    interiorDecorationFileList: [],
-    HealthFileList: [],
-    electricityFileList: [],
-    conditioningFileList: [],
-    username: "soso", // should be replaced with the name of user who logged in
-    fileListValidation: [],
-    bedRoomInputsNumber: 0,
-    kitchensNumber: 0,
-    garagesNumber: 0,
-    gardensNumber: 0,
-    bedRoomsDescription: [],
-    kitchenDescription: [],
-    garageDescription: [],
-    gardenDescription: [],
-  };
+  state = initalState();
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
@@ -252,6 +210,8 @@ class AddProject extends React.Component {
   };
 
   putStorageFile = (item, index) => {
+    const { username } = this.props.user;
+
     const {
       gardenChart,
       interiorDecorationChart,
@@ -260,7 +220,6 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
-      username,
     } = this.state;
 
     const charts = [
@@ -275,7 +234,7 @@ class AddProject extends React.Component {
     // the return value will be a Promise
     return firebase
       .storage()
-      .ref(`${username}/${charts[index]}`)
+      .ref(`${username}/${charts[index]}/${Date.now()}`)
       .put(item.originFileObj)
       .then(snapshot => {
         return snapshot.ref.getDownloadURL();
@@ -290,7 +249,7 @@ class AddProject extends React.Component {
   };
 
   putStorageImage = item => {
-    const { username } = this.state;
+    const { username } = this.props.user;
 
     // the return value will be a Promise
     return firebase
@@ -355,6 +314,7 @@ class AddProject extends React.Component {
         imagesURLs,
         projectMainImage,
         filesURLs,
+        user_id: this.props.user.id,
       })
       .then(response => {
         if (response.status === 200) {
@@ -555,8 +515,6 @@ class AddProject extends React.Component {
       );
     }
 
-    console.log(77777, this.state.gardenDescription);
-
     return (
       <div>
         <Header title="أضافة تصميم جديد" />
@@ -650,6 +608,7 @@ class AddProject extends React.Component {
                   projectMainImage={this.handleProjectMainImage}
                   showPlus
                   label="ارفع صورة الواجهة"
+                  // currentImage = {}
                 />
               </div>
             </div>
@@ -908,7 +867,6 @@ class AddProject extends React.Component {
             />
           </div>
         </div>
-        <Footer />
       </div>
     );
   }

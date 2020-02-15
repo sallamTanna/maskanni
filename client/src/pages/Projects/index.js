@@ -8,7 +8,6 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import { alert } from "../../utilities";
 import {
   numberInputValidation,
@@ -326,7 +325,6 @@ class Projects extends React.Component {
             <Button label="بحث" className="filter_search" onClick={this.handleSearch} />
           </div>
         </div>
-        <Footer />
       </div>
     );
   }

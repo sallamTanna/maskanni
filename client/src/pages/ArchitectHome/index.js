@@ -3,7 +3,6 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 
 import Button from "../../components/Button";
-import Footer from "../../components/Footer";
 import selectedComponent from "./details";
 
 import "./style.css";
@@ -34,7 +33,6 @@ class ArchitectHome extends React.Component {
   render() {
     const { user } = this.props;
     const { title, isResponsive, key } = this.state;
-    console.log("props in archHome", this.props);
 
     return (
       <>
@@ -61,7 +59,6 @@ class ArchitectHome extends React.Component {
           ) : null}
         </div>
         <div className="selected-component"> {selectedComponent(key, user)}</div>
-        <Footer />
       </>
     );
   }

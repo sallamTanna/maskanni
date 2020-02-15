@@ -40,7 +40,7 @@ class Navbar extends React.Component {
   };
 
   handleLogout = () => {
-    const { history } = this.props;
+    const { history, logout } = this.props;
     this.setState({ isLoading: true });
     axios
       .get("/v1/logout")
@@ -50,8 +50,8 @@ class Navbar extends React.Component {
             isLoading: false,
           },
           () => {
+            logout();
             return history.push("/login");
-            // return (window.location.href = "/login");
           }
         )
       )
@@ -64,7 +64,7 @@ class Navbar extends React.Component {
 
   render() {
     const { isResponsive, showLinks, isLoading } = this.state;
-    const { isLogged, username, avatar, userHome } = this.props;
+    const { isLogged, username, avatar, role } = this.props;
 
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
@@ -143,7 +143,7 @@ class Navbar extends React.Component {
             )
         ) : (
             <div className="navbar-logged">
-              <Link to={userHome}>{username}</Link>
+              <Link to={`${role}-home`}>{username}</Link>
               <Avatar src={avatar} />
             </div>
           )}
