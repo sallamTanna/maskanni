@@ -8,19 +8,23 @@ module.exports = async (req, res, next) => {
     const { id } = req.params;
 
     const project = await dbQuery(getProject(id));
+
     const randomProjects = await dbQuery(getRandomProjects(id));
+
     // if no data return 404
     if (project.rowCount === 0) {
       return next(boom.notFound("هذ العنصر غير موجود"));
     }
 
-    console.log(randomProjects);
-
     res.json({
-      response: { data: { project: project.rows, randomProjects }, statusCode: 200 },
+      response: {
+        data: { project: project.rows, randomProjects: randomProjects.rows },
+        statusCode: 200
+      },
       error: null
     });
   } catch (error) {
+    console.log(error);
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };

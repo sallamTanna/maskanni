@@ -198,7 +198,8 @@ class Project extends Component {
       this.setState(state => {
         return {
           ...state,
-          project: data[0],
+          project: data.project[0],
+          randomProjects: data.randomProjects,
           isLoading: false,
         };
       });
@@ -214,7 +215,7 @@ class Project extends Component {
   }
 
   render() {
-    const { isLoading, errs, errMsg, project } = this.state;
+    const { isLoading, errs, errMsg, project, randomProjects } = this.state;
     return (
       <>
         {/* <Navbar /> */}
@@ -254,26 +255,31 @@ class Project extends Component {
               <div className="shadow project-desc">{getProjectDetails(project)}</div>
             </div>
             {/* left section */}
-            <div className="left-section shadow">
+            <div className="left-section">
               <LeftSection project={project} />
             </div>
           </div>
         )}
         {!isLoading && !errs && (
-          <div className="bottom-container">
-            {/* 4 Random Projects should come from the db */}
-            {[1, 2, 3, 4].map(_ => (
-              <ProjectEx
-                key={Date.now() / Math.random()}
-                name="مخطط"
-                bedRoomsNumber={4}
-                livingRoomsNumber={3}
-                floorsNumber={1}
-                totalSize={260}
-                src={defaultBG}
-              />
-            ))}
-          </div>
+          <>
+            <div className="bottom-container">
+              <h3>خطط وتصاميم مشابهة</h3>
+            </div>
+            <div className=".bottom-container">
+              {/* 4 Random Projects should come from the db */}
+              {randomProjects.map(prj => (
+                <ProjectEx
+                  key={Date.now() / Math.random()}
+                  name={prj.name || ""}
+                  bedRoomsNumber={prj.bedrooms_number || 0}
+                  livingRoomsNumber={prj.livingrooms_number || 0}
+                  floorsNumber={prj.floors_number || 0}
+                  totalSize={prj.size || 0}
+                  src={prj.images_urls[0] || defaultBG}
+                />
+              ))}
+            </div>
+          </>
         )}
         <Footer />
       </>

@@ -50,11 +50,13 @@ a{
   /* flex-wrap: wrap; */
 }
 
+.check-col {
+  display: grid;
+}
+
 .bottom-container {
-  padding: 3% 5%;
+  padding: 0 5%;
   display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
   flex-wrap: wrap;
 }
 
@@ -105,7 +107,6 @@ a{
 
 .left-section {
   width: 30%;
-  padding: 2%;
 }
 
 .shadow {
@@ -114,6 +115,15 @@ a{
   box-shadow: 0 4px 8px #dad4d4;
   border-radius: 1%;
 }
+
+.lf-shadow {
+  background-color: #ffffff;
+  color: #202020;
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 1%;
+  padding: 6%;
+}
+
 
 .share-section {
   display: flex;
@@ -318,6 +328,38 @@ a{
 {
   background-color: var(--primary);
   border-color: var(--primary);
+}
+
+.check-col {
+  line-height: 2;
+}
+
+.check-col .ant-checkbox-group-item:last-child {
+  margin-right: 8px;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper {
+  color: var(--gray);
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper :not(.ant-checkbox-checked) .ant-checkbox-inner {
+  background-color: #b9b9bb;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper .ant-checkbox::after{
+  content: "x";
+  color: white;
+  position: absolute;
+  top: 0rem;
+  right: .3rem;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper.ant-checkbox-wrapper-checked {
+  color: black;
+}
+
+.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-wrapper-disabled span{
+  color: black;
 }
 
 /* react-image-viewer */
