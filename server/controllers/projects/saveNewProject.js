@@ -25,7 +25,8 @@ module.exports = async (req, res, next) => {
     engineerPrice,
     projectMainImage,
     filesURLs,
-    imagesURLs
+    imagesURLs,
+    user_id
   } = req.body;
 
   try {
@@ -51,7 +52,8 @@ module.exports = async (req, res, next) => {
         engineerPrice,
         imagesURLs,
         projectMainImage,
-        filesURLs
+        filesURLs,
+        user_id
       )
     );
     res.json({

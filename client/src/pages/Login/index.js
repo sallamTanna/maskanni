@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import logo from "../../assets/logo1.png";
 import Input from "../../components/Input";
@@ -27,8 +27,8 @@ class Login extends React.Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
+    const { history, login } = this.props;
     this.setState({ isLoading: true });
-    const { history } = this.props;
     const schema = loginValidation();
 
     schema
@@ -41,19 +41,22 @@ class Login extends React.Component {
           })
           .then(response => {
             if (response.status === 200) {
-              this.setState({
-                errors: false,
-                isLoading: false,
-              });
-              if (response.data.response.role === "architect") {
-                return history.push("/architect-home");
-              }
-              return history.push("/consumer-home");
+              const { username, role, avatar } = response.data.response;
+              console.log(1111, avatar);
+
+              this.setState(
+                {
+                  errors: false,
+                  isLoading: false,
+                },
+                () => {
+                  login(username, role, avatar);
+                  return history.push(`/${role}-home`);
+                }
+              );
             }
           })
           .catch(error => {
-            console.log(5555, error.response);
-
             this.setState({
               errors: true,
               isLoading: false,
@@ -119,4 +122,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

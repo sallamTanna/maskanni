@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
       return res.json({
         response: {
           role: loginResult.rows[0].role,
-          username: loginResult.rows[0].username,
+          username: loginResult.rows[0].full_name,
           avatar: loginResult.rows[0].avatar
         },
         error: null
