@@ -218,7 +218,7 @@ class Project extends Component {
     const { isLoading, errs, errMsg, project, randomProjects } = this.state;
     return (
       <>
-        {/* <Navbar /> */}
+        <Navbar />
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         {errs ? <Message message={errMsg} type="error" /> : null}
 
