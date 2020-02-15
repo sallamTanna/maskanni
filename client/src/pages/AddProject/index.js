@@ -234,7 +234,7 @@ class AddProject extends React.Component {
     // the return value will be a Promise
     return firebase
       .storage()
-      .ref(`${username}/${charts[index]}`)
+      .ref(`${username}/${charts[index]}/${Date.now()}`)
       .put(item.originFileObj)
       .then(snapshot => {
         return snapshot.ref.getDownloadURL();
