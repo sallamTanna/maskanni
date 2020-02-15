@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30.414" height="29.828" viewBox="0 0 30.414 29.828">
+  <g id="design" transform="translate(1.414 1.414)">
+    <path id="Path" d="M0,6,6,0" transform="translate(21 20)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M6,0,0,6" transform="translate(4 3)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-3" data-name="Path" d="M6.5,12.5,0,6,6,0l6.5,6.5" transform="translate(1)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-4" data-name="Path" d="M6,0l6.5,6.5,1,7-7-1L0,6" transform="translate(14.5 13.5)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <rect id="Rectangle" width="28.284" height="9.899" stroke-width="2" transform="translate(0 20) rotate(-45)" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" fill="none"/>
+    <path id="Path-5" data-name="Path" d="M0,0,3,3" transform="translate(10 10)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-6" data-name="Path" d="M0,0,2,2" transform="translate(7 13)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-7" data-name="Path" d="M0,0,3,3" transform="translate(16 4)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-8" data-name="Path" d="M0,0,2,2" transform="translate(13 7)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-9" data-name="Path" d="M0,0,3,3" transform="translate(4 16)" fill="none" stroke="#dcdcdc" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

@@ -28,19 +28,19 @@ const Footer = () => {
       <div className="footer-links">
         <p className="footer-title">روابط</p>
         <p>
-          <Link>المشاريع</Link>
+          <Link to="">المشاريع</Link>
         </p>
         <p>
-          <Link>المدونة</Link>
+          <Link to="">المدونة</Link>
         </p>
         <p>
-          <Link>كيف تعمل المنصة</Link>
+          <Link to="">كيف تعمل المنصة</Link>
         </p>
         <p>
-          <Link>من نحن</Link>
+          <Link to="">من نحن</Link>
         </p>
         <p>
-          <Link>إتصل بنا</Link>
+          <Link to="">إتصل بنا</Link>
         </p>
       </div>
       <div className="footer-access">
@@ -52,7 +52,7 @@ const Footer = () => {
           <Link to="/signup">تسجيل حساب جديد</Link>
         </p>
         <p>
-          <Link>طلب تصميم</Link>
+          <Link to="">طلب تصميم</Link>
         </p>
       </div>
       <div className="footer-contact">

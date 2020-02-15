@@ -1,9 +1,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ConfigProvider } from "antd";
 import axios from "axios";
-import ar from "antd/es/locale/ar_EG";
 
 import NotFoundPage from "../../pages/NotFound";
 import Unauthorized from "../../pages/Unauthorized";
@@ -13,6 +11,7 @@ import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
 import Projects from "../../pages/Projects";
+import Project from "../../pages/Project";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import withAuth from "../../hoc/withAuth";
@@ -71,10 +70,9 @@ class App extends Component {
   render() {
     const { isLogged, username, role, avatar } = this.state;
     return (
-      <ConfigProvider locale={ar}>
-        <div className="App">
-          <Router>
-            {window.location.pathname === "/add" ||
+      <div className="App">
+        <Router>
+          {window.location.pathname === "/add" ||
             window.location.pathname === "/home" ||
             window.location.pathname === "/consumer-home" ||
             window.location.pathname === "/architect-home" ||
@@ -88,36 +86,36 @@ class App extends Component {
               />
             ) : null}
 
-            <Switch>
-              <Route exact path="/add" component={withAuth(AddProject)} />
-              <Route exact path="/projects" component={Projects} />
-              <Route
-                exact
-                path="/login"
-                render={() => (
-                  <Login
-                    login={(userName, userRole, userAvatar) =>
-                      this.login(userName, userRole, userAvatar)
-                    }
-                  />
-                )}
-              />
-              <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
-              <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
-              <Route exact path="/unauthorized" component={Unauthorized} />
-              <Route component={NotFoundPage} />
-            </Switch>
-            {window.location.pathname === "/add" ||
+          <Switch>
+            <Route exact path="/add" component={withAuth(AddProject)} />
+            <Route exact path="/projects" component={Projects} />
+            <Route exact path="/projects/:projectId" component={Project} />
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <Login
+                  login={(userName, userRole, userAvatar) =>
+                    this.login(userName, userRole, userAvatar)
+                  }
+                />
+              )}
+            />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
+            <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
+            <Route exact path="/unauthorized" component={Unauthorized} />
+            <Route component={NotFoundPage} />
+          </Switch>
+          {window.location.pathname === "/add" ||
             window.location.pathname === "/home" ||
             window.location.pathname === "/consumer-home" ||
             window.location.pathname === "/architect-home" ||
             window.location.pathname === "/projects" ? (
               <Footer />
             ) : null}
-          </Router>
-        </div>
-      </ConfigProvider>
+        </Router>
+      </div>
     );
   }
 }
