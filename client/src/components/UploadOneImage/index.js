@@ -3,18 +3,6 @@ import { Upload, Icon, message } from "antd";
 
 import avatar from "../../assets/user-avatar.png";
 
-const style = {
-  objectFit: "cover",
-  objectPosition: "80% 80%",
-  display: "inline",
-  width: "200px",
-  height: "200px",
-  margin: "0 auto",
-  borderRadius: "50%",
-  backgroundSize: "cover",
-  backgrounPosition: "center",
-};
-
 class UploadOneFile extends React.Component {
   state = {
     loading: false,
@@ -60,7 +48,7 @@ class UploadOneFile extends React.Component {
   };
 
   render() {
-    const { currentImage, buttonStyleClassname, label, showPlus } = this.props;
+    const { currentImage, buttonStyleClassname, label, showPlus, imageStyle } = this.props;
     const { loading } = this.state;
     const uploadButton = (
       <div className={buttonStyleClassname}>
@@ -79,8 +67,9 @@ class UploadOneFile extends React.Component {
         beforeUpload={this.beforeUpload}
         onChange={this.handleChange}
       >
-        {/* <img src={currentImage || avatar} alt="avatar" style={style} /> */}
-        {currentImage ? <img src={currentImage} alt="avatar" style={style} /> : null}
+        {console.log(5555555, currentImage)}
+        {currentImage ? <img src={currentImage} alt="avatar" style={imageStyle} /> : null}
+
         {uploadButton}
       </Upload>
     );

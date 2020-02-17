@@ -40,4 +40,16 @@ const paypalAccountValidation = () =>
       .matches(/^[0-9]{10,11}$/, "يجب ادخال قيمة صحيحة لحساب البي بال"),
   });
 
-export { passwordValidation, personalDataValidation, paypalAccountValidation };
+const imageStyle = () => ({
+  objectFit: "cover",
+  objectPosition: "80% 80%",
+  display: "inline",
+  width: "200px",
+  height: "200px",
+  margin: "0 auto",
+  borderRadius: "50%",
+  backgroundSize: "cover",
+  backgrounPosition: "center",
+});
+
+export { passwordValidation, personalDataValidation, paypalAccountValidation, imageStyle };

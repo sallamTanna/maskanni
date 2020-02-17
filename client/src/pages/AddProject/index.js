@@ -617,7 +617,7 @@ class AddProject extends React.Component {
                   projectMainImage={this.handleProjectMainImage}
                   showPlus
                   label="ارفع صورة الواجهة"
-                  // currentImage = {}
+                  currentImage={this.state.projectMainImage}
                 />
               </div>
             </div>
