@@ -196,4 +196,9 @@ const initalState = () => ({
   gardenDescription: [],
 });
 
-export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initalState };
+const imageStyle = () => ({
+  width: "86px",
+  height: "86px",
+});
+
+export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initalState, imageStyle };

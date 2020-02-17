@@ -27,6 +27,7 @@ import {
   edibleInputValidation,
   edibleInputStyle,
   initalState,
+  imageStyle,
 } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
@@ -618,6 +619,7 @@ class AddProject extends React.Component {
                   showPlus
                   label="ارفع صورة الواجهة"
                   currentImage={this.state.projectMainImage}
+                  imageStyle={imageStyle()}
                 />
               </div>
             </div>

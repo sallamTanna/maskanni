@@ -1,7 +1,7 @@
 import React from "react";
 import { Upload, Icon, message } from "antd";
 
-import avatar from "../../assets/user-avatar.png";
+import Spinner from "../Spinner";
 
 class UploadOneFile extends React.Component {
   state = {
@@ -29,6 +29,7 @@ class UploadOneFile extends React.Component {
   };
 
   handleChange = info => {
+    this.setState({ isLoading: true });
     if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
@@ -42,6 +43,7 @@ class UploadOneFile extends React.Component {
         this.setState({
           imageUrl,
           loading: false,
+          isLoading: false,
         });
       });
     }
@@ -49,29 +51,31 @@ class UploadOneFile extends React.Component {
 
   render() {
     const { currentImage, buttonStyleClassname, label, showPlus, imageStyle } = this.props;
-    const { loading } = this.state;
+    const { loading, isLoading } = this.state;
     const uploadButton = (
       <div className={buttonStyleClassname}>
         <Icon type={loading ? "loading" : showPlus ? "plus" : ""} />
         <div className="ant-upload-text">{label}</div>
       </div>
     );
-    // const { imageUrl } = this.state;
     return (
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={this.beforeUpload}
-        onChange={this.handleChange}
-      >
-        {console.log(5555555, currentImage)}
-        {currentImage ? <img src={currentImage} alt="avatar" style={imageStyle} /> : null}
+      <>
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
 
-        {uploadButton}
-      </Upload>
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={this.beforeUpload}
+          onChange={this.handleChange}
+        >
+          {currentImage ? <img src={currentImage} alt="avatar" style={imageStyle} /> : null}
+
+          {uploadButton}
+        </Upload>
+      </>
     );
   }
 }
