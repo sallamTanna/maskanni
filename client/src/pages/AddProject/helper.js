@@ -150,7 +150,7 @@ const edibleInputStyle = () => ({
 });
 
 const initalState = () => ({
-  isLoading: false,
+  isLoading: true,
   errors: false,
   errorMessage: "",
   projectName: "",

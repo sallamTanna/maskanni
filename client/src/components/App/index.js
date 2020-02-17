@@ -20,6 +20,8 @@ import avatarIcon from "../../assets/user-avatar.png";
 
 import "./style.css";
 
+const pathnames = ["/add", "/consumer-home", "/architect-home", "/projects"];
+
 class App extends Component {
   state = {
     isLoading: true,
@@ -74,11 +76,7 @@ class App extends Component {
       <ConfigProvider locale={ar}>
         <div className="App">
           <Router>
-            {window.location.pathname === "/add" ||
-            window.location.pathname === "/home" ||
-            window.location.pathname === "/consumer-home" ||
-            window.location.pathname === "/architect-home" ||
-            window.location.pathname === "/projects" ? (
+            {pathnames.indexOf(window.location.pathname) > -1 ? (
               <Navbar
                 isLogged={isLogged}
                 username={username}
@@ -108,13 +106,7 @@ class App extends Component {
               <Route exact path="/unauthorized" component={Unauthorized} />
               <Route component={NotFoundPage} />
             </Switch>
-            {window.location.pathname === "/add" ||
-            window.location.pathname === "/home" ||
-            window.location.pathname === "/consumer-home" ||
-            window.location.pathname === "/architect-home" ||
-            window.location.pathname === "/projects" ? (
-              <Footer />
-            ) : null}
+            {pathnames.indexOf(window.location.pathname) > -1 ? <Footer /> : null}
           </Router>
         </div>
       </ConfigProvider>

@@ -80,7 +80,7 @@ class UploadOneFile extends React.Component {
         onChange={this.handleChange}
       >
         {/* <img src={currentImage || avatar} alt="avatar" style={style} /> */}
-        <img src={currentImage} alt="avatar" style={style} />
+        {currentImage ? <img src={currentImage} alt="avatar" style={style} /> : null}
         {uploadButton}
       </Upload>
     );

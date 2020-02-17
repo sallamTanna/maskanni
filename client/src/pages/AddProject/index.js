@@ -41,6 +41,12 @@ const imagesURLs = [];
 class AddProject extends React.Component {
   state = initalState();
 
+  componentDidMount() {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
 
@@ -515,6 +521,43 @@ class AddProject extends React.Component {
       );
     }
 
+    const mainProps = [
+      {
+        src: livingRoom,
+        alt: "livingRoom",
+        name: "livingRoomsNumber",
+        placeholder: "غرف المعيشة",
+        value: livingRoomsNumber,
+      },
+      {
+        src: bedRoom,
+        alt: "bedRoom",
+        name: "bedRoomsNumber",
+        placeholder: "غرف النوم",
+        value: bedRoomsNumber,
+      },
+      {
+        src: bathRoom,
+        alt: "bathRoom",
+        name: "bathRoomsNumber",
+        placeholder: "الحمامات",
+        value: bathRoomsNumber,
+      },
+      {
+        src: stairs,
+        alt: "stairs",
+        name: "floorsNumber",
+        placeholder: "الأدوار",
+        value: floorsNumber,
+      },
+      {
+        src: carGarage,
+        alt: "carGarage",
+        name: "carGarageNumber",
+        placeholder: "كراج السيارات",
+        value: carGarageNumber,
+      },
+    ];
     return (
       <div>
         <Header title="أضافة تصميم جديد" />
@@ -550,51 +593,17 @@ class AddProject extends React.Component {
             <div className="main-prop">
               <p className="main-prop__title">المواصفات الرئيسية</p>
               <div className="main-prop__data">
-                <div>
-                  <img src={livingRoom} alt="livingRoom." />
-                  <Input
-                    name="livingRoomsNumber"
-                    value={livingRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="غرف المعيشة"
-                  />
-                </div>
-                <div>
-                  <img src={bedRoom} alt="bedRoom" />
-                  <Input
-                    name="bedRoomsNumber"
-                    value={bedRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="غرف النوم"
-                  />
-                </div>
-                <div>
-                  <img src={bathRoom} alt="bathRoom" />
-                  <Input
-                    name="bathRoomsNumber"
-                    value={bathRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الحمامات"
-                  />
-                </div>
-                <div>
-                  <img src={stairs} alt="stairs" />
-                  <Input
-                    name="floorsNumber"
-                    value={floorsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الأدوار"
-                  />
-                </div>
-                <div>
-                  <img src={carGarage} alt="carGarage" />
-                  <Input
-                    name="carGarageNumber"
-                    value={carGarageNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="كراج السيارات"
-                  />
-                </div>
+                {mainProps.map(input => (
+                  <div>
+                    <img src={input.src} alt={input.alt} />
+                    <Input
+                      name={input.name}
+                      value={input.value}
+                      onChange={this.handleNormalInputChange}
+                      placeholder={input.placeholder}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             <div className="project-pic">

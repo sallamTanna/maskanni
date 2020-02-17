@@ -43,7 +43,8 @@ class Account extends React.Component {
     });
 
   handleSavePersonalInfo = () => {
-    const { fullName, email, mobile, address, user_id } = this.state;
+    const { fullName, email, mobile, address, user } = this.state;
+    const { id } = user;
     const schema = personalDataValidation();
 
     schema
@@ -53,7 +54,7 @@ class Account extends React.Component {
           isLoading: true,
         });
         axios
-          .put(`/v1/users/${user_id}`, { fullName, email, mobile, address })
+          .put(`/v1/users/${id}`, { fullName, email, mobile, address })
           .then(() =>
             this.setState(
               {
@@ -82,7 +83,8 @@ class Account extends React.Component {
   };
 
   handleChangePassword = () => {
-    const { newPassword, password, confirmPassword, user_id } = this.state;
+    const { newPassword, password, confirmPassword, user } = this.state;
+    const { id } = user;
     const schema = passwordValidation();
 
     schema
@@ -92,7 +94,7 @@ class Account extends React.Component {
           isLoading: true,
         });
         axios
-          .put(`/v1/users/${user_id}`, { newPassword, password })
+          .put(`/v1/users/${id}`, { newPassword, password })
           .then(() =>
             this.setState(
               {
@@ -120,7 +122,8 @@ class Account extends React.Component {
   };
 
   handlePaypalAccount = () => {
-    const { paypal, user_id } = this.state;
+    const { paypal, user } = this.state;
+    const { id } = user;
     const schema = paypalAccountValidation();
 
     schema
@@ -130,7 +133,7 @@ class Account extends React.Component {
           isLoading: true,
         });
         axios
-          .put(`/v1/users/${user_id}`, { paypal })
+          .put(`/v1/users/${id}`, { paypal })
           .then(() =>
             this.setState(
               {
@@ -162,6 +165,9 @@ class Account extends React.Component {
     // const { avbarAvatar } = this.props;
     const { user } = this.state;
     const { id } = user;
+    this.setState({
+      isLoading: true,
+    });
     axios
       .put(`/v1/users/${id}`, { profileImage: file })
       .then(() =>
@@ -170,6 +176,7 @@ class Account extends React.Component {
           uploadingImgError: false,
           uploadingImgErrorMsg: "",
           avatar: file,
+          isLoading: false,
         })
       )
       .catch(error =>
