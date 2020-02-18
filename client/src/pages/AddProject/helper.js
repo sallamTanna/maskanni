@@ -139,7 +139,7 @@ const edibleInputValidation = () =>
     str: yup.string().required("يرجى اضافة الوصف"),
   });
 
-const edibleInputStyle = () => ({
+const edibleInputStyle = {
   padding: "2px",
   border: "1px solid #d9d9d9",
   borderRadius: "3px",
@@ -147,9 +147,9 @@ const edibleInputStyle = () => ({
   marginBottom: "3%",
   color: "#909090",
   paddingRight: "3%",
-});
+};
 
-const initalState = () => ({
+const initialState = {
   isLoading: true,
   errors: false,
   errorMessage: "",
@@ -194,11 +194,11 @@ const initalState = () => ({
   kitchenDescription: [],
   garageDescription: [],
   gardenDescription: [],
-});
+};
 
-const imageStyle = () => ({
+const imageStyle = {
   width: "86px",
   height: "86px",
-});
+};
 
-export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initalState, imageStyle };
+export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initialState, imageStyle };

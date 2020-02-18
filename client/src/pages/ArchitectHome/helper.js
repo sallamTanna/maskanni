@@ -40,7 +40,7 @@ const paypalAccountValidation = () =>
       .matches(/^[0-9]{10,11}$/, "يجب ادخال قيمة صحيحة لحساب البي بال"),
   });
 
-const imageStyle = () => ({
+const imageStyle = {
   objectFit: "cover",
   objectPosition: "80% 80%",
   display: "inline",
@@ -50,6 +50,6 @@ const imageStyle = () => ({
   borderRadius: "50%",
   backgroundSize: "cover",
   backgrounPosition: "center",
-});
+};
 
 export { passwordValidation, personalDataValidation, paypalAccountValidation, imageStyle };

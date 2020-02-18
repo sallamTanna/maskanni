@@ -36,14 +36,15 @@ class ArchitectHome extends React.Component {
     axios
       .get("/v1/check")
       .then(response => {
+        const { id, username, role, email, avatar, isLogged } = response.data.response;
         this.setState({
           isLoading: false,
-          id: response.data.response.id,
-          username: response.data.response.username,
-          role: response.data.response.role,
-          isLogged: response.data.response.isLogged,
-          email: response.data.response.email,
-          avatar: response.data.response.avatar,
+          id,
+          username,
+          role,
+          isLogged,
+          email,
+          avatar,
         });
       })
       .catch(() => {

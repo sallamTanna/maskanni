@@ -26,7 +26,7 @@ import {
   saveProjectValidation,
   edibleInputValidation,
   edibleInputStyle,
-  initalState,
+  initialState,
   imageStyle,
 } from "./helper";
 import { alert } from "../../utilities";
@@ -40,7 +40,7 @@ const filesURLs = [];
 const imagesURLs = [];
 
 class AddProject extends React.Component {
-  state = initalState();
+  state = initialState;
 
   componentDidMount() {
     this.setState({
@@ -424,7 +424,7 @@ class AddProject extends React.Component {
 
     const bedRoomDescriptionInputs = [
       <Paragraph
-        style={edibleInputStyle()}
+        style={edibleInputStyle}
         editable={{
           onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
         }}
@@ -435,7 +435,7 @@ class AddProject extends React.Component {
 
     const kitchenDescriptionInputs = [
       <Paragraph
-        style={edibleInputStyle()}
+        style={edibleInputStyle}
         editable={{
           onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
         }}
@@ -446,7 +446,7 @@ class AddProject extends React.Component {
 
     const garageDescriptionsInput = [
       <Paragraph
-        style={edibleInputStyle()}
+        style={edibleInputStyle}
         editable={{
           onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
         }}
@@ -457,7 +457,7 @@ class AddProject extends React.Component {
 
     const gardenDescriptionInputs = [
       <Paragraph
-        style={edibleInputStyle()}
+        style={edibleInputStyle}
         editable={{
           onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
         }}
@@ -469,7 +469,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= bedRoomInputsNumber; i++) {
       bedRoomDescriptionInputs.push(
         <Paragraph
-          style={edibleInputStyle()}
+          style={edibleInputStyle}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
@@ -483,7 +483,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= kitchensNumber; i++) {
       kitchenDescriptionInputs.push(
         <Paragraph
-          style={edibleInputStyle()}
+          style={edibleInputStyle}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
@@ -497,7 +497,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= garagesNumber; i++) {
       garageDescriptionsInput.push(
         <Paragraph
-          style={edibleInputStyle()}
+          style={edibleInputStyle}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
@@ -511,7 +511,7 @@ class AddProject extends React.Component {
     for (let i = 1; i <= gardensNumber; i++) {
       gardenDescriptionInputs.push(
         <Paragraph
-          style={edibleInputStyle()}
+          style={edibleInputStyle}
           editable={{
             onChange: str =>
               this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),
@@ -619,7 +619,7 @@ class AddProject extends React.Component {
                   showPlus
                   label="ارفع صورة الواجهة"
                   currentImage={this.state.projectMainImage}
-                  imageStyle={imageStyle()}
+                  imageStyle={imageStyle}
                 />
               </div>
             </div>

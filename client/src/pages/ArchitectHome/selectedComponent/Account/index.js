@@ -348,7 +348,7 @@ class Account extends React.Component {
             buttonStyleClassname="account-page__uploadImage"
             projectMainImage={this.handleProfileChange}
             currentImage={avatar}
-            imageStyle={imageStyle()}
+            imageStyle={imageStyle}
           />
         </div>
       </div>
