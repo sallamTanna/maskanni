@@ -70,6 +70,11 @@ class App extends Component {
       avatar: avatar || avatarIcon,
     });
 
+  changeAvatar = avatar =>
+    this.setState({
+      avatar,
+    });
+
   render() {
     const { isLogged, username, role, avatar } = this.state;
     return (
@@ -101,7 +106,13 @@ class App extends Component {
                 )}
               />
               <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
+              <Route
+                exact
+                path="/architect-home"
+                render={() => (
+                  <ArchitectHome changeNavAvatar={newAvatar => this.changeAvatar(newAvatar)} />
+                )}
+              />
               <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
               <Route exact path="/unauthorized" component={Unauthorized} />
               <Route component={NotFoundPage} />

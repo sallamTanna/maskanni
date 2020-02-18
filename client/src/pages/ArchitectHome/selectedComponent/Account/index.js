@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-state */
 import React from "react";
@@ -38,9 +39,19 @@ class Account extends React.Component {
     profileImage: "",
     uploadingImgError: false,
     uploadingImgErrorMsg: "",
-    user: this.props.user,
     avatar: this.props.user.avatar,
+    user: this.props.user,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.user.avatar !== state.user.avatar) {
+      return {
+        user: props.user,
+        avatar: props.user.avatar,
+      };
+    }
+    return null;
+  }
 
   handleInputChange = e =>
     this.setState({
@@ -167,29 +178,31 @@ class Account extends React.Component {
   };
 
   handleProfileChange = file => {
-    // const { avbarAvatar } = this.props;
-    const { user } = this.state;
+    const { user } = this.props;
     const { id } = user;
     this.setState({
       isLoading: true,
     });
     axios
       .put(`/v1/users/${id}`, { profileImage: file })
-      .then(() =>
-        this.setState({
-          profileImage: file,
-          uploadingImgError: false,
-          uploadingImgErrorMsg: "",
-          avatar: file,
-          isLoading: false,
-        })
-      )
-      .catch(error =>
+      .then(() => {
+        this.setState(
+          {
+            profileImage: file,
+            uploadingImgError: false,
+            uploadingImgErrorMsg: "",
+            avatar: file,
+            isLoading: false,
+          },
+          () => this.props.changeAvatar(file)
+        );
+      })
+      .catch(error => {
         this.setState({
           uploadingImgError: true,
           uploadingImgErrorMsg: error.response.data.error.msg,
-        })
-      );
+        });
+      });
   };
 
   render() {

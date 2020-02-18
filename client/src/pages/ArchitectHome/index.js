@@ -1,9 +1,13 @@
 import React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import Button from "../../components/Button";
-import selectedComponent from "./details";
+import Spinner from "../../components/Spinner";
+// import selectedComponent from "./details";
+import Account from "./selectedComponent/Account";
+import Designs from "./selectedComponent/Designs";
+import Sales from "./selectedComponent/Sales";
 
 import "./style.css";
 
@@ -12,6 +16,13 @@ class ArchitectHome extends React.Component {
     title: "حسابي",
     key: "1",
     isResponsive: false,
+    isLoading: true,
+    id: "",
+    username: "",
+    role: "",
+    isLogged: false,
+    email: "",
+    avatar: "",
   };
 
   componentDidMount() {
@@ -21,6 +32,29 @@ class ArchitectHome extends React.Component {
         isResponsive: true,
       });
     }
+    axios
+      .get("/v1/check")
+      .then(response => {
+        this.setState(
+          {
+            isLoading: false,
+            id: response.data.response.id,
+            username: response.data.response.username,
+            role: response.data.response.role,
+            isLogged: response.data.response.isLogged,
+            email: response.data.response.email,
+            avatar: response.data.response.avatar,
+          },
+          () => {
+            if (!this.state.isLogged) this.props.history.push("/login");
+          }
+        );
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
   }
 
   handleSubNavClick = e => {
@@ -31,11 +65,51 @@ class ArchitectHome extends React.Component {
   };
 
   render() {
-    const { user } = this.props;
-    const { title, isResponsive, key } = this.state;
+    const { changeNavAvatar } = this.props;
+    const {
+      title,
+      isResponsive,
+      key,
+      isLoading,
+      isLogged,
+      avatar,
+      username,
+      role,
+      id,
+      email,
+    } = this.state;
+
+    const user = {
+      id,
+      username,
+      role,
+      isLogged,
+      email,
+      avatar,
+    };
+
+    let selectedComponent;
+    switch (key) {
+      case "1":
+        selectedComponent = (
+          <Account user={{ ...user }} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
+        );
+        break;
+      case "2":
+        selectedComponent = <Designs user={user} />;
+        break;
+      case "3":
+        selectedComponent = <Sales user={user} />;
+        break;
+      default:
+        selectedComponent = (
+          <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
+        );
+    }
 
     return (
       <>
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         <div className="architectNavbar">
           <div>
             <h1 className="architectNavbar__title">{title}</h1>
@@ -58,7 +132,7 @@ class ArchitectHome extends React.Component {
             </div>
           ) : null}
         </div>
-        <div className="selected-component"> {selectedComponent(key, user)}</div>
+        <div className="selected-component">{selectedComponent}</div>
       </>
     );
   }
