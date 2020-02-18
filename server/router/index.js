@@ -6,6 +6,7 @@ const checkAuth = require("../controllers/auth/checkAuth");
 const logout = require("../controllers/auth/logout");
 const saveNewProject = require("../controllers/projects/saveNewProject");
 const getAllProjects = require("../controllers/projects/getAllProjects");
+const getProject = require("../controllers/projects/getProject");
 const getUserProjects = require("../controllers/users/getUserProjects");
 const updateUserData = require("../controllers/users/updateUser");
 
@@ -22,5 +23,8 @@ router.put("/users/:user_id", updateUserData);
 // Projects
 router.post("/projects", saveNewProject); // add new project
 router.get("/projects", getAllProjects); // return all projects for all users
+
+// specific projecet
+router.get("/projects/:id", getProject);
 
 module.exports = router;

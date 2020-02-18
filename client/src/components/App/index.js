@@ -13,6 +13,7 @@ import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
 import AddProject from "../../pages/AddProject";
 import Projects from "../../pages/Projects";
+import Project from "../../pages/Project";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import withAuth from "../../hoc/withAuth";
@@ -94,6 +95,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/add" component={withAuth(AddProject)} />
               <Route exact path="/projects" component={Projects} />
+              <Route exact path="/projects/:projectId" component={Project} />
               <Route
                 exact
                 path="/login"

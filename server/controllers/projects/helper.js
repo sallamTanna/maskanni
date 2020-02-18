@@ -23,11 +23,11 @@ exports.addNewProject = (
   user_id
 ) => ({
   text: `INSERT INTO projects(
-            name, 
-            description, 
-            size, 
-            width, 
-            length, 
+            name,
+            description,
+            size,
+            width,
+            length,
             height,
             livingrooms_number, bathrooms_number,
             car_garage_number,
@@ -36,7 +36,7 @@ exports.addNewProject = (
             kitchen_description ,
             rooms_description ,
             garage_description ,
-            garden_description, 
+            garden_description,
             charts,
             total_price,
             engineer_price,
@@ -75,4 +75,15 @@ exports.addNewProject = (
 exports.getAllProjects = () => ({
   text: "select * FROM projects WHERE sold = $1",
   values: [false]
-});
+})
+
+exports.getProject = (id) => ({
+  text: 'SELECT * FROM projects WHERE id = $1',
+  values: [id]
+})
+
+exports.getRandomProjects = (id) => ({
+  text: 'SELECT * FROM projects WHERE id != $1 ORDER BY random() LIMIT 4',
+  values: [id]
+})
+

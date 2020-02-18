@@ -1,13 +1,13 @@
 import React from "react";
 import { Button } from "antd";
 
-const ButtonComponent = props => {
-  const { label, onClick, className } = props;
+function ButtonComponent(props) {
+  const { label, onClick, className, block } = props;
   return (
-    <Button className={className} onClick={onClick}>
+    <Button block={block} className={className} onClick={onClick}>
       {label}
     </Button>
   );
-};
+}
 
 export default ButtonComponent;

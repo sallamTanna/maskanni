@@ -1,0 +1,440 @@
+:root {
+  --primary: #ffc000;
+  --gray: #909090;
+}
+
+a{
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.bold {
+  font-size: 1.3rem;
+}
+
+.margin-bot-2{
+  margin-bottom: 2rem;
+}
+
+.margin-top-2rem{
+  margin-top: 2rem;
+}
+
+.margin-top-halfrem{
+  margin-top: .5rem;
+}
+
+.margin-top-1{
+  margin-top: 1rem;
+  line-height: 2;
+}
+
+.margin-1-5-right{
+  margin-right: 1.5rem;
+}
+
+.gray-small {
+  color: var(--gray);
+  font-size: .8rem;
+}
+
+.container {
+  padding: 3% 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* flex-wrap: wrap; */
+}
+
+.check-col {
+  display: grid;
+}
+
+.bottom-container {
+  padding: 0 5%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bottom-container > div {
+  margin-right: 0;
+  width: 23%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cl-flexstart {
+  align-items: flex-start;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mid-font-size{
+  font-size: 12px;
+}
+
+.line-hy {
+  line-height: 2;
+}
+
+.space-bt{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.right-section {
+  width: 68%;
+  /* background-color: brown; */
+}
+
+.left-section {
+  width: 30%;
+}
+
+.shadow {
+  background-color: #ffffff;
+  color: #202020;
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 1%;
+}
+
+.lf-shadow {
+  background-color: #ffffff;
+  color: #202020;
+  box-shadow: 0 4px 8px #dad4d4;
+  border-radius: 1%;
+  padding: 6%;
+}
+
+
+.share-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 1% 0;
+}
+
+.shortDetails-section {
+  /* padding-bottom: 3%; */
+  /* margin-bottom: 2%; */
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-wrap: wrap;
+  /* height: 139px; */
+}
+
+.shortDetails-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 3% 0;
+
+}
+
+.gallery-sec{
+  width: 48%;
+  height: 30rem;
+}
+
+.gallery-right {
+}
+
+.gallery-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gallery-left-up {
+  height: 48%;
+  width: 100%;
+}
+
+.rotateimg {
+    /* rotate the image */
+  /* transform: rotate(-90deg); */
+}
+
+.gallery-left-down {
+  height: 48%;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.gallery-left-down-right {
+  height: 100%;
+  width: 47%;
+}
+
+.gallery-left-down-left {
+  height: 100%;
+  width: 47%;
+}
+
+.half-hy {
+  width: 100%;
+  height: 46%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gallery section */
+
+.gallery {
+  display: grid;
+  margin-top: 1rem;
+  height: 40rem;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  /* grid-template-rows: repeat(5, 1fr); */
+  grid-gap: 1rem;
+}
+
+.gallery img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.tall {
+  grid-row: span 4;
+}
+
+.wide {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+
+.half-tall {
+  grid-row: span 2;
+}
+
+.f-big3 {
+  font-size: 3rem;
+  color: var(--primary);
+}
+
+.form {
+  margin-top: -1.5rem;
+}
+
+.form-select {
+  margin-top: 0.5rem;
+}
+
+.warn{
+  margin-top: 1rem;
+  background-color: rgba(255, 250, 235, 100%);
+  padding: 1rem 3rem;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.edit-time::before{
+  content: url("../../assets/bulb.svg");
+  position: absolute;
+  right: .7rem;
+}
+
+.warn-msg{
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.buy-btn.ant-btn{
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  height: 3rem;
+  margin-top: 1rem;
+  font-weight: bolder;
+}
+
+/* project description */
+
+.project-desc {
+  padding: 1rem;
+  line-height: 2;
+}
+
+.details-info {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.dt-info-title {
+  width: 40%;
+}
+
+.dt-info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 60%;
+  text-align: right;
+}
+
+.dt-info-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.dt-info-list.dt-info-list__wrap li {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* antd custom style */
+.ant-select-dropdown-menu{
+  padding-right: 0;
+}
+
+.ant-select-selection__placeholder{
+  text-align: right;
+  right: 0;
+}
+
+.ant-select-selection-selected-value{
+  padding-right: 0;
+  float: right;
+}
+
+.ant-select-arrow{
+  right: initial;
+  left: 11px;
+}
+
+.ant-checkbox-checked
+.ant-checkbox-inner
+{
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.check-col {
+  line-height: 2;
+}
+
+.check-col .ant-checkbox-group-item:last-child {
+  margin-right: 8px;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper {
+  color: var(--gray);
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper :not(.ant-checkbox-checked) .ant-checkbox-inner {
+  background-color: #b9b9bb;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper .ant-checkbox::after{
+  content: "x";
+  color: white;
+  position: absolute;
+  top: 0rem;
+  right: .3rem;
+}
+
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper.ant-checkbox-wrapper-checked {
+  color: black;
+}
+
+.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-wrapper-disabled span{
+  color: black;
+}
+
+/* react-image-viewer */
+.previous, .next {
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/* responsive */
+
+@media only screen and (max-width: 900px) {
+
+  .container{
+    display: block;
+  }
+
+  .right-section{
+    width: 100%;
+  }
+
+  .left-section{
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .gallery{
+    height: 30rem;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+
+  .gallery {
+    display: block;
+    height: initial;
+  }
+
+  .gallery .shadow {
+    margin-bottom: 1rem;
+  }
+
+  .bottom-container > div {
+    margin-right: 0;
+    width: 45%;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .bottom-container > div {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+  .dt-info-list.wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dt-info-list.smaller-width{
+    width: 18%;
+  }
+
+  .dt-info-list.small-width{
+    width: 30%;
+  }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }
