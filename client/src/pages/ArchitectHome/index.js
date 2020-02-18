@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import React from "react";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
@@ -26,7 +27,7 @@ class ArchitectHome extends React.Component {
   };
 
   componentDidMount() {
-    // eslint-disable-next-line no-undef
+    const { history } = this.props;
     if (window.screen.width <= 425) {
       this.setState({
         isResponsive: true,
@@ -35,25 +36,23 @@ class ArchitectHome extends React.Component {
     axios
       .get("/v1/check")
       .then(response => {
+        this.setState({
+          isLoading: false,
+          id: response.data.response.id,
+          username: response.data.response.username,
+          role: response.data.response.role,
+          isLogged: response.data.response.isLogged,
+          email: response.data.response.email,
+          avatar: response.data.response.avatar,
+        });
+      })
+      .catch(() => {
         this.setState(
           {
             isLoading: false,
-            id: response.data.response.id,
-            username: response.data.response.username,
-            role: response.data.response.role,
-            isLogged: response.data.response.isLogged,
-            email: response.data.response.email,
-            avatar: response.data.response.avatar,
           },
-          () => {
-            if (!this.state.isLogged) this.props.history.push("/login");
-          }
+          () => history.push("/login")
         );
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-        });
       });
   }
 
@@ -138,4 +137,4 @@ class ArchitectHome extends React.Component {
   }
 }
 
-export default ArchitectHome;
+export default withRouter(ArchitectHome);
