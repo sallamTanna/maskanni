@@ -8,6 +8,10 @@
   height: 400px;
 }
 
+.project:hover {
+  cursor: pointer;
+}
+
 .project__icons {
   display: flex;
   justify-content: space-between;
