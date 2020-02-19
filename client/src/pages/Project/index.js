@@ -6,9 +6,6 @@ import { Breadcrumb } from "antd";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
 
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-
 import ProjectEx from "../../components/Project";
 
 import defaultBG from "../../assets/default-pg.png";
@@ -194,7 +191,6 @@ class Project extends Component {
           response: { data },
         },
       } = await axios.get(`/v1/projects/${projectId}`);
-      console.log("data", data);
       this.setState(state => {
         return {
           ...state,
@@ -204,7 +200,6 @@ class Project extends Component {
         };
       });
     } catch (err) {
-      console.log(111, { err });
       const error = err.response && err.response.data && err.response.data.error;
       this.setState({
         errs: true,
@@ -218,7 +213,6 @@ class Project extends Component {
     const { isLoading, errs, errMsg, project, randomProjects } = this.state;
     return (
       <>
-        <Navbar />
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         {errs ? <Message message={errMsg} type="error" /> : null}
 
@@ -281,7 +275,6 @@ class Project extends Component {
             </div>
           </>
         )}
-        <Footer />
       </>
     );
   }
