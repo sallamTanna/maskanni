@@ -1,4 +1,58 @@
+import React from "react";
 import * as yup from "yup";
+import { Typography } from "antd";
+
+import livingRoom from "../../assets/living-room.svg";
+import bedRoom from "../../assets/bed-room.svg";
+import bathRoom from "../../assets/bath-room.svg";
+import stairs from "../../assets/stairs.svg";
+import carGarage from "../../assets/car-garage.svg";
+
+const { Paragraph } = Typography;
+
+const projectMainProp = (
+  livingRoomsNumber,
+  bedRoomsNumber,
+  bathRoomsNumber,
+  floorsNumber,
+  carGarageNumber
+) => [
+  {
+    src: livingRoom,
+    alt: "livingRoom",
+    name: "livingRoomsNumber",
+    placeholder: "غرف المعيشة",
+    value: livingRoomsNumber,
+  },
+  {
+    src: bedRoom,
+    alt: "bedRoom",
+    name: "bedRoomsNumber",
+    placeholder: "غرف النوم",
+    value: bedRoomsNumber,
+  },
+  {
+    src: bathRoom,
+    alt: "bathRoom",
+    name: "bathRoomsNumber",
+    placeholder: "الحمامات",
+    value: bathRoomsNumber,
+  },
+  {
+    src: stairs,
+    alt: "stairs",
+    name: "floorsNumber",
+    placeholder: "الأدوار",
+    value: floorsNumber,
+  },
+  {
+    src: carGarage,
+    alt: "carGarage",
+    name: "carGarageNumber",
+    placeholder: "كراج السيارات",
+    value: carGarageNumber,
+  },
+];
 
 const saveProjectValidation = () => {
   return yup.object().shape({
@@ -201,4 +255,23 @@ const imageStyle = {
   height: "86px",
 };
 
-export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initialState, imageStyle };
+const generateDescriptionInputs = ({ descriptionArray, stateValue, description, onChange }) => [
+  <Paragraph
+    style={edibleInputStyle}
+    editable={{
+      onChange: str => onChange(str, descriptionArray, stateValue),
+    }}
+  >
+    {description}
+  </Paragraph>,
+];
+
+export {
+  projectMainProp,
+  saveProjectValidation,
+  edibleInputValidation,
+  edibleInputStyle,
+  initialState,
+  imageStyle,
+  generateDescriptionInputs,
+};

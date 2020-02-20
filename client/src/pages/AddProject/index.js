@@ -6,7 +6,6 @@ import axios from "axios";
 
 import { Typography } from "antd";
 import Input from "../../components/Input";
-import TextArea from "../../components/TextArea";
 import CheckBox from "../../components/CheckBox";
 import InputNumber from "../../components/InputNumber";
 import Button from "../../components/Button";
@@ -17,17 +16,17 @@ import Project from "../../components/Project";
 import UploadImages from "../../components/UploadImages";
 import UploadOneImage from "../../components/UploadOneImage";
 import UploadFile from "../../components/UploadFile";
-import livingRoom from "../../assets/living-room.svg";
-import bedRoom from "../../assets/bed-room.svg";
-import bathRoom from "../../assets/bath-room.svg";
-import stairs from "../../assets/stairs.svg";
-import carGarage from "../../assets/car-garage.svg";
+import MainProjectProp from "./MainProjectProp";
+import InputWithLabel from "./InputWithLabel";
+import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
+import Section from "./Section";
 import {
   saveProjectValidation,
   edibleInputValidation,
   edibleInputStyle,
   initialState,
   imageStyle,
+  generateDescriptionInputs,
 } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
@@ -51,15 +50,14 @@ class AddProject extends React.Component {
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
 
-    if (name === "") {
+    if (name === "")
       this.setState({
         [e.target.name]: e.target.name,
       });
-    } else {
+    else
       this.setState({
         [e.target.name]: "",
       });
-    }
   };
 
   handlePriceChange = value =>
@@ -352,7 +350,7 @@ class AddProject extends React.Component {
   };
 
   handleInputChange = (str, descriptionArray, stateValue) => {
-    // str: is the the value we got aflter clicking "enter"
+    // str: is the the value we got after clicking "enter"
     // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
     // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
     // inputValidation
@@ -422,16 +420,23 @@ class AddProject extends React.Component {
       inputEmptyErrorMsg,
     } = this.state;
 
-    const bedRoomDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle}
-        editable={{
-          onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
-        }}
-      >
-        {this.state.roomsDescription0 || "وصف غرف النوم"}
-      </Paragraph>,
-    ];
+    const bedRoomDescriptionInputs = generateDescriptionInputs(
+      "bedRoomsDescription",
+      "roomsDescription0",
+      this.state.roomsDescription0 || "وصف غرف النوم",
+      this.handleInputChange
+    );
+    // descriptionArray, stateValue
+    // const bedRoomDescriptionInputs = [
+    //   <Paragraph
+    //     style={edibleInputStyle}
+    //     editable={{
+    //       onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
+    //     }}
+    //   >
+    //     {this.state.roomsDescription0 || "وصف غرف النوم"}
+    //   </Paragraph>,
+    // ];
 
     const kitchenDescriptionInputs = [
       <Paragraph
@@ -522,43 +527,6 @@ class AddProject extends React.Component {
       );
     }
 
-    const mainProps = [
-      {
-        src: livingRoom,
-        alt: "livingRoom",
-        name: "livingRoomsNumber",
-        placeholder: "غرف المعيشة",
-        value: livingRoomsNumber,
-      },
-      {
-        src: bedRoom,
-        alt: "bedRoom",
-        name: "bedRoomsNumber",
-        placeholder: "غرف النوم",
-        value: bedRoomsNumber,
-      },
-      {
-        src: bathRoom,
-        alt: "bathRoom",
-        name: "bathRoomsNumber",
-        placeholder: "الحمامات",
-        value: bathRoomsNumber,
-      },
-      {
-        src: stairs,
-        alt: "stairs",
-        name: "floorsNumber",
-        placeholder: "الأدوار",
-        value: floorsNumber,
-      },
-      {
-        src: carGarage,
-        alt: "carGarage",
-        name: "carGarageNumber",
-        placeholder: "كراج السيارات",
-        value: carGarageNumber,
-      },
-    ];
     return (
       <div>
         <Header title="أضافة تصميم جديد" />
@@ -570,45 +538,41 @@ class AddProject extends React.Component {
               <Message message={errorMessage} type="error" className="login__errorMsg" />
             ) : null}
 
-            <div className="main-details">
-              <p className="main-details__title">معلومات أساسية</p>
-              <div className="project-name">
-                <p>اسم المشروع</p>
-                <Input
-                  onChange={this.handleNormalInputChange}
-                  name="projectName"
-                  value={projectName}
-                  placeholder="ادخل اسم المشروع"
-                />
-              </div>
-              <div className="project-description">
-                <p>وصف المشروع</p>
-                <TextArea
-                  onChange={this.handleNormalInputChange}
-                  name="projectDescription"
-                  value={projectDescription}
-                  placeholder="أكتب وصفاً جدياً لهذا المشروع"
-                />
-              </div>
-            </div>
-            <div className="main-prop">
-              <p className="main-prop__title">المواصفات الرئيسية</p>
+            <Section title="معلومات أساسية">
+              <InputWithLabel
+                className="project-name"
+                label="اسم المشروع"
+                onChange={this.handleNormalInputChange}
+                name="projectName"
+                value={projectName}
+                placeholder="ادخل اسم المشروع"
+              />
+              <InputWithLabel
+                className="project-description"
+                label="وصف المشروع"
+                onChange={this.handleNormalInputChange}
+                name="projectDescription"
+                value={projectDescription}
+                placeholder="أكتب وصفاً جدياً لهذا المشروع"
+              />
+            </Section>
+
+            <Section title="المواصفات الرئيسية">
               <div className="main-prop__data">
-                {mainProps.map(input => (
-                  <div>
-                    <img src={input.src} alt={input.alt} />
-                    <Input
-                      name={input.name}
-                      value={input.value}
-                      onChange={this.handleNormalInputChange}
-                      placeholder={input.placeholder}
-                    />
-                  </div>
-                ))}
+                <MainProjectProp
+                  onChange={this.handleNormalInputChange}
+                  states={[
+                    livingRoomsNumber,
+                    bedRoomsNumber,
+                    bathRoomsNumber,
+                    floorsNumber,
+                    carGarageNumber,
+                  ]}
+                />
               </div>
-            </div>
-            <div className="project-pic">
-              <p className="project-pic__title">صور التصميم\المشروع</p>
+            </Section>
+
+            <Section title="صور التصميم\المشروع">
               <div className="project-pic__pictures">
                 <UploadImages
                   imagesNumber={10}
@@ -622,9 +586,9 @@ class AddProject extends React.Component {
                   imageStyle={imageStyle}
                 />
               </div>
-            </div>
-            <div className="more-details">
-              <p className="more-details__title">المواصفات والميزات بالتفصيل</p>
+            </Section>
+
+            <Section title="المواصفات والميزات بالتفصيل">
               <div className="total-size">
                 <p>المساحة الكلية</p>
                 <div className="size-fileds">
@@ -662,55 +626,33 @@ class AddProject extends React.Component {
                 </div>
               </div>
 
-              <div className="total-size">
-                <p>غرف النوم</p>
-                <div className="size-fileds">
-                  {bedRoomDescriptionInputs}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("bedRoomInputsNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>المطبخ</p>
-                <div className="size-fileds">
-                  {kitchenDescriptionInputs}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("kitchensNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>الكراج</p>
-                <div className="size-fileds">
-                  {garageDescriptionsInput}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("garagesNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>الحديقة</p>
-                <div className="size-fileds">
-                  {gardenDescriptionInputs}
-                  {/* <Input
-                    name="gardenDescription"
-                    value={gardenDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف الحديقة"
-                  /> */}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("gardensNumber")}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="charts">
-              <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
+              <MultipleInputWithLAbel
+                label="غرف النوم"
+                onClick={this.handleAddInputField}
+                inputs={bedRoomDescriptionInputs}
+                inputsNumber="bedRoomInputsNumber"
+              />
+              <MultipleInputWithLAbel
+                label="المطبخ"
+                onClick={this.handleAddInputField}
+                inputs={kitchenDescriptionInputs}
+                inputsNumber="kitchensNumber"
+              />
+              <MultipleInputWithLAbel
+                label="الكراج"
+                onClick={this.handleAddInputField}
+                inputs={garageDescriptionsInput}
+                inputsNumber="garagesNumber"
+              />
+              <MultipleInputWithLAbel
+                label="الحديقة"
+                onClick={this.handleAddInputField}
+                inputs={gardenDescriptionInputs}
+                inputsNumber="gardensNumber"
+              />
+            </Section>
+
+            <Section title="المخططات المتوفرة لهذا التصميم">
               <div className="available-charts">
                 <div>
                   <CheckBox
@@ -756,9 +698,9 @@ class AddProject extends React.Component {
                   />
                 </div>
               </div>
-            </div>
-            <div className="upload-projects">
-              <p className="upload-projects__title">أضافة التصميم</p>
+            </Section>
+
+            <Section title="أضافة التصميم">
               {architecturalChart ? (
                 <div className="building-chart">
                   <p>المخطط المعماري</p>
@@ -789,7 +731,6 @@ class AddProject extends React.Component {
                   />
                 </div>
               ) : null}
-
               {interiorDecorationChart ? (
                 <div className="garden-chart">
                   <p>مخطط ديكور داخلي</p>
@@ -830,10 +771,9 @@ class AddProject extends React.Component {
                   />
                 </div>
               ) : null}
-            </div>
-            <div className="price">
-              <p className="price__title">سعر التصميم</p>
+            </Section>
 
+            <Section title="السعر">
               <div className="price-div">
                 <div className="total-price">
                   <p>سعر التصميم</p>
@@ -853,7 +793,8 @@ class AddProject extends React.Component {
                   <p>{engineerPrice}$</p>
                 </div>
               </div>
-            </div>
+            </Section>
+
             <div className="buttons">
               <Button
                 label="حفظ  التصميم بدون نشر"
