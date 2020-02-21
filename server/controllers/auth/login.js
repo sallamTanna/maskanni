@@ -39,8 +39,6 @@ module.exports = async (req, res, next) => {
     }
     return next(boom.unauthorized("كلمة المرور المدخلة غير صحيحة"));
   } catch (error) {
-    console.log("error in login", error);
-
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };

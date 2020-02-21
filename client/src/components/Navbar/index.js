@@ -106,15 +106,19 @@ class Navbar extends React.Component {
                 <Link to="">طلب تصميم خاص</Link>
               </Menu.Item>
             ) : null}
-            {!showLinks ? (
-              <Menu.Item key="9">
-                <Link to="/login">تسجيل الدخول</Link>
-              </Menu.Item>
+            {!isLogged ? (
+              !showLinks ? (
+                <Menu.Item key="9">
+                  <Link to="/login">تسجيل الدخول</Link>
+                </Menu.Item>
+              ) : null
             ) : null}
-            {!showLinks ? (
-              <Menu.Item key="10">
-                <Link to="/signup">تسجيل حساب جديد</Link>
-              </Menu.Item>
+            {!isLogged ? (
+              !showLinks ? (
+                <Menu.Item key="10">
+                  <Link to="/signup">تسجيل حساب جديد</Link>
+                </Menu.Item>
+              ) : null
             ) : null}
             {isLogged ? (
               <Menu.Item key="11">
@@ -135,18 +139,18 @@ class Navbar extends React.Component {
               </Link>
             </div>
           ) : (
-              <Menu className="Navbar__item" theme="#fff" mode="horizontal">
-                <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
-                  <img src={logo} alt="logo" />
-                </Menu.Item>
-              </Menu>
-            )
+            <Menu className="Navbar__item" theme="#fff" mode="horizontal">
+              <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
+                <img src={logo} alt="logo" />
+              </Menu.Item>
+            </Menu>
+          )
         ) : (
-            <div className="navbar-logged">
-              <Link to={`${role}-home`}>{username}</Link>
-              <Avatar src={avatar} />
-            </div>
-          )}
+          <div className="navbar-logged">
+            <Link to={`${role}-home`}>{username}</Link>
+            <Avatar src={avatar} />
+          </div>
+        )}
       </Header>
     );
   }
