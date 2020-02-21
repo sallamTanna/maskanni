@@ -193,16 +193,6 @@ const edibleInputValidation = () =>
     str: yup.string().required("يرجى اضافة الوصف"),
   });
 
-const edibleInputStyle = {
-  padding: "2px",
-  border: "1px solid #d9d9d9",
-  borderRadius: "3px",
-  boxShadow: "0 2px 0 rgba(0, 0, 0, 0.015)",
-  marginBottom: "3%",
-  color: "#909090",
-  paddingRight: "3%",
-};
-
 const initialState = {
   isLoading: true,
   errors: false,
@@ -255,23 +245,39 @@ const imageStyle = {
   height: "86px",
 };
 
-const generateDescriptionInputs = ({ descriptionArray, stateValue, description, onChange }) => [
-  <Paragraph
-    style={edibleInputStyle}
-    editable={{
-      onChange: str => onChange(str, descriptionArray, stateValue),
-    }}
-  >
-    {description}
-  </Paragraph>,
+const CheckBoxCol1 = [
+  {
+    label: "المخطط المعماري",
+  },
+  {
+    label: "مخطط انشائي",
+    name: "constructionChart",
+  },
+  {
+    label: "مخطط صحي",
+    name: "HealthChart",
+  },
+  { label: "مخطط كهرباء", name: "electricityChart" },
+];
+
+const CheckBoxCol2 = [
+  {
+    label: "مخطط تصميم حديقة",
+    name: "gardenChart",
+  },
+  {
+    label: "مخطط ديكور داخلي",
+    name: "interiorDecorationChart",
+  },
+  { label: "مخطط تكييف", name: "conditioningChart" },
 ];
 
 export {
   projectMainProp,
   saveProjectValidation,
   edibleInputValidation,
-  edibleInputStyle,
   initialState,
   imageStyle,
-  generateDescriptionInputs,
+  CheckBoxCol1,
+  CheckBoxCol2,
 };

@@ -4,7 +4,6 @@
 import React from "react";
 import axios from "axios";
 
-import { Typography } from "antd";
 import Input from "../../components/Input";
 import CheckBox from "../../components/CheckBox";
 import InputNumber from "../../components/InputNumber";
@@ -19,14 +18,16 @@ import UploadFile from "../../components/UploadFile";
 import MainProjectProp from "./MainProjectProp";
 import InputWithLabel from "./InputWithLabel";
 import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
+import ParagraphWithButton from "./ParagraphWithButton";
+import UploadChartFile from "./UploadChartFile";
 import Section from "./Section";
 import {
   saveProjectValidation,
   edibleInputValidation,
-  edibleInputStyle,
   initialState,
   imageStyle,
-  generateDescriptionInputs,
+  CheckBoxCol1,
+  CheckBoxCol2,
 } from "./helper";
 import { alert } from "../../utilities";
 import firebase from "../../firebase";
@@ -34,7 +35,6 @@ import defaultBG from "../../assets/default-pg.png";
 
 import "./style.css";
 
-const { Paragraph } = Typography;
 const filesURLs = [];
 const imagesURLs = [];
 
@@ -420,110 +420,83 @@ class AddProject extends React.Component {
       inputEmptyErrorMsg,
     } = this.state;
 
-    const bedRoomDescriptionInputs = generateDescriptionInputs(
-      "bedRoomsDescription",
-      "roomsDescription0",
-      this.state.roomsDescription0 || "وصف غرف النوم",
-      this.handleInputChange
-    );
-    // descriptionArray, stateValue
-    // const bedRoomDescriptionInputs = [
-    //   <Paragraph
-    //     style={edibleInputStyle}
-    //     editable={{
-    //       onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
-    //     }}
-    //   >
-    //     {this.state.roomsDescription0 || "وصف غرف النوم"}
-    //   </Paragraph>,
-    // ];
+    const bedRoomDescriptionInputs = [
+      <ParagraphWithButton
+        description={this.state.roomsDescription0 || "وصف غرف النوم"}
+        onChange={this.handleInputChange}
+        descriptionArray="bedRoomsDescription"
+        stateValue="roomsDescription0"
+      />,
+    ];
 
     const kitchenDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle}
-        editable={{
-          onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
-        }}
-      >
-        {this.state.ketchenDescription0 || "وصف المطبخ"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.ketchenDescription0 || "وصف المطبخ"}
+        onChange={this.handleInputChange}
+        descriptionArray="kitchenDescription"
+        stateValue="ketchenDescription0"
+      />,
     ];
 
     const garageDescriptionsInput = [
-      <Paragraph
-        style={edibleInputStyle}
-        editable={{
-          onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
-        }}
-      >
-        {this.state.garageDescription0 || "وصف الكراج"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.garageDescription0 || "وصف الكراج"}
+        onChange={this.handleInputChange}
+        descriptionArray="garageDescription"
+        stateValue="garageDescription0"
+      />,
     ];
 
     const gardenDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle}
-        editable={{
-          onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
-        }}
-      >
-        {this.state.gardenDescription0 || "وصف الحديقة"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.gardenDescription0 || "وصف الحديقة"}
+        onChange={this.handleInputChange}
+        descriptionArray="gardenDescription"
+        stateValue="gardenDescription0"
+      />,
     ];
 
     for (let i = 1; i <= bedRoomInputsNumber; i++) {
       bedRoomDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
-          }}
-        >
-          {this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
+          onChange={this.handleInputChange}
+          descriptionArray="bedRoomsDescription"
+          stateValue={`roomsDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= kitchensNumber; i++) {
       kitchenDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
-          }}
-        >
-          {this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
+          onChange={this.handleInputChange}
+          descriptionArray="kitchenDescription"
+          stateValue={`ketchenDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= garagesNumber; i++) {
       garageDescriptionsInput.push(
-        <Paragraph
-          style={edibleInputStyle}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
-          }}
-        >
-          {this.state[`garageDescription${i}`] || "وصف الكراج"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`garageDescription${i}`] || "وصف الكراج"}
+          onChange={this.handleInputChange}
+          descriptionArray="garageDescription"
+          stateValue={`garageDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= gardensNumber; i++) {
       gardenDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),
-          }}
-        >
-          {this.state[`gardenDescription${i}`] || "وصف الحديقة"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`gardenDescription${i}`] || "وصف الحديقة"}
+          onChange={this.handleInputChange}
+          descriptionArray="gardenDescription"
+          stateValue={`gardenDescription${i}`}
+        />
       );
     }
 
@@ -655,121 +628,77 @@ class AddProject extends React.Component {
             <Section title="المخططات المتوفرة لهذا التصميم">
               <div className="available-charts">
                 <div>
-                  <CheckBox
-                    defaultChecked
-                    disabled
-                    onChange={this.handleCheckboxChange}
-                    label="المخطط المعماري"
-                  />
-                  <CheckBox
-                    name="constructionChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط انشائي"
-                  />
-
-                  <CheckBox
-                    name="HealthChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط صحي"
-                  />
-                  <CheckBox
-                    name="electricityChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط كهرباء"
-                  />
+                  {CheckBoxCol1.map((checkBox, index) => (
+                    <CheckBox
+                      defaultChecked={index === 0}
+                      disabled={index === 0}
+                      onChange={this.handleCheckboxChange}
+                      label={checkBox.label}
+                      name={checkBox.name}
+                    />
+                  ))}
                 </div>
                 <div>
-                  <CheckBox
-                    name="gardenChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط تصميم حديقة"
-                  />
-
-                  <CheckBox
-                    name="interiorDecorationChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط ديكور داخلي"
-                  />
-
-                  <CheckBox
-                    name="conditioningChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط تكييف"
-                  />
+                  {CheckBoxCol2.map(checkBox => (
+                    <CheckBox
+                      name={checkBox.name}
+                      onChange={this.handleCheckboxChange}
+                      label={checkBox.label}
+                    />
+                  ))}
                 </div>
               </div>
             </Section>
 
             <Section title="أضافة التصميم">
               {architecturalChart ? (
-                <div className="building-chart">
-                  <p>المخطط المعماري</p>
-                  <UploadFile
-                    fileName="المخطط المعماري"
-                    handleChange={file => this.handleFileChange(file, "architecturalFileList")}
-                    fileList={architecturalFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط المعماري"
+                  handleChange={file => this.handleFileChange(file, "architecturalFileList")}
+                  fileList={architecturalFileList}
+                />
               ) : null}
               {constructionChart ? (
-                <div className="building-chart">
-                  <p>المخطط الانشائي</p>
-                  <UploadFile
-                    fileName="المخطط الانشائي"
-                    handleChange={file => this.handleFileChange(file, "constructionFileList")}
-                    fileList={constructionFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط الانشائي"
+                  handleChange={file => this.handleFileChange(file, "constructionFileList")}
+                  fileList={constructionFileList}
+                />
               ) : null}
               {gardenChart ? (
-                <div className="garden-chart">
-                  <p>مخطط تصميم حديقة</p>
-                  <UploadFile
-                    fileName="مخطط تصميم الحديقة"
-                    handleChange={file => this.handleFileChange(file, "gardenFileList")}
-                    fileList={gardenFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط تصميم حديقة"
+                  handleChange={file => this.handleFileChange(file, "gardenFileList")}
+                  fileList={gardenFileList}
+                />
               ) : null}
               {interiorDecorationChart ? (
-                <div className="garden-chart">
-                  <p>مخطط ديكور داخلي</p>
-                  <UploadFile
-                    fileName="مخطط ديكور داخلي"
-                    handleChange={file => this.handleFileChange(file, "interiorDecorationFileList")}
-                    fileList={interiorDecorationFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط ديكور داخلي"
+                  handleChange={file => this.handleFileChange(file, "interiorDecorationFileList")}
+                  fileList={interiorDecorationFileList}
+                />
               ) : null}
               {conditioningChart ? (
-                <div className="garden-chart">
-                  <p>مخطط تكييف</p>
-                  <UploadFile
-                    fileName="مخطط تكييف"
-                    handleChange={file => this.handleFileChange(file, "conditioningFileList")}
-                    fileList={conditioningFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط تكييف"
+                  handleChange={file => this.handleFileChange(file, "conditioningFileList")}
+                  fileList={conditioningFileList}
+                />
               ) : null}
               {HealthChart ? (
-                <div className="garden-chart">
-                  <p>المخطط الصحي</p>
-                  <UploadFile
-                    fileName="المخطط الصحي"
-                    handleChange={file => this.handleFileChange(file, "HealthFileList")}
-                    fileList={HealthFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط الصحي"
+                  handleChange={file => this.handleFileChange(file, "HealthFileList")}
+                  fileList={HealthFileList}
+                />
               ) : null}
               {electricityChart ? (
-                <div className="garden-chart">
-                  <p>مخطط الكهرباء</p>
-                  <UploadFile
-                    fileName="مخطط الكهرباء"
-                    handleChange={file => this.handleFileChange(file, "electricityFileList")}
-                    fileList={electricityFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط كهرباء"
+                  handleChange={file => this.handleFileChange(file, "electricityFileList")}
+                  fileList={electricityFileList}
+                />
               ) : null}
             </Section>
 

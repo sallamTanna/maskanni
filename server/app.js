@@ -36,6 +36,8 @@ app.get((req, res, next) => {
 
 app.use((err, req, res, next) => {
   if (err.isBoom) {
+    console.log(88888, err);
+
     return res.status(err.output.statusCode).json({
       error: {
         statusCode: err.output.statusCode,
