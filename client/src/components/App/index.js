@@ -1,23 +1,27 @@
 /* eslint-disable no-undef */
+
+import { ConfigProvider } from "antd";
+import ar from "antd/es/locale/ar_EG";
+import axios from "axios";
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ConfigProvider } from "antd";
-import axios from "axios";
-import ar from "antd/es/locale/ar_EG";
 
-import NotFoundPage from "../../pages/NotFound";
-import Unauthorized from "../../pages/Unauthorized";
-import Login from "../../pages/Login";
-import SignUp from "../../pages/SignUp";
+import AddProject from "../../pages/AddProject";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
-import AddProject from "../../pages/AddProject";
-import Projects from "../../pages/Projects";
+import Login from "../../pages/Login";
+import NotFoundPage from "../../pages/NotFound";
 import Project from "../../pages/Project";
+import Projects from "../../pages/Projects";
+import SignUp from "../../pages/SignUp";
+import Unauthorized from "../../pages/Unauthorized";
+
 import Footer from "../Footer";
 import Navbar from "../Navbar";
-import withAuth from "../../hoc/withAuth";
+import Spinner from "../Spinner";
+
 import avatarIcon from "../../assets/user-avatar.png";
+import withAuth from "../../hoc/withAuth";
 
 import "./style.css";
 
@@ -77,10 +81,11 @@ class App extends Component {
     });
 
   render() {
-    const { isLogged, username, role, avatar } = this.state;
+    const { isLogged, username, role, avatar, isLoading } = this.state;
     return (
       <ConfigProvider locale={ar}>
         <div className="App">
+          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
           <Router>
             {pathnames.indexOf(window.location.pathname) > -1 ? (
               <Navbar
