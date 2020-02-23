@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import React from "react";
 
@@ -10,35 +9,20 @@ import Message from "../../../../components/Message";
 import Spinner from "../../../../components/Spinner";
 import UploadImage from "../../../../components/UploadOneImage";
 import { alert } from "../../../../utilities";
+
 import {
+  initialState,
   passwordValidation,
   personalDataValidation,
   paypalAccountValidation,
   imageStyle,
-} from "../../helper";
+} from "./helper";
 
 import "./style.css";
 
 class Account extends React.Component {
   state = {
-    fullName: "",
-    email: "",
-    mobile: "",
-    address: "",
-    password: "",
-    newPassword: "",
-    confirmPassword: "",
-    paypal: "",
-    isLoading: false,
-    passwordErrorMsg: "",
-    passwordError: false,
-    personalDataErrorMsg: "",
-    personalDataError: false,
-    paypayError: false,
-    paypayErrorMsg: "",
-    profileImage: "",
-    uploadingImgError: false,
-    uploadingImgErrorMsg: "",
+    ...initialState,
     avatar: this.props.user.avatar,
     user: this.props.user,
   };
@@ -58,151 +42,129 @@ class Account extends React.Component {
       [e.target.name]: e.target.value,
     });
 
-  handleSavePersonalInfo = () => {
-    const { fullName, email, mobile, address, user } = this.state;
-    const { id } = user;
-    const schema = personalDataValidation();
+  handleSavePersonalInfo = async () => {
+    try {
+      const { fullName, email, mobile, address, user } = this.state;
+      const { id } = user;
+      const schema = personalDataValidation();
+      schema.validateSync({ address, mobile, email, fullName });
 
-    schema
-      .validate({ address, mobile, email, fullName })
-      .then(() => {
-        this.setState({
-          isLoading: true,
-        });
-        axios
-          .put(`/v1/users/${id}`, { fullName, email, mobile, address })
-          .then(() =>
-            this.setState(
-              {
-                isLoading: false,
-                personalDataErrorMsg: "",
-                personalDataError: false,
-              },
-              () =>
-                alert("success", "success", "تم", "تم تعديل معلوماتك الشخصية بنجاح", 1500, false)
-            )
-          )
-          .catch(error =>
-            this.setState({
-              isLoading: false,
-              personalDataErrorMsg: error.response.data.error.msg,
-              personalDataError: true,
-            })
-          );
-      })
-      .catch(error =>
-        this.setState({
-          personalDataErrorMsg: error.errors[0],
-          personalDataError: true,
-        })
-      );
-  };
-
-  handleChangePassword = () => {
-    const { newPassword, password, confirmPassword, user } = this.state;
-    const { id } = user;
-    const schema = passwordValidation();
-
-    schema
-      .validate({ password, newPassword, confirmPassword })
-      .then(() => {
-        this.setState({
-          isLoading: true,
-        });
-        axios
-          .put(`/v1/users/${id}`, { newPassword, password })
-          .then(() =>
-            this.setState(
-              {
-                isLoading: false,
-                passwordError: false,
-                passwordErrorMsg: "",
-              },
-              () => alert("success", "success", "تم", "تم تعديل كلمة المرور بنجاح", 1500, false)
-            )
-          )
-          .catch(error => {
-            this.setState({
-              isLoading: false,
-              passwordError: true,
-              passwordErrorMsg: error.response.data.error.msg,
-            });
-          });
-      })
-      .catch(error => {
-        this.setState({
-          passwordErrorMsg: error.errors[0],
-          passwordError: true,
-        });
+      this.setState({
+        isLoading: true,
       });
-  };
-
-  handlePaypalAccount = () => {
-    const { paypal, user } = this.state;
-    const { id } = user;
-    const schema = paypalAccountValidation();
-
-    schema
-      .validate({ paypal })
-      .then(() => {
-        this.setState({
-          isLoading: true,
-        });
-        axios
-          .put(`/v1/users/${id}`, { paypal })
-          .then(() =>
-            this.setState(
-              {
-                isLoading: false,
-                paypayError: false,
-                paypayErrorMsg: "",
-              },
-              () =>
-                alert("success", "success", "تم", "تم تعديل رقك حساب البي بال بنجاح", 1500, false)
-            )
-          )
-          .catch(error =>
-            this.setState({
-              paypayError: true,
-              paypayErrorMsg: error.response.data.error.msg,
-              isLoading: false,
-            })
-          );
-      })
-      .catch(error =>
-        this.setState({
-          paypayError: true,
-          paypayErrorMsg: error.errors[0],
-        })
-      );
-  };
-
-  handleProfileChange = file => {
-    const { user } = this.props;
-    const { id } = user;
-    this.setState({
-      isLoading: true,
-    });
-    axios
-      .put(`/v1/users/${id}`, { profileImage: file })
-      .then(() => {
-        this.setState(
-          {
-            profileImage: file,
-            uploadingImgError: false,
-            uploadingImgErrorMsg: "",
-            avatar: file,
-            isLoading: false,
-          },
-          () => this.props.changeAvatar(file)
-        );
-      })
-      .catch(error => {
-        this.setState({
-          uploadingImgError: true,
-          uploadingImgErrorMsg: error.response.data.error.msg,
-        });
+      const savePersonalInfo = await axios.put(`/v1/users/${id}`, {
+        fullName,
+        email,
+        mobile,
+        address,
       });
+      this.setState(
+        {
+          isLoading: false,
+          personalDataErrorMsg: "",
+          personalDataError: false,
+        },
+        () => alert("success", "success", "تم", "تم تعديل معلوماتك الشخصية بنجاح", 1500, false)
+      );
+    } catch (error) {
+      const axiosError =
+        error && error.response && error.response.data && error.response.data.error;
+      const validationError = error && error.errors && error.errors[0];
+      this.setState({
+        isLoading: false,
+        personalDataErrorMsg: validationError || axiosError.msg,
+        personalDataError: true,
+      });
+    }
+  };
+
+  handleChangePassword = async () => {
+    try {
+      const { newPassword, password, confirmPassword, user } = this.state;
+      const { id } = user;
+      const schema = passwordValidation();
+
+      schema.validateSync({ password, newPassword, confirmPassword });
+      this.setState({
+        isLoading: true,
+      });
+
+      const updatePassword = await axios.put(`/v1/users/${id}`, { newPassword, password });
+      this.setState(
+        {
+          isLoading: false,
+          passwordError: false,
+          passwordErrorMsg: "",
+        },
+        () => alert("success", "success", "تم", "تم تعديل كلمة المرور بنجاح", 1500, false)
+      );
+    } catch (error) {
+      const axiosError =
+        error && error.response && error.response.data && error.response.data.error;
+      const validationError = error && error.errors && error.errors[0];
+      this.setState({
+        isLoading: false,
+        passwordError: true,
+        passwordErrorMsg: validationError || axiosError.msg,
+      });
+    }
+  };
+
+  handlePaypalAccount = async () => {
+    try {
+      const { paypal, user } = this.state;
+      const { id } = user;
+      const schema = paypalAccountValidation();
+
+      schema.validateSync({ paypal });
+
+      this.setState({
+        isLoading: true,
+      });
+      const updatePaypal = await axios.put(`/v1/users/${id}`, { paypal });
+      this.setState(
+        {
+          isLoading: false,
+          paypayError: false,
+          paypayErrorMsg: "",
+        },
+        () => alert("success", "success", "تم", "تم تعديل رقك حساب البي بال بنجاح", 1500, false)
+      );
+    } catch (error) {
+      const axiosError =
+        error && error.response && error.response.data && error.response.data.error;
+      const validationError = error && error.errors && error.errors[0];
+      this.setState({
+        paypayErrorMsg: validationError || axiosError,
+        isLoading: false,
+        paypayError: true,
+      });
+    }
+  };
+
+  handleProfileChange = async file => {
+    try {
+      const { user } = this.props;
+      const { id } = user;
+      this.setState({
+        isLoading: true,
+      });
+      const updateProfileImage = await axios.put(`/v1/users/${id}`, { profileImage: file });
+      this.setState(
+        {
+          uploadingImgError: false,
+          uploadingImgErrorMsg: "",
+          avatar: file,
+          isLoading: false,
+        },
+        () => this.props.changeAvatar(file)
+      );
+    } catch (error) {
+      this.setState({
+        uploadingImgError: true,
+        uploadingImgErrorMsg: error.response.data.error.msg,
+      });
+    }
   };
 
   render() {

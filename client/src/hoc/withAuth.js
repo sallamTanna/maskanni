@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import axios from "axios";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 
 import Spinner from "../components/Spinner";
 

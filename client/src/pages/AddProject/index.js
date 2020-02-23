@@ -273,31 +273,31 @@ class AddProject extends React.Component {
       });
   };
 
-  postNewProject = () => {
-    const {
-      projectName,
-      projectDescription,
-      size,
-      width,
-      length,
-      height,
-      livingRoomsNumber,
-      bathRoomsNumber,
-      carGarageNumber,
-      floorsNumber,
-      bedRoomsNumber,
-      kitchenDescription,
-      garageDescription,
-      gardenDescription,
-      charts,
-      engineerPrice,
-      projectMainImage,
-      bedRoomsDescription,
-      price,
-    } = this.state;
+  postNewProject = async () => {
+    try {
+      const {
+        projectName,
+        projectDescription,
+        size,
+        width,
+        length,
+        height,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
+        kitchenDescription,
+        garageDescription,
+        gardenDescription,
+        charts,
+        engineerPrice,
+        projectMainImage,
+        bedRoomsDescription,
+        price,
+      } = this.state;
 
-    axios
-      .post("/v1/projects", {
+      const postProject = await axios.post("/v1/projects", {
         projectName,
         projectDescription,
         size,
@@ -320,27 +320,23 @@ class AddProject extends React.Component {
         projectMainImage,
         filesURLs,
         user_id: this.props.user.id,
-      })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState(
-            {
-              errors: false,
-              isLoading: false,
-            },
-            () => {
-              return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
-            }
-          );
-        }
-      })
-      .catch(error => {
-        this.setState({
-          errors: true,
-          isLoading: false,
-          errorMessage: error.response.data.error.msg,
-        });
       });
+      this.setState(
+        {
+          errors: false,
+          isLoading: false,
+        },
+        () => {
+          return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
+        }
+      );
+    } catch (error) {
+      this.setState({
+        errors: true,
+        isLoading: false,
+        errorMessage: error.response.data.error.msg,
+      });
+    }
   };
 
   handleAddInputField = inputsNumber => {

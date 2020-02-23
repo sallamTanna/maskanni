@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from "react";
 
 import bathRoom from "../../../../../assets/bath-room.svg";
@@ -31,8 +32,6 @@ const Design = props => {
     case "غير معتمد":
       color = "red";
       break;
-    default:
-      color = "red";
   }
 
   return (

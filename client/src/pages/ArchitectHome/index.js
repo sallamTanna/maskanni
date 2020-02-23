@@ -7,6 +7,7 @@ import { withRouter, Link } from "react-router-dom";
 import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
 
+import { initialState } from "./helper";
 import Account from "./selectedComponent/Account";
 import Designs from "./selectedComponent/Designs";
 import Sales from "./selectedComponent/Sales";
@@ -14,48 +15,39 @@ import Sales from "./selectedComponent/Sales";
 import "./style.css";
 
 class ArchitectHome extends React.Component {
-  state = {
-    title: "حسابي",
-    key: "1",
-    isResponsive: false,
-    isLoading: true,
-    id: "",
-    username: "",
-    role: "",
-    isLogged: false,
-    email: "",
-    avatar: "",
-  };
+  state = initialState;
 
-  componentDidMount() {
+  async componentDidMount() {
     const { history } = this.props;
     if (window.screen.width <= 425) {
       this.setState({
         isResponsive: true,
       });
     }
-    axios
-      .get("/v1/check")
-      .then(response => {
-        const { id, username, role, email, avatar, isLogged } = response.data.response;
-        this.setState({
-          isLoading: false,
-          id,
-          username,
-          role,
-          isLogged,
-          email,
-          avatar,
-        });
-      })
-      .catch(() => {
-        this.setState(
-          {
-            isLoading: false,
-          },
-          () => history.push("/login")
-        );
+
+    try {
+      const {
+        data: { response },
+      } = await axios.get("/v1/check");
+
+      const { id, username, role, email, avatar, isLogged } = response;
+      this.setState({
+        isLoading: false,
+        id,
+        username,
+        role,
+        isLogged,
+        email,
+        avatar,
       });
+    } catch (error) {
+      this.setState(
+        {
+          isLoading: false,
+        },
+        () => history.push("/login")
+      );
+    }
   }
 
   handleSubNavClick = e => {
@@ -93,7 +85,7 @@ class ArchitectHome extends React.Component {
     switch (key) {
       case "1":
         selectedComponent = (
-          <Account user={{ ...user }} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
+          <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
         );
         break;
       case "2":

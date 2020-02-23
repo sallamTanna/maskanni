@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-undef */
 import axios from "axios";
 import React from "react";
@@ -7,44 +8,37 @@ import advertismentIcon from "../../../../assets/advertisment-icon.png";
 import Spinner from "../../../../components/Spinner";
 
 import Design from "./Design";
+import { initialState } from "./helper";
 
 import "./style.css";
 
 class Designs extends React.Component {
   state = {
-    projects: [],
-    isLoading: true,
-    errors: false,
-    errorMsg: "",
-    emptyResponse: false,
-    isResponsive: false,
+    ...initialState,
     user_id: this.props.user.id,
-    user: this.props.user,
   };
 
-  componentDidMount() {
-    const { user_id } = this.state;
-    axios
-      .get(`/v1/users/${user_id}/projects`)
-      .then(response => {
-        if (response.data.response.data.length === 0)
-          this.setState({ isLoading: false, emptyResponse: true });
-        else {
-          this.setState({
-            projects: response.data.response.data,
-            isLoading: false,
-            errors: false,
-            errorMsg: "",
-          });
-        }
-      })
-      .catch(() =>
+  async componentDidMount() {
+    try {
+      const { user_id } = this.state;
+      const getDesigns = await axios.get(`/v1/users/${user_id}/projects`);
+      if (getDesigns.data.response.data.length === 0)
+        this.setState({ isLoading: false, emptyResponse: true });
+      else {
         this.setState({
-          errors: true,
-          errorMsg: "حدثت مشكلة ما، حاول مرة أخرى",
+          projects: getDesigns.data.response.data,
           isLoading: false,
-        })
-      );
+          errors: false,
+          errorMsg: "",
+        });
+      }
+    } catch (error) {
+      this.setState({
+        errors: true,
+        errorMsg: "حدثت مشكلة ما، حاول مرة أخرى",
+        isLoading: false,
+      });
+    }
 
     if (window.screen.width <= 425) {
       this.setState({
