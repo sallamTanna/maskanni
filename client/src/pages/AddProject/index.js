@@ -1,26 +1,23 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
-import React from "react";
 import axios from "axios";
+import React from "react";
 
-import Input from "../../components/Input";
-import CheckBox from "../../components/CheckBox";
-import InputNumber from "../../components/InputNumber";
+import defaultBG from "../../assets/default-pg.png";
 import Button from "../../components/Button";
+import CheckBox from "../../components/CheckBox";
 import Header from "../../components/Header";
+import Input from "../../components/Input";
+import InputNumber from "../../components/InputNumber";
 import Message from "../../components/Message";
-import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
+import Spinner from "../../components/Spinner";
 import UploadImages from "../../components/UploadImages";
 import UploadOneImage from "../../components/UploadOneImage";
-import UploadFile from "../../components/UploadFile";
-import MainProjectProp from "./MainProjectProp";
-import InputWithLabel from "./InputWithLabel";
-import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
-import ParagraphWithButton from "./ParagraphWithButton";
-import UploadChartFile from "./UploadChartFile";
-import Section from "./Section";
+import firebase from "../../firebase";
+import { alert } from "../../utilities";
+
 import {
   saveProjectValidation,
   edibleInputValidation,
@@ -29,9 +26,12 @@ import {
   CheckBoxCol1,
   CheckBoxCol2,
 } from "./helper";
-import { alert } from "../../utilities";
-import firebase from "../../firebase";
-import defaultBG from "../../assets/default-pg.png";
+import InputWithLabel from "./InputWithLabel";
+import MainProjectProp from "./MainProjectProp";
+import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
+import ParagraphWithButton from "./ParagraphWithButton";
+import Section from "./Section";
+import UploadChartFile from "./UploadChartFile";
 
 import "./style.css";
 

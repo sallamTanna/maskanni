@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-state */
-import React from "react";
 import axios from "axios";
+import React from "react";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import Spinner from "../../../../components/Spinner";
+import Input from "../../../../components/Input";
 import Message from "../../../../components/Message";
+import Spinner from "../../../../components/Spinner";
 import UploadImage from "../../../../components/UploadOneImage";
 import { alert } from "../../../../utilities";
 import {

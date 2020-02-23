@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
-import React from "react";
 import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
 
-import Design from "./Design";
-import Spinner from "../../../../components/Spinner";
 import advertismentIcon from "../../../../assets/advertisment-icon.png";
+import Spinner from "../../../../components/Spinner";
+
+import Design from "./Design";
 
 import "./style.css";
 

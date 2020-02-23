@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
-import React from "react";
 import { Menu } from "antd";
-import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
+import React from "react";
+import { withRouter, Link } from "react-router-dom";
+
 import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
-// import selectedComponent from "./details";
+
 import Account from "./selectedComponent/Account";
 import Designs from "./selectedComponent/Designs";
 import Sales from "./selectedComponent/Sales";

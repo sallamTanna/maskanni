@@ -1,8 +1,8 @@
-import livingRoom from "../../../assets/living-room.svg";
-import bedRoom from "../../../assets/bed-room.svg";
 import bathRoom from "../../../assets/bath-room.svg";
-import stairs from "../../../assets/stairs.svg";
+import bedRoom from "../../../assets/bed-room.svg";
 import carGarage from "../../../assets/car-garage.svg";
+import livingRoom from "../../../assets/living-room.svg";
+import stairs from "../../../assets/stairs.svg";
 
 const projectMainProp = (
   livingRoomsNumber,

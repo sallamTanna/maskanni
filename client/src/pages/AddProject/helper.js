@@ -1,14 +1,10 @@
-import React from "react";
 import * as yup from "yup";
-import { Typography } from "antd";
 
-import livingRoom from "../../assets/living-room.svg";
-import bedRoom from "../../assets/bed-room.svg";
 import bathRoom from "../../assets/bath-room.svg";
-import stairs from "../../assets/stairs.svg";
+import bedRoom from "../../assets/bed-room.svg";
 import carGarage from "../../assets/car-garage.svg";
-
-const { Paragraph } = Typography;
+import livingRoom from "../../assets/living-room.svg";
+import stairs from "../../assets/stairs.svg";
 
 const projectMainProp = (
   livingRoomsNumber,

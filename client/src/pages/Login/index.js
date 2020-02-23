@@ -1,12 +1,13 @@
-import React from "react";
 import axios from "axios";
+import React from "react";
 import { withRouter, Link } from "react-router-dom";
 
 import logo from "../../assets/logo1.png";
-import Input from "../../components/Input";
 import Button from "../../components/Button";
+import Input from "../../components/Input";
 import Message from "../../components/Message";
 import Spinner from "../../components/Spinner";
+
 import { loginValidation } from "./helper";
 
 import "./style.css";
@@ -42,7 +43,6 @@ class Login extends React.Component {
           .then(response => {
             if (response.status === 200) {
               const { username, role, avatar } = response.data.response;
-              console.log(1111, avatar);
 
               this.setState(
                 {
