@@ -36,27 +36,27 @@ class App extends Component {
     avatar: "",
   };
 
-  componentDidMount() {
-    axios
-      .get("/v1/check")
-      .then(response => {
-        this.setState({
-          isLoading: false,
-          username: response.data.response.username,
-          role: response.data.response.role,
-          isLogged: response.data.response.isLogged,
-          avatar: response.data.response.avatar,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          username: "",
-          role: "",
-          avatar: "",
-          isLogged: false,
-        });
+  async componentDidMount() {
+    try {
+      const {
+        data: { response },
+      } = await axios.get("/v1/check");
+      this.setState({
+        isLoading: false,
+        username: response.username,
+        role: response.role,
+        isLogged: response.isLogged,
+        avatar: response.avatar,
       });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        username: "",
+        role: "",
+        avatar: "",
+        isLogged: false,
+      });
+    }
   }
 
   logout = () =>
@@ -82,12 +82,13 @@ class App extends Component {
 
   render() {
     const { isLogged, username, role, avatar, isLoading } = this.state;
+    const showNavbarAndFooter = pathnames.indexOf(window.location.pathname) > -1;
     return (
       <ConfigProvider locale={ar}>
         <div className="App">
           {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
           <Router>
-            {pathnames.indexOf(window.location.pathname) > -1 ? (
+            {showNavbarAndFooter ? (
               <Navbar
                 isLogged={isLogged}
                 username={username}
@@ -124,7 +125,7 @@ class App extends Component {
               <Route exact path="/unauthorized" component={Unauthorized} />
               <Route component={NotFoundPage} />
             </Switch>
-            {pathnames.indexOf(window.location.pathname) > -1 ? <Footer /> : null}
+            {showNavbarAndFooter ? <Footer /> : null}
           </Router>
         </div>
       </ConfigProvider>
