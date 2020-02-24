@@ -268,6 +268,17 @@ const CheckBoxCol2 = [
   { label: "مخطط تكييف", name: "conditioningChart" },
 ];
 
+const buttons = [
+  {
+    label: "حفظ  التصميم بدون نشر",
+    className: "save-project",
+  },
+  {
+    label: "نشر التصميم",
+    className: "publish-project",
+  },
+];
+
 export {
   projectMainProp,
   saveProjectValidation,
@@ -276,4 +287,5 @@ export {
   imageStyle,
   CheckBoxCol1,
   CheckBoxCol2,
+  buttons,
 };

@@ -25,7 +25,6 @@
 
 .project-name,
 .project-description,
-.total-size,
 .total-price,
 .garden-chart,
 .platform-price,
@@ -39,7 +38,6 @@
 
 .project-name p,
 .project-description p,
-.total-size p,
 .garden-chart p,
 .total-price p,
 .garden-chart p {
@@ -100,16 +98,6 @@
 .available-charts div:nth-child(1),
 .available-charts div:nth-child(2) {
   margin-left: 10%;
-  display: flex;
-  flex-direction: column;
-}
-
-.price-div {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.price-div div {
   display: flex;
   flex-direction: column;
 }
@@ -180,10 +168,6 @@
   .available-charts div:nth-child(1),
   .available-charts div:nth-child(2) {
     flex: none;
-  }
-  .price-div {
-    flex: none;
-    display: block;
   }
 }
 

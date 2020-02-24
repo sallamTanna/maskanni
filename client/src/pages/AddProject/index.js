@@ -8,8 +8,6 @@ import defaultBG from "../../assets/default-pg.png";
 import Button from "../../components/Button";
 import CheckBox from "../../components/CheckBox";
 import Header from "../../components/Header";
-import Input from "../../components/Input";
-import InputNumber from "../../components/InputNumber";
 import Message from "../../components/Message";
 import Project from "../../components/Project";
 import Spinner from "../../components/Spinner";
@@ -25,15 +23,19 @@ import {
   imageStyle,
   CheckBoxCol1,
   CheckBoxCol2,
+  buttons,
+  projectSizes,
 } from "./helper";
 import InputWithLabel from "./InputWithLabel";
 import MainProjectProp from "./MainProjectProp";
 import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
 import ParagraphWithButton from "./ParagraphWithButton";
 import Section from "./Section";
+import Sizes from "./Sizes";
 import UploadChartFile from "./UploadChartFile";
 
 import "./style.css";
+import Price from "./Price";
 
 const filesURLs = [];
 const imagesURLs = [];
@@ -138,14 +140,14 @@ class AddProject extends React.Component {
       conditioningFileList,
     ].filter(list => list.length > 0);
 
-    const schema = saveProjectValidation();
+    try {
+      const schema = saveProjectValidation();
 
-    this.setState({
-      isLoading: true,
-    });
+      this.setState({
+        isLoading: true,
+      });
 
-    schema
-      .validate({
+      schema.validateSync({
         projectName,
         projectDescription,
         size,
@@ -173,45 +175,26 @@ class AddProject extends React.Component {
         conditioningFileList: conditioningChart
           ? { required: true, list: conditioningFileList }
           : {},
-      })
-      .then(() => {
-        Promise.all(
-          filesArray.map(async (item, index) => {
-            await this.putStorageFile(item[0], index);
-          })
-        )
-          .then(() => {
-            Promise.all(
-              imagesArray.map(async item => {
-                await this.putStorageImage(item);
-              })
-            )
-              .then(() => {
-                this.postNewProject();
-              })
-              .catch(() => {
-                this.setState({
-                  errors: true,
-                  isLoading: false,
-                  errorMessage: "Something went wrong while getting uploaded images URLs",
-                });
-              });
-          })
-          .catch(() => {
-            this.setState({
-              errors: true,
-              isLoading: false,
-              errorMessage: "Something went wrong while getting uploaded files  URLs",
-            });
-          });
-      })
-      .catch(error => {
-        this.setState({
-          errors: true,
-          isLoading: false,
-          errorMessage: error.errors[0],
-        });
       });
+      Promise.all(
+        filesArray.map(async (item, index) => {
+          await this.putStorageFile(item[0], index);
+        })
+      );
+      Promise.all(
+        imagesArray.map(async item => {
+          await this.putStorageImage(item);
+        })
+      );
+      this.postNewProject();
+    } catch (error) {
+      const validationError = error && error.errors && error.errors[0];
+      this.setState({
+        errors: true,
+        isLoading: false,
+        errorMessage: validationError || "حدثت مشكلة اثناء رفع الملفات، حاول مرة أخرى",
+      });
+    }
   };
 
   putStorageFile = (item, index) => {
@@ -350,23 +333,21 @@ class AddProject extends React.Component {
     // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
     // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
     // inputValidation
-    const schema = edibleInputValidation();
-    schema
-      .validate({ str })
-      .then(() =>
-        this.setState({
-          [descriptionArray]: this.state[descriptionArray].concat(str),
-          [stateValue]: str,
-          isOneInputEmpty: false,
-          inputEmptyErrorMsg: "",
-        })
-      )
-      .catch(error =>
-        this.setState({
-          isOneInputEmpty: true,
-          inputEmptyErrorMsg: error.errors[0],
-        })
-      );
+    try {
+      const schema = edibleInputValidation();
+      schema.validateSync({ str });
+      this.setState({
+        [descriptionArray]: this.state[descriptionArray].concat(str),
+        [stateValue]: str,
+        isOneInputEmpty: false,
+        inputEmptyErrorMsg: "",
+      });
+    } catch (error) {
+      this.setState({
+        isOneInputEmpty: true,
+        inputEmptyErrorMsg: error.errors[0],
+      });
+    }
   };
 
   handleNormalInputChange = e =>
@@ -416,6 +397,7 @@ class AddProject extends React.Component {
       inputEmptyErrorMsg,
     } = this.state;
 
+    const sizesValue = [size, length, width, height];
     const bedRoomDescriptionInputs = [
       <ParagraphWithButton
         description={this.state.roomsDescription0 || "وصف غرف النوم"}
@@ -558,42 +540,12 @@ class AddProject extends React.Component {
             </Section>
 
             <Section title="المواصفات والميزات بالتفصيل">
-              <div className="total-size">
-                <p>المساحة الكلية</p>
-                <div className="size-fileds">
-                  {isOneInputEmpty ? (
-                    <Message
-                      message={inputEmptyErrorMsg}
-                      type="error"
-                      className="login__errorMsg"
-                    />
-                  ) : null}
-                  <Input
-                    name="size"
-                    value={size}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="المساحة"
-                  />
-                  <Input
-                    name="length"
-                    value={length}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الطول"
-                  />
-                  <Input
-                    name="width"
-                    value={width}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="العرض"
-                  />
-                  <Input
-                    name="height"
-                    value={height}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الارتفاع"
-                  />
-                </div>
-              </div>
+              <Sizes
+                isOneInputEmpty={isOneInputEmpty}
+                inputEmptyErrorMsg={inputEmptyErrorMsg}
+                onChange={this.handleNormalInputChange}
+                valuesArray={sizesValue}
+              />
 
               <MultipleInputWithLAbel
                 label="غرف النوم"
@@ -699,38 +651,25 @@ class AddProject extends React.Component {
             </Section>
 
             <Section title="السعر">
-              <div className="price-div">
-                <div className="total-price">
-                  <p>سعر التصميم</p>
-                  <InputNumber
-                    onChange={this.handlePriceChange}
-                    name="price"
-                    value={price}
-                    symbol="$"
-                  />{" "}
-                </div>
-                <div className="platform-price">
-                  <p>السعر المعروض على المنصة</p>
-                  <p>{platformPrice}$</p>
-                </div>
-                <div className="eng-price">
-                  <p>مستحقاتك بعض الخصم</p>
-                  <p>{engineerPrice}$</p>
-                </div>
-              </div>
+              <Price
+                onChange={this.handlePriceChange}
+                value={price}
+                platformPrice={platformPrice}
+                engineerPrice={engineerPrice}
+              />
             </Section>
 
             <div className="buttons">
-              <Button
-                label="حفظ  التصميم بدون نشر"
-                className="save-project"
-                onClick={this.handleSaveProject}
-              />
-              <Button
-                label="نشر التصميم"
-                className="publish-project"
-                onClick={this.handlePublishProject}
-              />
+              {buttons.map((button, index) => {
+                const onClicks = [this.handleSaveProject, this.handlePublishProject];
+                return (
+                  <Button
+                    label={button.label}
+                    className={button.className}
+                    onClick={onClicks[index]}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="project-review">
