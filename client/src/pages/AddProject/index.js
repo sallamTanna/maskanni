@@ -24,18 +24,16 @@ import {
   CheckBoxCol1,
   CheckBoxCol2,
   buttons,
-  projectSizes,
 } from "./helper";
 import InputWithLabel from "./InputWithLabel";
 import MainProjectProp from "./MainProjectProp";
 import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
 import ParagraphWithButton from "./ParagraphWithButton";
+import Price from "./Price";
 import Section from "./Section";
 import Sizes from "./Sizes";
 import UploadChartFile from "./UploadChartFile";
-
 import "./style.css";
-import Price from "./Price";
 
 const filesURLs = [];
 const imagesURLs = [];

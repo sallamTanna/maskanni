@@ -4,17 +4,14 @@ const boom = require("boom");
 const dbQuery = require("../../database/queries/dbQuery");
 const { getUserAvatar } = require("./helper");
 
-module.exports = (req, res, next) => {
-  const { cookies } = req;
+module.exports = async (req, res, next) => {
+  try {
+    const { cookies } = req;
 
-  if (!cookies || !cookies.jwt) {
-    return next(boom.unauthorized("لا يملك صلاحيات"));
-  }
-  return verify(cookies.jwt, process.env.SECRET, async (err, decoded) => {
-    if (err) {
-      res.clearCookie("jwt");
+    if (!cookies || !cookies.jwt) {
       return next(boom.unauthorized("لا يملك صلاحيات"));
     }
+    const decoded = verify(cookies.jwt, process.env.SECRET);
     const { role, id, username, email } = decoded;
     const userAvatarResult = await dbQuery(getUserAvatar(id));
     return res.status(200).json({
@@ -30,5 +27,7 @@ module.exports = (req, res, next) => {
       },
       error: null
     });
-  });
+  } catch (error) {
+    return next(boom.unauthorized("لا يملك صلاحيات"));
+  }
 };
