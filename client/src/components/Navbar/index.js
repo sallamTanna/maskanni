@@ -2,15 +2,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from "react";
 import { Layout, Menu, Avatar } from "antd";
-import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
+import React from "react";
+import { withRouter, Link } from "react-router-dom";
 
 import Button from "../Button";
-import Spinner from "../Spinner";
-import logo from "../../assets/navbar-logo.png";
 import Message from "../Message";
+import Spinner from "../Spinner";
+
+import logo from "../../assets/navbar-logo.png";
 
 import "./style.css";
 
@@ -145,7 +146,7 @@ class Navbar extends React.Component {
           )
         ) : (
           <div className="navbar-logged">
-            <Link to={`${role}-home`}>{username}</Link>
+            <Link to={`/${role}-home`}>{username}</Link>
             <Avatar src={avatar} />
           </div>
         )}
