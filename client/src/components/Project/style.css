@@ -49,14 +49,13 @@
 
 .project_summary {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   overflow: hidden;
   max-height: max-content;
 }
 
 .project_summary div {
   overflow: hidden;
-  padding: 1% 1%;
 }
 
 .project_summary div p:nth-child(1) {
