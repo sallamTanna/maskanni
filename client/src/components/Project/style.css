@@ -5,7 +5,7 @@
   border-radius: 3%;
   padding: 2%;
   margin: 2%;
-  height: 400px;
+  height: max-content;
 }
 
 .project:hover {
@@ -31,7 +31,7 @@
 
 .project__image {
   text-align: center;
-  height: 70%;
+  height: 300px;
 }
 
 .project__image img {
@@ -50,15 +50,13 @@
 .project_summary {
   display: flex;
   justify-content: space-around;
-  height: 20%;
   overflow: hidden;
-  height: auto;
+  max-height: max-content;
 }
 
 .project_summary div {
   overflow: hidden;
-  background-color: ;
-  padding: 0 1%;
+  padding: 1% 1%;
 }
 
 .project_summary div p:nth-child(1) {
