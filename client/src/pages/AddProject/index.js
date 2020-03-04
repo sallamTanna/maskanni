@@ -67,10 +67,15 @@ class AddProject extends React.Component {
       engineerPrice: (0.8 * value).toFixed(2),
     });
 
-  getFilesList = files =>
-    this.setState({
-      imagesArray: files,
-    });
+  getFilesList = files => {
+    console.log(1);
+    this.setState(prevState => ({
+      imagesArray: [...new Set([...prevState.imagesArray, ...files])],
+    }));
+  };
+  // this.setState({
+  //   imagesArray: files,
+  // });
 
   handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
@@ -92,10 +97,15 @@ class AddProject extends React.Component {
     });
   };
 
-  handleProjectMainImage = file =>
-    this.setState({
-      projectMainImage: file,
-    });
+  handleProjectMainImage = async (base64Image, originImageObj) => {
+    // const uploadProjectWallpaper = await putStorageImage(originImageObj, "wallpaper");
+    console.log(originImageObj);
+    this.setState(prevState => ({
+      projectMainImage: base64Image,
+      // originImageObj,
+      imagesArray: prevState.imagesArray.concat(originImageObj),
+    }));
+  };
 
   handleSaveProject = () => {
     const {
@@ -174,17 +184,50 @@ class AddProject extends React.Component {
           ? { required: true, list: conditioningFileList }
           : {},
       });
+      // Promise.all(
+      //   filesArray.map(async (item, index) => {
+      //     await this.putStorageFile(item[0], index);
+      //   })
+      // );
+      // Promise.all(
+      //   imagesArray.map(async item => {
+      //     await this.putStorageImage(item);
+      //   })
+      // );
       Promise.all(
         filesArray.map(async (item, index) => {
           await this.putStorageFile(item[0], index);
         })
-      );
-      Promise.all(
-        imagesArray.map(async item => {
-          await this.putStorageImage(item);
+      )
+        .then(() => {
+          Promise.all(
+            imagesArray.map(async item => {
+              await this.putStorageImage(item);
+            })
+          )
+            .then(() => {
+              console.log("postNewProject then ");
+
+              this.postNewProject();
+            })
+            .catch(() => {
+              console.log("postNewProject error");
+
+              this.setState({
+                errors: true,
+                isLoading: false,
+                errorMessage: "Something went wrong while getting uploaded images URLs",
+              });
+            });
         })
-      );
-      this.postNewProject();
+        .catch(() => {
+          this.setState({
+            errors: true,
+            isLoading: false,
+            errorMessage: "Something went wrong while getting uploaded files  URLs",
+          });
+        });
+      // this.postNewProject();
     } catch (error) {
       const validationError = error && error.errors && error.errors[0];
       this.setState({
@@ -234,13 +277,13 @@ class AddProject extends React.Component {
       });
   };
 
-  putStorageImage = item => {
+  putStorageImage = (item, wallpaper) => {
     const { username } = this.props.user;
 
     // the return value will be a Promise
     return firebase
       .storage()
-      .ref(`${username}/${item.name}`)
+      .ref(`${username}/${wallpaper ? "wallpaper" : item.name}`)
       .put(item.originFileObj)
       .then(snapshot => {
         return snapshot.ref.getDownloadURL();
@@ -475,6 +518,7 @@ class AddProject extends React.Component {
         />
       );
     }
+    console.log("imagesArray", this.state.imagesArray);
 
     return (
       <div>
@@ -523,10 +567,7 @@ class AddProject extends React.Component {
 
             <Section title="صور التصميم\المشروع">
               <div className="project-pic__pictures">
-                <UploadImages
-                  imagesNumber={10}
-                  fileListProp={fileList => this.getFilesList(fileList)}
-                />
+                <UploadImages imagesNumber={10} fileListProp={this.getFilesList} />
                 <UploadOneImage
                   projectMainImage={this.handleProjectMainImage}
                   showPlus

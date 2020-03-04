@@ -1,5 +1,5 @@
-import React from "react";
 import { Upload, Icon, message } from "antd";
+import React from "react";
 
 import Spinner from "../Spinner";
 
@@ -25,7 +25,12 @@ class UploadOneFile extends React.Component {
     if (!isLt2M) {
       message.error("حجم الصورة يجب أن يقل عن 2 ميجا بايت");
     }
-    return isJpgOrPng && isLt2M;
+    this.setState(
+      {
+        isLoading: false,
+      },
+      () => isJpgOrPng && isLt2M
+    );
   };
 
   handleChange = info => {
@@ -38,10 +43,10 @@ class UploadOneFile extends React.Component {
       // Get this url from response in real world.
       this.getBase64(info.file.originFileObj, imageUrl => {
         const { projectMainImage } = this.props;
-        projectMainImage(imageUrl);
+        projectMainImage(imageUrl, info.file);
 
         this.setState({
-          imageUrl,
+          // imageUrl,
           loading: false,
           isLoading: false,
         });

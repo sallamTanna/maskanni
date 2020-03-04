@@ -8,6 +8,7 @@ import Input from "../../../../components/Input";
 import Message from "../../../../components/Message";
 import Spinner from "../../../../components/Spinner";
 import UploadImage from "../../../../components/UploadOneImage";
+import firebase from "../../../../firebase";
 import { alert } from "../../../../utilities";
 
 import {
@@ -142,23 +143,35 @@ class Account extends React.Component {
     }
   };
 
-  handleProfileChange = async file => {
+  handleProfileChange = async (base64Image, originImageObj) => {
     try {
       const { user } = this.props;
-      const { id } = user;
+      const { id, username } = user;
       this.setState({
         isLoading: true,
       });
-      const updateProfileImage = await axios.put(`/v1/users/${id}`, { profileImage: file });
-      this.setState(
-        {
-          uploadingImgError: false,
-          uploadingImgErrorMsg: "",
-          avatar: file,
-          isLoading: false,
-        },
-        () => this.props.changeAvatar(file)
-      );
+
+      return firebase
+        .storage()
+        .ref(`${username}/${originImageObj.name}`)
+        .put(originImageObj.originFileObj)
+        .then(snapshot => {
+          return snapshot.ref.getDownloadURL();
+        })
+        .then(async downloadURL => {
+          const updateProfileImage = await axios.put(`/v1/users/${id}`, {
+            profileImage: downloadURL,
+          });
+          this.setState(
+            {
+              uploadingImgError: false,
+              uploadingImgErrorMsg: "",
+              avatar: base64Image,
+              isLoading: false,
+            },
+            () => this.props.changeAvatar(base64Image)
+          );
+        });
     } catch (error) {
       this.setState({
         uploadingImgError: true,
