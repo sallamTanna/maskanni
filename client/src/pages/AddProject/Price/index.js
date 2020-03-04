@@ -15,7 +15,7 @@ const Price = ({ onChange, value, platformPrice, engineerPrice }) => (
       <p>{platformPrice}$</p>
     </div>
     <div className="eng-price">
-      <p>مستحقاتك بعض الخصم</p>
+      <p>مستحقاتك بعد الخصم</p>
       <p>{engineerPrice}$</p>
     </div>
   </div>

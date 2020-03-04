@@ -30,8 +30,6 @@ module.exports = async (req, res, next) => {
   } = req.body;
 
   try {
-    console.log(9999999999, imagesURLs);
-
     const saveNewProjectResult = await dbQuery(
       addNewProject(
         projectName,
@@ -63,8 +61,6 @@ module.exports = async (req, res, next) => {
       error: null
     });
   } catch (error) {
-    console.log("errrrrrrror", error);
-
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };

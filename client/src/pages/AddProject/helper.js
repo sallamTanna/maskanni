@@ -109,7 +109,7 @@ const saveProjectValidation = () => {
       .number("يجب ادخال قيمة صحيحة لسعر المشروع")
       .required("يرجى ادخال قيمة سعر المشروع")
       .positive("يرجى ادخال قيمة صحيحة لسعر المشروع"),
-    imagesArray: yup
+    fileList: yup
       .array()
       .min(1, "يرجى تحميل صور المشروع")
       .required("يرجى ارفاق صور للمشروع"),

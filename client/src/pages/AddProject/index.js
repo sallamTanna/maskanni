@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
+import { Upload, Icon, Modal } from "antd";
 import axios from "axios";
 import React from "react";
 
@@ -38,14 +40,49 @@ import "./style.css";
 const filesURLs = [];
 const imagesURLs = [];
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
 class AddProject extends React.Component {
-  state = initialState;
+  state = {
+    ...initialState,
+    previewVisible: false,
+    previewImage: "",
+    fileList: [],
+    wallpaperObj: {},
+  };
 
   componentDidMount() {
     this.setState({
       isLoading: false,
     });
   }
+
+  handleCancel = () => this.setState({ previewVisible: false });
+
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+    });
+  };
+
+  handleChange = ({ fileList }) => {
+    this.setState(prevState => ({
+      fileList,
+      allImagesFileList: prevState.fileList,
+    }));
+  };
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
@@ -66,16 +103,6 @@ class AddProject extends React.Component {
       platformPrice: (0.2 * value).toFixed(2),
       engineerPrice: (0.8 * value).toFixed(2),
     });
-
-  getFilesList = files => {
-    console.log(1);
-    this.setState(prevState => ({
-      imagesArray: [...new Set([...prevState.imagesArray, ...files])],
-    }));
-  };
-  // this.setState({
-  //   imagesArray: files,
-  // });
 
   handleFileChange = (info, name) => {
     let fileList = [...info.fileList];
@@ -98,13 +125,10 @@ class AddProject extends React.Component {
   };
 
   handleProjectMainImage = async (base64Image, originImageObj) => {
-    // const uploadProjectWallpaper = await putStorageImage(originImageObj, "wallpaper");
-    console.log(originImageObj);
-    this.setState(prevState => ({
+    this.setState({
       projectMainImage: base64Image,
-      // originImageObj,
-      imagesArray: prevState.imagesArray.concat(originImageObj),
-    }));
+      wallpaperObj: originImageObj,
+    });
   };
 
   handleSaveProject = () => {
@@ -136,6 +160,8 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
+      fileList,
+      wallpaperObj,
     } = this.state;
 
     const filesArray = [
@@ -168,7 +194,7 @@ class AddProject extends React.Component {
         floorsNumber,
         bedRoomsNumber,
         price,
-        imagesArray,
+        fileList,
         projectMainImage,
         architecturalFileList,
         constructionFileList: constructionChart
@@ -184,16 +210,6 @@ class AddProject extends React.Component {
           ? { required: true, list: conditioningFileList }
           : {},
       });
-      // Promise.all(
-      //   filesArray.map(async (item, index) => {
-      //     await this.putStorageFile(item[0], index);
-      //   })
-      // );
-      // Promise.all(
-      //   imagesArray.map(async item => {
-      //     await this.putStorageImage(item);
-      //   })
-      // );
       Promise.all(
         filesArray.map(async (item, index) => {
           await this.putStorageFile(item[0], index);
@@ -205,14 +221,16 @@ class AddProject extends React.Component {
               await this.putStorageImage(item);
             })
           )
-            .then(() => {
-              console.log("postNewProject then ");
-
-              this.postNewProject();
+            .then(async () => {
+              const uploadProjectWallpaper = await this.putStorageImage(wallpaperObj);
+              this.setState(
+                {
+                  projectMainImage: uploadProjectWallpaper,
+                },
+                () => this.postNewProject()
+              );
             })
             .catch(() => {
-              console.log("postNewProject error");
-
               this.setState({
                 errors: true,
                 isLoading: false,
@@ -227,7 +245,6 @@ class AddProject extends React.Component {
             errorMessage: "Something went wrong while getting uploaded files  URLs",
           });
         });
-      // this.postNewProject();
     } catch (error) {
       const validationError = error && error.errors && error.errors[0];
       this.setState({
@@ -277,13 +294,13 @@ class AddProject extends React.Component {
       });
   };
 
-  putStorageImage = (item, wallpaper) => {
+  putStorageImage = item => {
     const { username } = this.props.user;
 
     // the return value will be a Promise
     return firebase
       .storage()
-      .ref(`${username}/${wallpaper ? "wallpaper" : item.name}`)
+      .ref(`${username}/${item.name}`)
       .put(item.originFileObj)
       .then(snapshot => {
         return snapshot.ref.getDownloadURL();
@@ -396,6 +413,13 @@ class AddProject extends React.Component {
       [e.target.name]: e.target.value,
     });
 
+  uploadButton = () => (
+    <div>
+      <Icon type="plus" />
+      <div className="ant-upload-text">ارفع صور المشروع</div>
+    </div>
+  );
+
   render() {
     const {
       projectName,
@@ -436,6 +460,9 @@ class AddProject extends React.Component {
       gardensNumber,
       isOneInputEmpty,
       inputEmptyErrorMsg,
+      previewVisible,
+      previewImage,
+      fileList,
     } = this.state;
 
     const sizesValue = [size, length, width, height];
@@ -518,7 +545,6 @@ class AddProject extends React.Component {
         />
       );
     }
-    console.log("imagesArray", this.state.imagesArray);
 
     return (
       <div>
@@ -567,7 +593,20 @@ class AddProject extends React.Component {
 
             <Section title="صور التصميم\المشروع">
               <div className="project-pic__pictures">
-                <UploadImages imagesNumber={10} fileListProp={this.getFilesList} />
+                <div className="images-container">
+                  <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.handlePreview}
+                    onChange={this.handleChange}
+                  >
+                    {fileList.length >= 10 ? null : this.uploadButton()}
+                  </Upload>
+                  <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="example" style={{ width: "100%" }} src={previewImage} />
+                  </Modal>
+                </div>
                 <UploadOneImage
                   projectMainImage={this.handleProjectMainImage}
                   showPlus
