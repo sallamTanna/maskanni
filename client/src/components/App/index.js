@@ -25,7 +25,13 @@ import withAuth from "../../hoc/withAuth";
 
 import "./style.css";
 
-const pathnames = ["/add", "/consumer-home", "/architect-home", "/projects"];
+const pathnames = [
+  /^\/add$/,
+  /^\/consumer-home$/,
+  /^\/architect-home$/,
+  /^\/projects\/?$/,
+  /^\/projects\/\d+$/,
+];
 
 class App extends Component {
   state = {
@@ -82,7 +88,9 @@ class App extends Component {
 
   render() {
     const { isLogged, username, role, avatar, isLoading } = this.state;
-    const showNavbarAndFooter = pathnames.indexOf(window.location.pathname) > -1;
+    const showNavbarAndFooter = pathnames.find(pathname =>
+      window.location.pathname.match(pathname)
+    );
     return (
       <ConfigProvider locale={ar}>
         <div className="App">
