@@ -26,13 +26,28 @@ class Account extends React.Component {
     ...initialState,
     avatar: this.props.user.avatar,
     user: this.props.user,
+    // fullName: this.props.user.username,
+    fullName: "",
+    email: this.props.user.email,
+    mobile: this.props.user.mobile,
+    address: this.props.user.address,
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.user.avatar !== state.user.avatar) {
+    if (
+      props.user.avatar !== state.user.avatar ||
+      props.user.username !== state.user.username ||
+      props.user.email !== state.user.email ||
+      props.user.address !== state.user.address ||
+      props.user.mobile !== state.user.mobile
+    ) {
       return {
         user: props.user,
         avatar: props.user.avatar,
+        fullName: props.user.username,
+        mobile: props.user.mobile,
+        address: props.user.address,
+        email: props.user.email,
       };
     }
     return null;
@@ -64,6 +79,7 @@ class Account extends React.Component {
           isLoading: false,
           personalDataErrorMsg: "",
           personalDataError: false,
+          fullName,
         },
         () => alert("success", "success", "تم", "تم تعديل معلوماتك الشخصية بنجاح", 1500, false)
       );
@@ -201,6 +217,7 @@ class Account extends React.Component {
       uploadingImgErrorMsg,
       avatar,
     } = this.state;
+    console.log(5555, this.props.user);
 
     return (
       <div className="account-page">

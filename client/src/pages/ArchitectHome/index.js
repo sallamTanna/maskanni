@@ -30,7 +30,7 @@ class ArchitectHome extends React.Component {
         data: { response },
       } = await axios.get("/v1/check");
 
-      const { id, username, role, email, avatar, isLogged } = response;
+      const { id, username, role, email, avatar, isLogged, address, mobile } = response;
       this.setState({
         isLoading: false,
         id,
@@ -39,6 +39,8 @@ class ArchitectHome extends React.Component {
         isLogged,
         email,
         avatar,
+        address,
+        mobile,
       });
     } catch (error) {
       this.setState(
@@ -70,6 +72,8 @@ class ArchitectHome extends React.Component {
       role,
       id,
       email,
+      address,
+      mobile,
     } = this.state;
 
     const user = {
@@ -79,6 +83,8 @@ class ArchitectHome extends React.Component {
       isLogged,
       email,
       avatar,
+      address,
+      mobile,
     };
 
     let selectedComponent;

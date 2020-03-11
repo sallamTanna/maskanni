@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
 const initialState = {
-  fullName: "",
-  email: "",
-  mobile: "",
-  address: "",
+  // fullName: "",
+  // email: "",
+  // mobile: "",
+  // address: "",
   password: "",
   newPassword: "",
   confirmPassword: "",

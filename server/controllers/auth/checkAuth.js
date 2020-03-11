@@ -12,14 +12,16 @@ module.exports = async (req, res, next) => {
       return next(boom.unauthorized("لا يملك صلاحيات"));
     }
     const decoded = verify(cookies.jwt, process.env.SECRET);
-    const { role, id, username, email } = decoded;
+    const { role, id, username, email, address, mobile } = decoded;
     const userAvatarResult = await dbQuery(getUserAvatar(id));
     return res.status(200).json({
       response: {
         role,
         id,
         username,
+        address,
         email,
+        mobile,
         avatar:
           userAvatarResult.rows[0].avatar ||
           "https://www.pngjoy.com/pngm/136/2750635_gray-circle-login-user-icon-png-transparent-png.png",
