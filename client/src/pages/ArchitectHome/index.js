@@ -1,140 +1,103 @@
 /* eslint-disable no-undef */
 import { Menu } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withRouter, Link } from "react-router-dom";
 
 import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
+import UserContext from "../../context/userContext";
 
-import { initialState } from "./helper";
 import Account from "./selectedComponent/Account";
 import Designs from "./selectedComponent/Designs";
 import Sales from "./selectedComponent/Sales";
 
 import "./style.css";
 
-class ArchitectHome extends React.Component {
-  state = initialState;
+const ArchitectHome = props => {
+  const [user, setUser] = useState({});
+  // const [username, setUsername] = useState("fofo");
+  const [title, setTitle] = useState("حسابي");
+  const [isLoading, setIsLoading] = useState(true);
+  const [key, setKey] = useState(1);
+  const [isResponsive, setIsResponsive] = useState(false);
 
-  async componentDidMount() {
-    const { history } = this.props;
-    if (window.screen.width <= 425) {
-      this.setState({
-        isResponsive: true,
-      });
-    }
-
+  async function checkAuth() {
     try {
       const {
         data: { response },
       } = await axios.get("/v1/check");
+      setIsLoading(false);
 
-      const { id, username, role, email, avatar, isLogged, address, mobile } = response;
-      this.setState({
-        isLoading: false,
-        id,
-        username,
-        role,
-        isLogged,
-        email,
-        avatar,
-        address,
-        mobile,
-      });
+      return response;
     } catch (error) {
-      this.setState(
-        {
-          isLoading: false,
-        },
-        () => history.push("/login")
-      );
+      setIsLoading(false);
+      props.history.push("/login");
     }
   }
 
-  handleSubNavClick = e => {
-    this.setState({
-      key: e.key,
-      title: e.item.props.children,
-    });
+  useEffect(async () => {
+    if (window.screen.width <= 425) setIsResponsive(true);
+    const userData = await checkAuth();
+    setUser(userData);
+    setIsLoading(false);
+  }, []);
+
+  const handleSubNavClick = e => {
+    setKey(e.key);
+    setTitle(e.item.props.children);
   };
 
-  render() {
-    const { changeNavAvatar } = this.props;
-    const {
-      title,
-      isResponsive,
-      key,
-      isLoading,
-      isLogged,
-      avatar,
-      username,
-      role,
-      id,
-      email,
-      address,
-      mobile,
-    } = this.state;
+  const { changeNavAvatar } = props;
 
-    const user = {
-      id,
-      username,
-      role,
-      isLogged,
-      email,
-      avatar,
-      address,
-      mobile,
-    };
-
-    let selectedComponent;
-    switch (key) {
-      case "1":
-        selectedComponent = (
-          <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
-        );
-        break;
-      case "2":
-        selectedComponent = <Designs user={user} />;
-        break;
-      case "3":
-        selectedComponent = <Sales user={user} />;
-        break;
-      default:
-        selectedComponent = (
-          <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
-        );
-    }
-
-    return (
-      <>
-        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
-        <div className="architectNavbar">
-          <div>
-            <h1 className="architectNavbar__title">{title}</h1>
-            <Menu
-              onClick={this.handleSubNavClick}
-              mode="horizontal"
-              style={{ backgroundColor: "#404041", color: "#909090" }}
-              defaultSelectedKeys={["1"]}
-            >
-              <Menu.Item key="1">حسابي</Menu.Item>
-              <Menu.Item key="2">التصاميم والخطط</Menu.Item>
-              <Menu.Item key="3">المبيعات</Menu.Item>
-            </Menu>
-          </div>
-          {!isResponsive ? (
-            <div className="designs__add">
-              <Link to="/add">
-                <Button label="اضافة تصميم جديد" />
-              </Link>
-            </div>
-          ) : null}
-        </div>
-        <div className="selected-component">{selectedComponent}</div>
-      </>
-    );
+  let selectedComponent;
+  switch (key) {
+    case "1":
+      selectedComponent = (
+        <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
+      );
+      break;
+    case "2":
+      selectedComponent = <Designs user={user} />;
+      break;
+    case "3":
+      selectedComponent = <Sales user={user} />;
+      break;
+    default:
+      selectedComponent = (
+        <Account user={user} changeAvatar={newAvatar => changeNavAvatar(newAvatar)} />
+      );
   }
-}
+  return (
+    <>
+      {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+      <div className="architectNavbar">
+        <div>
+          <h1 className="architectNavbar__title">{title}</h1>
+          <Menu
+            onClick={handleSubNavClick}
+            mode="horizontal"
+            style={{ backgroundColor: "#404041", color: "#909090" }}
+            defaultSelectedKeys={["1"]}
+          >
+            <Menu.Item key="1">حسابي</Menu.Item>
+            <Menu.Item key="2">التصاميم والخطط</Menu.Item>
+            <Menu.Item key="3">المبيعات</Menu.Item>
+          </Menu>
+        </div>
+        {!isResponsive ? (
+          <div className="designs__add">
+            <Link to="/add">
+              <Button label="اضافة تصميم جديد" />
+            </Link>
+          </div>
+        ) : null}
+      </div>
+      <UserContext.Provider value={{ user, setUser, id: user.id }}>
+        <div className="selected-component">{selectedComponent}</div>
+      </UserContext.Provider>
+    </>
+  );
+};
 
 export default withRouter(ArchitectHome);

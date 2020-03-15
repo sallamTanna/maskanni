@@ -9,6 +9,7 @@ const getAllProjects = require("../controllers/projects/getAllProjects");
 const getProject = require("../controllers/projects/getProject");
 const getUserProjects = require("../controllers/users/getUserProjects");
 const updateUserData = require("../controllers/users/updateUser");
+const getUsers = require("../controllers/users/getUsers");
 
 // login, signup, and logout and auth
 router.post("/login", login);
@@ -18,6 +19,7 @@ router.get("/logout", logout);
 
 // Users
 router.get("/users/:user_id/projects/:project_id?", getUserProjects); // return project/s of specific user
+router.get("/users/:user_id?", getUsers); // return specific user or all users
 router.put("/users/:user_id", updateUserData);
 
 // Projects

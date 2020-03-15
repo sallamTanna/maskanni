@@ -1,10 +1,6 @@
 import * as yup from "yup";
 
 const initialState = {
-  // fullName: "",
-  // email: "",
-  // mobile: "",
-  // address: "",
   password: "",
   newPassword: "",
   confirmPassword: "",
@@ -46,7 +42,7 @@ const personalDataValidation = () =>
       .string()
       .email("يجب ادخال صيغة صحيحة للايميل")
       .required("يجب ادخال الايميل"),
-    fullName: yup
+    username: yup
       .string()
       .min(6, "الاسم كاملا لا يقل عن 6 حروف")
       .max(20, "الاسم كاملا لا يزيد عن 20 حرف")

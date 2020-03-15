@@ -12,7 +12,7 @@ const {
 
 module.exports = async (req, res, next) => {
   const {
-    fullName,
+    username,
     email,
     mobile,
     address,
@@ -22,11 +22,13 @@ module.exports = async (req, res, next) => {
     profileImage
   } = req.body;
   const { user_id } = req.params;
+  console.log(444444, req.params);
+  console.log("00000000000", user_id, username, email, mobile, address);
 
   try {
-    if (user_id && fullName && email && mobile && address) {
+    if (user_id && username && email && mobile && address) {
       const updatePersonalDataResult = await dbQuery(
-        updatePersonalData(fullName, email, mobile, address, user_id)
+        updatePersonalData(username, email, mobile, address, user_id)
       );
       res.json({
         response: { data: updatePersonalDataResult.rows, statusCode: 200 },
@@ -62,6 +64,8 @@ module.exports = async (req, res, next) => {
       });
     }
   } catch (error) {
+    console.log(222, error);
+
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }
 };
