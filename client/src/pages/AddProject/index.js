@@ -1,58 +1,100 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
-import React from "react";
+import { Upload, Icon, Modal } from "antd";
 import axios from "axios";
+import React from "react";
 
-import { Typography } from "antd";
-import Input from "../../components/Input";
-import TextArea from "../../components/TextArea";
-import CheckBox from "../../components/CheckBox";
-import InputNumber from "../../components/InputNumber";
+import defaultBG from "../../assets/default-pg.png";
 import Button from "../../components/Button";
+import CheckBox from "../../components/CheckBox";
 import Header from "../../components/Header";
 import Message from "../../components/Message";
-import Spinner from "../../components/Spinner";
 import Project from "../../components/Project";
+import Spinner from "../../components/Spinner";
 import UploadImages from "../../components/UploadImages";
 import UploadOneImage from "../../components/UploadOneImage";
-import UploadFile from "../../components/UploadFile";
-import livingRoom from "../../assets/living-room.svg";
-import bedRoom from "../../assets/bed-room.svg";
-import bathRoom from "../../assets/bath-room.svg";
-import stairs from "../../assets/stairs.svg";
-import carGarage from "../../assets/car-garage.svg";
+import firebase from "../../firebase";
+import { alert } from "../../utilities";
+
 import {
   saveProjectValidation,
   edibleInputValidation,
-  edibleInputStyle,
-  initalState,
+  initialState,
+  imageStyle,
+  CheckBoxCol1,
+  CheckBoxCol2,
+  buttons,
 } from "./helper";
-import { alert } from "../../utilities";
-import firebase from "../../firebase";
-import defaultBG from "../../assets/default-pg.png";
-
+import InputWithLabel from "./InputWithLabel";
+import MainProjectProp from "./MainProjectProp";
+import MultipleInputWithLAbel from "./MultipleInputWithLAbel";
+import ParagraphWithButton from "./ParagraphWithButton";
+import Price from "./Price";
+import Section from "./Section";
+import Sizes from "./Sizes";
+import UploadChartFile from "./UploadChartFile";
 import "./style.css";
 
-const { Paragraph } = Typography;
 const filesURLs = [];
 const imagesURLs = [];
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
 class AddProject extends React.Component {
-  state = initalState();
+  state = {
+    ...initialState,
+    previewVisible: false,
+    previewImage: "",
+    fileList: [],
+    wallpaperObj: {},
+  };
+
+  componentDidMount() {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  handleCancel = () => this.setState({ previewVisible: false });
+
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+    });
+  };
+
+  handleChange = ({ fileList }) => {
+    this.setState(prevState => ({
+      fileList,
+      allImagesFileList: prevState.fileList,
+    }));
+  };
 
   handleCheckboxChange = e => {
     const name = this.state[e.target.name];
 
-    if (name === "") {
+    if (name === "")
       this.setState({
         [e.target.name]: e.target.name,
       });
-    } else {
+    else
       this.setState({
         [e.target.name]: "",
       });
-    }
   };
 
   handlePriceChange = value =>
@@ -60,11 +102,6 @@ class AddProject extends React.Component {
       price: value,
       platformPrice: (0.2 * value).toFixed(2),
       engineerPrice: (0.8 * value).toFixed(2),
-    });
-
-  getFilesList = files =>
-    this.setState({
-      imagesArray: files,
     });
 
   handleFileChange = (info, name) => {
@@ -87,10 +124,12 @@ class AddProject extends React.Component {
     });
   };
 
-  handleProjectMainImage = file =>
+  handleProjectMainImage = async (base64Image, originImageObj) => {
     this.setState({
-      projectMainImage: file,
+      projectMainImage: base64Image,
+      wallpaperObj: originImageObj,
     });
+  };
 
   handleSaveProject = () => {
     const {
@@ -121,6 +160,8 @@ class AddProject extends React.Component {
       constructionChart,
       electricityChart,
       conditioningChart,
+      fileList,
+      wallpaperObj,
     } = this.state;
 
     const filesArray = [
@@ -133,14 +174,14 @@ class AddProject extends React.Component {
       conditioningFileList,
     ].filter(list => list.length > 0);
 
-    const schema = saveProjectValidation();
+    try {
+      const schema = saveProjectValidation();
 
-    this.setState({
-      isLoading: true,
-    });
+      this.setState({
+        isLoading: true,
+      });
 
-    schema
-      .validate({
+      schema.validateSync({
         projectName,
         projectDescription,
         size,
@@ -153,7 +194,7 @@ class AddProject extends React.Component {
         floorsNumber,
         bedRoomsNumber,
         price,
-        imagesArray,
+        fileList,
         projectMainImage,
         architecturalFileList,
         constructionFileList: constructionChart
@@ -168,45 +209,50 @@ class AddProject extends React.Component {
         conditioningFileList: conditioningChart
           ? { required: true, list: conditioningFileList }
           : {},
-      })
-      .then(() => {
-        Promise.all(
-          filesArray.map(async (item, index) => {
-            await this.putStorageFile(item[0], index);
-          })
-        )
-          .then(() => {
-            Promise.all(
-              imagesArray.map(async item => {
-                await this.putStorageImage(item);
-              })
-            )
-              .then(() => {
-                this.postNewProject();
-              })
-              .catch(() => {
-                this.setState({
-                  errors: true,
-                  isLoading: false,
-                  errorMessage: "Something went wrong while getting uploaded images URLs",
-                });
-              });
-          })
-          .catch(() => {
-            this.setState({
-              errors: true,
-              isLoading: false,
-              errorMessage: "Something went wrong while getting uploaded files  URLs",
-            });
-          });
-      })
-      .catch(error => {
-        this.setState({
-          errors: true,
-          isLoading: false,
-          errorMessage: error.errors[0],
-        });
       });
+      Promise.all(
+        filesArray.map(async (item, index) => {
+          await this.putStorageFile(item[0], index);
+        })
+      )
+        .then(() => {
+          Promise.all(
+            imagesArray.map(async item => {
+              await this.putStorageImage(item);
+            })
+          )
+            .then(async () => {
+              const uploadProjectWallpaper = await this.putStorageImage(wallpaperObj);
+              this.setState(
+                {
+                  projectMainImage: uploadProjectWallpaper,
+                },
+                () => this.postNewProject()
+              );
+            })
+            .catch(() => {
+              this.setState({
+                errors: true,
+                isLoading: false,
+                errorMessage: "Something went wrong while getting uploaded images URLs",
+              });
+            });
+        })
+        .catch(() => {
+          this.setState({
+            errors: true,
+            isLoading: false,
+            errorMessage: "Something went wrong while getting uploaded files  URLs",
+          });
+        });
+    } catch (error) {
+      const validationError = error && error.errors && error.errors[0];
+      this.setState({
+        errors: true,
+        isLoading: false,
+        errorMessage: validationError || "حدثت مشكلة اثناء رفع الملفات، حاول مرة أخرى",
+      });
+    }
   };
 
   putStorageFile = (item, index) => {
@@ -268,31 +314,31 @@ class AddProject extends React.Component {
       });
   };
 
-  postNewProject = () => {
-    const {
-      projectName,
-      projectDescription,
-      size,
-      width,
-      length,
-      height,
-      livingRoomsNumber,
-      bathRoomsNumber,
-      carGarageNumber,
-      floorsNumber,
-      bedRoomsNumber,
-      kitchenDescription,
-      garageDescription,
-      gardenDescription,
-      charts,
-      engineerPrice,
-      projectMainImage,
-      bedRoomsDescription,
-      price,
-    } = this.state;
+  postNewProject = async () => {
+    try {
+      const {
+        projectName,
+        projectDescription,
+        size,
+        width,
+        length,
+        height,
+        livingRoomsNumber,
+        bathRoomsNumber,
+        carGarageNumber,
+        floorsNumber,
+        bedRoomsNumber,
+        kitchenDescription,
+        garageDescription,
+        gardenDescription,
+        charts,
+        engineerPrice,
+        projectMainImage,
+        bedRoomsDescription,
+        price,
+      } = this.state;
 
-    axios
-      .post("/v1/projects", {
+      const postProject = await axios.post("/v1/projects", {
         projectName,
         projectDescription,
         size,
@@ -315,27 +361,23 @@ class AddProject extends React.Component {
         projectMainImage,
         filesURLs,
         user_id: this.props.user.id,
-      })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState(
-            {
-              errors: false,
-              isLoading: false,
-            },
-            () => {
-              return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
-            }
-          );
-        }
-      })
-      .catch(error => {
-        this.setState({
-          errors: true,
-          isLoading: false,
-          errorMessage: error.response.data.error.msg,
-        });
       });
+      this.setState(
+        {
+          errors: false,
+          isLoading: false,
+        },
+        () => {
+          return alert("success", "success", "تم", "تم اضافة المشروع بنجاح", 1500, false);
+        }
+      );
+    } catch (error) {
+      this.setState({
+        errors: true,
+        isLoading: false,
+        errorMessage: error.response.data.error.msg,
+      });
+    }
   };
 
   handleAddInputField = inputsNumber => {
@@ -345,33 +387,38 @@ class AddProject extends React.Component {
   };
 
   handleInputChange = (str, descriptionArray, stateValue) => {
-    // str: is the the value we got aflter clicking "enter"
+    // str: is the the value we got after clicking "enter"
     // descriptionArray: the array we will push to it all the values we got from inputs(e.g: kitchenDescription array that will hold all description comes from inputs )
     // stateValue: is the new value that the input should have after clicking "enter", so user can see what he typed in the input
     // inputValidation
-    const schema = edibleInputValidation();
-    schema
-      .validate({ str })
-      .then(() =>
-        this.setState({
-          [descriptionArray]: this.state[descriptionArray].concat(str),
-          [stateValue]: str,
-          isOneInputEmpty: false,
-          inputEmptyErrorMsg: "",
-        })
-      )
-      .catch(error =>
-        this.setState({
-          isOneInputEmpty: true,
-          inputEmptyErrorMsg: error.errors[0],
-        })
-      );
+    try {
+      const schema = edibleInputValidation();
+      schema.validateSync({ str });
+      this.setState({
+        [descriptionArray]: this.state[descriptionArray].concat(str),
+        [stateValue]: str,
+        isOneInputEmpty: false,
+        inputEmptyErrorMsg: "",
+      });
+    } catch (error) {
+      this.setState({
+        isOneInputEmpty: true,
+        inputEmptyErrorMsg: error.errors[0],
+      });
+    }
   };
 
   handleNormalInputChange = e =>
     this.setState({
       [e.target.name]: e.target.value,
     });
+
+  uploadButton = () => (
+    <div>
+      <Icon type="plus" />
+      <div className="ant-upload-text">ارفع صور المشروع</div>
+    </div>
+  );
 
   render() {
     const {
@@ -413,105 +460,89 @@ class AddProject extends React.Component {
       gardensNumber,
       isOneInputEmpty,
       inputEmptyErrorMsg,
+      previewVisible,
+      previewImage,
+      fileList,
     } = this.state;
 
+    const sizesValue = [size, length, width, height];
     const bedRoomDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle()}
-        editable={{
-          onChange: str => this.handleInputChange(str, "bedRoomsDescription", "roomsDescription0"),
-        }}
-      >
-        {this.state.roomsDescription0 || "وصف غرف النوم"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.roomsDescription0 || "وصف غرف النوم"}
+        onChange={this.handleInputChange}
+        descriptionArray="bedRoomsDescription"
+        stateValue="roomsDescription0"
+      />,
     ];
 
     const kitchenDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle()}
-        editable={{
-          onChange: str => this.handleInputChange(str, "kitchenDescription", "ketchenDescription0"),
-        }}
-      >
-        {this.state.ketchenDescription0 || "وصف المطبخ"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.ketchenDescription0 || "وصف المطبخ"}
+        onChange={this.handleInputChange}
+        descriptionArray="kitchenDescription"
+        stateValue="ketchenDescription0"
+      />,
     ];
 
     const garageDescriptionsInput = [
-      <Paragraph
-        style={edibleInputStyle()}
-        editable={{
-          onChange: str => this.handleInputChange(str, "garageDescription", "garageDescription0"),
-        }}
-      >
-        {this.state.garageDescription0 || "وصف الكراج"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.garageDescription0 || "وصف الكراج"}
+        onChange={this.handleInputChange}
+        descriptionArray="garageDescription"
+        stateValue="garageDescription0"
+      />,
     ];
 
     const gardenDescriptionInputs = [
-      <Paragraph
-        style={edibleInputStyle()}
-        editable={{
-          onChange: str => this.handleInputChange(str, "gardenDescription", "gardenDescription0"),
-        }}
-      >
-        {this.state.gardenDescription0 || "وصف الحديقة"}
-      </Paragraph>,
+      <ParagraphWithButton
+        description={this.state.gardenDescription0 || "وصف الحديقة"}
+        onChange={this.handleInputChange}
+        descriptionArray="gardenDescription"
+        stateValue="gardenDescription0"
+      />,
     ];
 
     for (let i = 1; i <= bedRoomInputsNumber; i++) {
       bedRoomDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle()}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "bedRoomsDescription", `roomsDescription${i}`),
-          }}
-        >
-          {this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`roomsDescription${i}`] || "وصف غرف النوم"}
+          onChange={this.handleInputChange}
+          descriptionArray="bedRoomsDescription"
+          stateValue={`roomsDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= kitchensNumber; i++) {
       kitchenDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle()}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "kitchenDescription", `ketchenDescription${i}`),
-          }}
-        >
-          {this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`ketchenDescription${i}`] || "وصف غرف النوم"}
+          onChange={this.handleInputChange}
+          descriptionArray="kitchenDescription"
+          stateValue={`ketchenDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= garagesNumber; i++) {
       garageDescriptionsInput.push(
-        <Paragraph
-          style={edibleInputStyle()}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "garageDescription", `garageDescription${i}`),
-          }}
-        >
-          {this.state[`garageDescription${i}`] || "وصف الكراج"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`garageDescription${i}`] || "وصف الكراج"}
+          onChange={this.handleInputChange}
+          descriptionArray="garageDescription"
+          stateValue={`garageDescription${i}`}
+        />
       );
     }
 
     for (let i = 1; i <= gardensNumber; i++) {
       gardenDescriptionInputs.push(
-        <Paragraph
-          style={edibleInputStyle()}
-          editable={{
-            onChange: str =>
-              this.handleInputChange(str, "gardenDescription", `gardenDescription${i}`),
-          }}
-        >
-          {this.state[`gardenDescription${i}`] || "وصف الحديقة"}
-        </Paragraph>
+        <ParagraphWithButton
+          description={this.state[`gardenDescription${i}`] || "وصف الحديقة"}
+          onChange={this.handleInputChange}
+          descriptionArray="gardenDescription"
+          stateValue={`gardenDescription${i}`}
+        />
       );
     }
 
@@ -526,334 +557,197 @@ class AddProject extends React.Component {
               <Message message={errorMessage} type="error" className="login__errorMsg" />
             ) : null}
 
-            <div className="main-details">
-              <p className="main-details__title">معلومات أساسية</p>
-              <div className="project-name">
-                <p>اسم المشروع</p>
-                <Input
-                  onChange={this.handleNormalInputChange}
-                  name="projectName"
-                  value={projectName}
-                  placeholder="ادخل اسم المشروع"
-                />
-              </div>
-              <div className="project-description">
-                <p>وصف المشروع</p>
-                <TextArea
-                  onChange={this.handleNormalInputChange}
-                  name="projectDescription"
-                  value={projectDescription}
-                  placeholder="أكتب وصفاً جدياً لهذا المشروع"
-                />
-              </div>
-            </div>
-            <div className="main-prop">
-              <p className="main-prop__title">المواصفات الرئيسية</p>
+            <Section title="معلومات أساسية">
+              <InputWithLabel
+                className="project-name"
+                label="اسم المشروع"
+                onChange={this.handleNormalInputChange}
+                name="projectName"
+                value={projectName}
+                placeholder="ادخل اسم المشروع"
+              />
+              <InputWithLabel
+                className="project-description"
+                label="وصف المشروع"
+                onChange={this.handleNormalInputChange}
+                name="projectDescription"
+                value={projectDescription}
+                placeholder="أكتب وصفاً جدياً لهذا المشروع"
+              />
+            </Section>
+
+            <Section title="المواصفات الرئيسية">
               <div className="main-prop__data">
-                <div>
-                  <img src={livingRoom} alt="livingRoom." />
-                  <Input
-                    name="livingRoomsNumber"
-                    value={livingRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="غرف المعيشة"
-                  />
-                </div>
-                <div>
-                  <img src={bedRoom} alt="bedRoom" />
-                  <Input
-                    name="bedRoomsNumber"
-                    value={bedRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="غرف النوم"
-                  />
-                </div>
-                <div>
-                  <img src={bathRoom} alt="bathRoom" />
-                  <Input
-                    name="bathRoomsNumber"
-                    value={bathRoomsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الحمامات"
-                  />
-                </div>
-                <div>
-                  <img src={stairs} alt="stairs" />
-                  <Input
-                    name="floorsNumber"
-                    value={floorsNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الأدوار"
-                  />
-                </div>
-                <div>
-                  <img src={carGarage} alt="carGarage" />
-                  <Input
-                    name="carGarageNumber"
-                    value={carGarageNumber}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="كراج السيارات"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="project-pic">
-              <p className="project-pic__title">صور التصميم\المشروع</p>
-              <div className="project-pic__pictures">
-                <UploadImages
-                  imagesNumber={10}
-                  fileListProp={fileList => this.getFilesList(fileList)}
+                <MainProjectProp
+                  onChange={this.handleNormalInputChange}
+                  states={[
+                    livingRoomsNumber,
+                    bedRoomsNumber,
+                    bathRoomsNumber,
+                    floorsNumber,
+                    carGarageNumber,
+                  ]}
                 />
+              </div>
+            </Section>
+
+            <Section title="صور التصميم\المشروع">
+              <div className="project-pic__pictures">
+                <div className="images-container">
+                  <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.handlePreview}
+                    onChange={this.handleChange}
+                  >
+                    {fileList.length >= 10 ? null : this.uploadButton()}
+                  </Upload>
+                  <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="example" style={{ width: "100%" }} src={previewImage} />
+                  </Modal>
+                </div>
                 <UploadOneImage
                   projectMainImage={this.handleProjectMainImage}
                   showPlus
                   label="ارفع صورة الواجهة"
-                  // currentImage = {}
+                  currentImage={this.state.projectMainImage}
+                  imageStyle={imageStyle}
                 />
               </div>
-            </div>
-            <div className="more-details">
-              <p className="more-details__title">المواصفات والميزات بالتفصيل</p>
-              <div className="total-size">
-                <p>المساحة الكلية</p>
-                <div className="size-fileds">
-                  {isOneInputEmpty ? (
-                    <Message
-                      message={inputEmptyErrorMsg}
-                      type="error"
-                      className="login__errorMsg"
-                    />
-                  ) : null}
-                  <Input
-                    name="size"
-                    value={size}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="المساحة"
-                  />
-                  <Input
-                    name="length"
-                    value={length}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الطول"
-                  />
-                  <Input
-                    name="width"
-                    value={width}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="العرض"
-                  />
-                  <Input
-                    name="height"
-                    value={height}
-                    onChange={this.handleNormalInputChange}
-                    placeholder="الارتفاع"
-                  />
-                </div>
-              </div>
+            </Section>
 
-              <div className="total-size">
-                <p>غرف النوم</p>
-                <div className="size-fileds">
-                  {bedRoomDescriptionInputs}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("bedRoomInputsNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>المطبخ</p>
-                <div className="size-fileds">
-                  {kitchenDescriptionInputs}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("kitchensNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>الكراج</p>
-                <div className="size-fileds">
-                  {garageDescriptionsInput}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("garagesNumber")}
-                  />
-                </div>
-              </div>
-              <div className="total-size">
-                <p>الحديقة</p>
-                <div className="size-fileds">
-                  {gardenDescriptionInputs}
-                  {/* <Input
-                    name="gardenDescription"
-                    value={gardenDescription}
-                    onChange={this.handleInputChange}
-                    placeholder="وصف الحديقة"
-                  /> */}
-                  <Button
-                    label="اضافة حقل جديد"
-                    onClick={() => this.handleAddInputField("gardensNumber")}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="charts">
-              <p className="available-charts__title">المخططات المتوفرة لهذا التصميم</p>
+            <Section title="المواصفات والميزات بالتفصيل">
+              <Sizes
+                isOneInputEmpty={isOneInputEmpty}
+                inputEmptyErrorMsg={inputEmptyErrorMsg}
+                onChange={this.handleNormalInputChange}
+                valuesArray={sizesValue}
+              />
+
+              <MultipleInputWithLAbel
+                label="غرف النوم"
+                onClick={this.handleAddInputField}
+                inputs={bedRoomDescriptionInputs}
+                inputsNumber="bedRoomInputsNumber"
+              />
+              <MultipleInputWithLAbel
+                label="المطبخ"
+                onClick={this.handleAddInputField}
+                inputs={kitchenDescriptionInputs}
+                inputsNumber="kitchensNumber"
+              />
+              <MultipleInputWithLAbel
+                label="الكراج"
+                onClick={this.handleAddInputField}
+                inputs={garageDescriptionsInput}
+                inputsNumber="garagesNumber"
+              />
+              <MultipleInputWithLAbel
+                label="الحديقة"
+                onClick={this.handleAddInputField}
+                inputs={gardenDescriptionInputs}
+                inputsNumber="gardensNumber"
+              />
+            </Section>
+
+            <Section title="المخططات المتوفرة لهذا التصميم">
               <div className="available-charts">
                 <div>
-                  <CheckBox
-                    defaultChecked
-                    disabled
-                    onChange={this.handleCheckboxChange}
-                    label="المخطط المعماري"
-                  />
-                  <CheckBox
-                    name="constructionChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط انشائي"
-                  />
-
-                  <CheckBox
-                    name="HealthChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط صحي"
-                  />
-                  <CheckBox
-                    name="electricityChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط كهرباء"
-                  />
+                  {CheckBoxCol1.map((checkBox, index) => (
+                    <CheckBox
+                      defaultChecked={index === 0}
+                      disabled={index === 0}
+                      onChange={this.handleCheckboxChange}
+                      label={checkBox.label}
+                      name={checkBox.name}
+                    />
+                  ))}
                 </div>
                 <div>
-                  <CheckBox
-                    name="gardenChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط تصميم حديقة"
-                  />
-
-                  <CheckBox
-                    name="interiorDecorationChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط ديكور داخلي"
-                  />
-
-                  <CheckBox
-                    name="conditioningChart"
-                    onChange={this.handleCheckboxChange}
-                    label="مخطط تكييف"
-                  />
+                  {CheckBoxCol2.map(checkBox => (
+                    <CheckBox
+                      name={checkBox.name}
+                      onChange={this.handleCheckboxChange}
+                      label={checkBox.label}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
-            <div className="upload-projects">
-              <p className="upload-projects__title">أضافة التصميم</p>
+            </Section>
+
+            <Section title="أضافة التصميم">
               {architecturalChart ? (
-                <div className="building-chart">
-                  <p>المخطط المعماري</p>
-                  <UploadFile
-                    fileName="المخطط المعماري"
-                    handleChange={file => this.handleFileChange(file, "architecturalFileList")}
-                    fileList={architecturalFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط المعماري"
+                  handleChange={file => this.handleFileChange(file, "architecturalFileList")}
+                  fileList={architecturalFileList}
+                />
               ) : null}
               {constructionChart ? (
-                <div className="building-chart">
-                  <p>المخطط الانشائي</p>
-                  <UploadFile
-                    fileName="المخطط الانشائي"
-                    handleChange={file => this.handleFileChange(file, "constructionFileList")}
-                    fileList={constructionFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط الانشائي"
+                  handleChange={file => this.handleFileChange(file, "constructionFileList")}
+                  fileList={constructionFileList}
+                />
               ) : null}
               {gardenChart ? (
-                <div className="garden-chart">
-                  <p>مخطط تصميم حديقة</p>
-                  <UploadFile
-                    fileName="مخطط تصميم الحديقة"
-                    handleChange={file => this.handleFileChange(file, "gardenFileList")}
-                    fileList={gardenFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط تصميم حديقة"
+                  handleChange={file => this.handleFileChange(file, "gardenFileList")}
+                  fileList={gardenFileList}
+                />
               ) : null}
-
               {interiorDecorationChart ? (
-                <div className="garden-chart">
-                  <p>مخطط ديكور داخلي</p>
-                  <UploadFile
-                    fileName="مخطط ديكور داخلي"
-                    handleChange={file => this.handleFileChange(file, "interiorDecorationFileList")}
-                    fileList={interiorDecorationFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط ديكور داخلي"
+                  handleChange={file => this.handleFileChange(file, "interiorDecorationFileList")}
+                  fileList={interiorDecorationFileList}
+                />
               ) : null}
               {conditioningChart ? (
-                <div className="garden-chart">
-                  <p>مخطط تكييف</p>
-                  <UploadFile
-                    fileName="مخطط تكييف"
-                    handleChange={file => this.handleFileChange(file, "conditioningFileList")}
-                    fileList={conditioningFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط تكييف"
+                  handleChange={file => this.handleFileChange(file, "conditioningFileList")}
+                  fileList={conditioningFileList}
+                />
               ) : null}
               {HealthChart ? (
-                <div className="garden-chart">
-                  <p>المخطط الصحي</p>
-                  <UploadFile
-                    fileName="المخطط الصحي"
-                    handleChange={file => this.handleFileChange(file, "HealthFileList")}
-                    fileList={HealthFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="المخطط الصحي"
+                  handleChange={file => this.handleFileChange(file, "HealthFileList")}
+                  fileList={HealthFileList}
+                />
               ) : null}
               {electricityChart ? (
-                <div className="garden-chart">
-                  <p>مخطط الكهرباء</p>
-                  <UploadFile
-                    fileName="مخطط الكهرباء"
-                    handleChange={file => this.handleFileChange(file, "electricityFileList")}
-                    fileList={electricityFileList}
-                  />
-                </div>
+                <UploadChartFile
+                  fileName="مخطط كهرباء"
+                  handleChange={file => this.handleFileChange(file, "electricityFileList")}
+                  fileList={electricityFileList}
+                />
               ) : null}
-            </div>
-            <div className="price">
-              <p className="price__title">سعر التصميم</p>
+            </Section>
 
-              <div className="price-div">
-                <div className="total-price">
-                  <p>سعر التصميم</p>
-                  <InputNumber
-                    onChange={this.handlePriceChange}
-                    name="price"
-                    value={price}
-                    symbol="$"
-                  />{" "}
-                </div>
-                <div className="platform-price">
-                  <p>السعر المعروض على المنصة</p>
-                  <p>{platformPrice}$</p>
-                </div>
-                <div className="eng-price">
-                  <p>مستحقاتك بعض الخصم</p>
-                  <p>{engineerPrice}$</p>
-                </div>
-              </div>
-            </div>
+            <Section title="السعر">
+              <Price
+                onChange={this.handlePriceChange}
+                value={price}
+                platformPrice={platformPrice}
+                engineerPrice={engineerPrice}
+              />
+            </Section>
+
             <div className="buttons">
-              <Button
-                label="حفظ  التصميم بدون نشر"
-                className="save-project"
-                onClick={this.handleSaveProject}
-              />
-              <Button
-                label="نشر التصميم"
-                className="publish-project"
-                onClick={this.handlePublishProject}
-              />
+              {buttons.map((button, index) => {
+                const onClicks = [this.handleSaveProject, this.handlePublishProject];
+                return (
+                  <Button
+                    label={button.label}
+                    className={button.className}
+                    onClick={onClicks[index]}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="project-review">

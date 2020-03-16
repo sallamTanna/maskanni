@@ -49,6 +49,7 @@
 
 .navbar-logged a {
   color: #606060;
+  padding-left: 2%;
 }
 
 .navbar-logged a:hover {

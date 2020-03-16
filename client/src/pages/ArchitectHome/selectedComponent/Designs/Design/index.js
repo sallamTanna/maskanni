@@ -1,11 +1,13 @@
+/* eslint-disable default-case */
 import React from "react";
 
-import Button from "../../../../../components/Button";
-import livingRoom from "../../../../../assets/living-room.svg";
-import bedRoom from "../../../../../assets/bed-room.svg";
 import bathRoom from "../../../../../assets/bath-room.svg";
-import stairs from "../../../../../assets/stairs.svg";
+import bedRoom from "../../../../../assets/bed-room.svg";
 import carGarage from "../../../../../assets/car-garage.svg";
+import livingRoom from "../../../../../assets/living-room.svg";
+import stairs from "../../../../../assets/stairs.svg";
+import Button from "../../../../../components/Button";
+
 import "./style.css";
 
 const Design = props => {
@@ -29,6 +31,7 @@ const Design = props => {
     }
     case "غير معتمد":
       color = "red";
+      break;
   }
 
   return (

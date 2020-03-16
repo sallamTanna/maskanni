@@ -14,8 +14,8 @@ exports.addNewUser = (fullName, email, password, role) => ({
   values: [fullName, email, password, role]
 });
 
-exports.getUserAvatar = (user_id) => ({
-  text: `SELECT avatar FROM users WHERE id = $1`,
+exports.getUserData = (user_id) => ({
+  text: `SELECT avatar, full_name, email, address, mobile FROM users WHERE id = $1`,
   values: [user_id]
 });
 

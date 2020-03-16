@@ -12,9 +12,10 @@ const Project = props => {
     totalSize,
     handleSetting,
     handleFavorite,
+    handleProjectClick,
   } = props;
   return (
-    <div className="project">
+    <div className="project" onClick={handleProjectClick}>
       <div className="project__icons">
         <i className="fa fa-ellipsis-h" onClick={handleSetting} />
         <i className="fa fa-heart" onClick={handleFavorite} />

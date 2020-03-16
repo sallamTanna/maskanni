@@ -1,19 +1,7 @@
-import React from "react";
 import { Upload, Icon, message } from "antd";
+import React from "react";
 
-import avatar from "../../assets/user-avatar.png";
-
-const style = {
-  objectFit: "cover",
-  objectPosition: "80% 80%",
-  display: "inline",
-  width: "200px",
-  height: "200px",
-  margin: "0 auto",
-  borderRadius: "50%",
-  backgroundSize: "cover",
-  backgrounPosition: "center",
-};
+import Spinner from "../Spinner";
 
 class UploadOneFile extends React.Component {
   state = {
@@ -37,10 +25,16 @@ class UploadOneFile extends React.Component {
     if (!isLt2M) {
       message.error("حجم الصورة يجب أن يقل عن 2 ميجا بايت");
     }
-    return isJpgOrPng && isLt2M;
+    this.setState(
+      {
+        isLoading: false,
+      },
+      () => isJpgOrPng && isLt2M
+    );
   };
 
   handleChange = info => {
+    this.setState({ isLoading: true });
     if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
@@ -49,40 +43,44 @@ class UploadOneFile extends React.Component {
       // Get this url from response in real world.
       this.getBase64(info.file.originFileObj, imageUrl => {
         const { projectMainImage } = this.props;
-        projectMainImage(imageUrl);
+        projectMainImage(imageUrl, info.file);
 
         this.setState({
-          imageUrl,
+          // imageUrl,
           loading: false,
+          isLoading: false,
         });
       });
     }
   };
 
   render() {
-    const { currentImage, buttonStyleClassname, label, showPlus } = this.props;
-    const { loading } = this.state;
+    const { currentImage, buttonStyleClassname, label, showPlus, imageStyle } = this.props;
+    const { loading, isLoading } = this.state;
     const uploadButton = (
       <div className={buttonStyleClassname}>
         <Icon type={loading ? "loading" : showPlus ? "plus" : ""} />
         <div className="ant-upload-text">{label}</div>
       </div>
     );
-    // const { imageUrl } = this.state;
     return (
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={this.beforeUpload}
-        onChange={this.handleChange}
-      >
-        {/* <img src={currentImage || avatar} alt="avatar" style={style} /> */}
-        <img src={currentImage} alt="avatar" style={style} />
-        {uploadButton}
-      </Upload>
+      <>
+        {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={this.beforeUpload}
+          onChange={this.handleChange}
+        >
+          {currentImage ? <img src={currentImage} alt="avatar" style={imageStyle} /> : null}
+
+          {uploadButton}
+        </Upload>
+      </>
     );
   }
 }

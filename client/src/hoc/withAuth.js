@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import axios from "axios";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
+
+import Spinner from "../components/Spinner";
 
 export default function withAuth(ComponentToprotect) {
   class AuthenticatedComponent extends Component {
@@ -42,7 +44,7 @@ export default function withAuth(ComponentToprotect) {
     render() {
       const { loading, redirect, id, username, role, isLogged, email, avatar } = this.state;
       if (loading) {
-        return null;
+        return <Spinner type="spin" width={150} height={150} color="#ffc000" />;
       }
       if (redirect) {
         return <Redirect to="/login" />;

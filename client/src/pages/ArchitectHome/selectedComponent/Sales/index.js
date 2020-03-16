@@ -1,8 +1,10 @@
-import React from "react";
-import axios from "axios";
+/* eslint-disable react/destructuring-assignment */
 import { Table } from "antd";
-import Spinner from "../../../../components/Spinner";
+import axios from "axios";
+import React from "react";
+
 import Message from "../../../../components/Message";
+import Spinner from "../../../../components/Spinner";
 
 import "./style.css";
 
@@ -13,30 +15,26 @@ class Sales extends React.Component {
     isLoading: true,
     tableError: false,
     tableErrorMsg: "",
-    user_id: this.props.user.id,
-    user: this.props.user,
   };
 
-  componentDidMount() {
-    const { user_id } = this.state;
-    axios
-      .get(`/v1/users/${user_id}/projects`)
-      .then(response => {
-        const soldProjects = response.data.response.data.filter(project => project.sold === true);
-        this.setState({
-          projects: soldProjects,
-          isLoading: false,
-          tableError: false,
-          tableErrorMsg: "",
-        });
-      })
-      .catch(error =>
-        this.setState({
-          isLoading: false,
-          tableError: true,
-          tableErrorMsg: error.response.data.error.msg,
-        })
-      );
+  async componentDidMount() {
+    try {
+      const { id } = this.props.user;
+      const getSales = await axios.get(`/v1/users/${id}/projects`);
+      const soldProjects = getSales.data.response.data.filter(project => project.sold === true);
+      this.setState({
+        projects: soldProjects,
+        isLoading: false,
+        tableError: false,
+        tableErrorMsg: "",
+      });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        tableError: true,
+        tableErrorMsg: error.response.data.error.msg,
+      });
+    }
   }
 
   onChange = (pagination, filters, sorter, extra) => {

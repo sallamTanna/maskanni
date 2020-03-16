@@ -1,0 +1,16 @@
+.price-div {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.price-div div {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 768px) {
+  .price-div {
+    flex: none;
+    display: block;
+  }
+}

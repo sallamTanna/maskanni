@@ -32,3 +32,12 @@ exports.updateProfileImg = (img, user_id) => ({
   text: "UPDATE users SET avatar = $1 WHERE id = $2",
   values: [img, user_id]
 });
+
+exports.getSpecificUser = user_id => ({
+  text: "SELECT * FROM users WHERE id = $1",
+  values: [user_id]
+});
+
+exports.getAllUsers = () => ({
+  text: "SELECT * FROM users"
+});

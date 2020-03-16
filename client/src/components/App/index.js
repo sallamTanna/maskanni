@@ -1,23 +1,37 @@
 /* eslint-disable no-undef */
+
+import { ConfigProvider } from "antd";
+import ar from "antd/es/locale/ar_EG";
+import axios from "axios";
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import axios from "axios";
 
-import NotFoundPage from "../../pages/NotFound";
-import Unauthorized from "../../pages/Unauthorized";
-import Login from "../../pages/Login";
-import SignUp from "../../pages/SignUp";
+import AddProject from "../../pages/AddProject";
 import ArchitectHome from "../../pages/ArchitectHome";
 import ConsumerHome from "../../pages/ConsumerHome";
-import AddProject from "../../pages/AddProject";
-import Projects from "../../pages/Projects";
+import Login from "../../pages/Login";
+import NotFoundPage from "../../pages/NotFound";
 import Project from "../../pages/Project";
+import Projects from "../../pages/Projects";
+import SignUp from "../../pages/SignUp";
+import Unauthorized from "../../pages/Unauthorized";
+
 import Footer from "../Footer";
 import Navbar from "../Navbar";
-import withAuth from "../../hoc/withAuth";
+import Spinner from "../Spinner";
+
 import avatarIcon from "../../assets/user-avatar.png";
+import withAuth from "../../hoc/withAuth";
 
 import "./style.css";
+
+const pathnames = [
+  /^\/add$/,
+  /^\/consumer-home$/,
+  /^\/architect-home$/,
+  /^\/projects\/?$/,
+  /^\/projects\/\d+$/,
+];
 
 class App extends Component {
   state = {
@@ -28,27 +42,27 @@ class App extends Component {
     avatar: "",
   };
 
-  componentDidMount() {
-    axios
-      .get("/v1/check")
-      .then(response => {
-        this.setState({
-          isLoading: false,
-          username: response.data.response.username,
-          role: response.data.response.role,
-          isLogged: response.data.response.isLogged,
-          avatar: response.data.response.avatar,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          username: "",
-          role: "",
-          avatar: "",
-          isLogged: false,
-        });
+  async componentDidMount() {
+    try {
+      const {
+        data: { response },
+      } = await axios.get("/v1/check");
+      this.setState({
+        isLoading: false,
+        username: response.username,
+        role: response.role,
+        isLogged: response.isLogged,
+        avatar: response.avatar,
       });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+        username: "",
+        role: "",
+        avatar: "",
+        isLogged: false,
+      });
+    }
   }
 
   logout = () =>
@@ -67,16 +81,22 @@ class App extends Component {
       avatar: avatar || avatarIcon,
     });
 
+  changeAvatar = avatar =>
+    this.setState({
+      avatar,
+    });
+
   render() {
-    const { isLogged, username, role, avatar } = this.state;
+    const { isLogged, username, role, avatar, isLoading } = this.state;
+    const showNavbarAndFooter = pathnames.find(pathname =>
+      window.location.pathname.match(pathname)
+    );
     return (
-      <div className="App">
-        <Router>
-          {window.location.pathname === "/add" ||
-            window.location.pathname === "/home" ||
-            window.location.pathname === "/consumer-home" ||
-            window.location.pathname === "/architect-home" ||
-            window.location.pathname === "/projects" ? (
+      <ConfigProvider locale={ar}>
+        <div className="App">
+          {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+          <Router>
+            {showNavbarAndFooter ? (
               <Navbar
                 isLogged={isLogged}
                 username={username}
@@ -86,36 +106,37 @@ class App extends Component {
               />
             ) : null}
 
-          <Switch>
-            <Route exact path="/add" component={withAuth(AddProject)} />
-            <Route exact path="/projects" component={Projects} />
-            <Route exact path="/projects/:projectId" component={Project} />
-            <Route
-              exact
-              path="/login"
-              render={() => (
-                <Login
-                  login={(userName, userRole, userAvatar) =>
-                    this.login(userName, userRole, userAvatar)
-                  }
-                />
-              )}
-            />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/architect-home" component={withAuth(ArchitectHome)} />
-            <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
-            <Route exact path="/unauthorized" component={Unauthorized} />
-            <Route component={NotFoundPage} />
-          </Switch>
-          {window.location.pathname === "/add" ||
-            window.location.pathname === "/home" ||
-            window.location.pathname === "/consumer-home" ||
-            window.location.pathname === "/architect-home" ||
-            window.location.pathname === "/projects" ? (
-              <Footer />
-            ) : null}
-        </Router>
-      </div>
+            <Switch>
+              <Route exact path="/add" component={withAuth(AddProject)} />
+              <Route exact path="/projects" component={Projects} />
+              <Route exact path="/projects/:projectId" component={Project} />
+              <Route
+                exact
+                path="/login"
+                render={() => (
+                  <Login
+                    login={(userName, userRole, userAvatar) =>
+                      this.login(userName, userRole, userAvatar)
+                    }
+                  />
+                )}
+              />
+              <Route exact path="/signup" component={SignUp} />
+              <Route
+                exact
+                path="/architect-home"
+                render={() => (
+                  <ArchitectHome changeNavAvatar={newAvatar => this.changeAvatar(newAvatar)} />
+                )}
+              />
+              <Route exact path="/consumer-home" component={withAuth(ConsumerHome)} />
+              <Route exact path="/unauthorized" component={Unauthorized} />
+              <Route component={NotFoundPage} />
+            </Switch>
+            {showNavbarAndFooter ? <Footer /> : null}
+          </Router>
+        </div>
+      </ConfigProvider>
     );
   }
 }

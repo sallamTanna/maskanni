@@ -1,5 +1,55 @@
 import * as yup from "yup";
 
+import bathRoom from "../../assets/bath-room.svg";
+import bedRoom from "../../assets/bed-room.svg";
+import carGarage from "../../assets/car-garage.svg";
+import livingRoom from "../../assets/living-room.svg";
+import stairs from "../../assets/stairs.svg";
+
+const projectMainProp = (
+  livingRoomsNumber,
+  bedRoomsNumber,
+  bathRoomsNumber,
+  floorsNumber,
+  carGarageNumber
+) => [
+  {
+    src: livingRoom,
+    alt: "livingRoom",
+    name: "livingRoomsNumber",
+    placeholder: "غرف المعيشة",
+    value: livingRoomsNumber,
+  },
+  {
+    src: bedRoom,
+    alt: "bedRoom",
+    name: "bedRoomsNumber",
+    placeholder: "غرف النوم",
+    value: bedRoomsNumber,
+  },
+  {
+    src: bathRoom,
+    alt: "bathRoom",
+    name: "bathRoomsNumber",
+    placeholder: "الحمامات",
+    value: bathRoomsNumber,
+  },
+  {
+    src: stairs,
+    alt: "stairs",
+    name: "floorsNumber",
+    placeholder: "الأدوار",
+    value: floorsNumber,
+  },
+  {
+    src: carGarage,
+    alt: "carGarage",
+    name: "carGarageNumber",
+    placeholder: "كراج السيارات",
+    value: carGarageNumber,
+  },
+];
+
 const saveProjectValidation = () => {
   return yup.object().shape({
     projectName: yup
@@ -59,7 +109,7 @@ const saveProjectValidation = () => {
       .number("يجب ادخال قيمة صحيحة لسعر المشروع")
       .required("يرجى ادخال قيمة سعر المشروع")
       .positive("يرجى ادخال قيمة صحيحة لسعر المشروع"),
-    imagesArray: yup
+    fileList: yup
       .array()
       .min(1, "يرجى تحميل صور المشروع")
       .required("يرجى ارفاق صور للمشروع"),
@@ -139,18 +189,8 @@ const edibleInputValidation = () =>
     str: yup.string().required("يرجى اضافة الوصف"),
   });
 
-const edibleInputStyle = () => ({
-  padding: "2px",
-  border: "1px solid #d9d9d9",
-  borderRadius: "3px",
-  boxShadow: "0 2px 0 rgba(0, 0, 0, 0.015)",
-  marginBottom: "3%",
-  color: "#909090",
-  paddingRight: "3%",
-});
-
-const initalState = () => ({
-  isLoading: false,
+const initialState = {
+  isLoading: true,
   errors: false,
   errorMessage: "",
   projectName: "",
@@ -194,6 +234,58 @@ const initalState = () => ({
   kitchenDescription: [],
   garageDescription: [],
   gardenDescription: [],
-});
+};
 
-export { saveProjectValidation, edibleInputValidation, edibleInputStyle, initalState };
+const imageStyle = {
+  width: "86px",
+  height: "86px",
+};
+
+const CheckBoxCol1 = [
+  {
+    label: "المخطط المعماري",
+  },
+  {
+    label: "مخطط انشائي",
+    name: "constructionChart",
+  },
+  {
+    label: "مخطط صحي",
+    name: "HealthChart",
+  },
+  { label: "مخطط كهرباء", name: "electricityChart" },
+];
+
+const CheckBoxCol2 = [
+  {
+    label: "مخطط تصميم حديقة",
+    name: "gardenChart",
+  },
+  {
+    label: "مخطط ديكور داخلي",
+    name: "interiorDecorationChart",
+  },
+  { label: "مخطط تكييف", name: "conditioningChart" },
+];
+
+const buttons = [
+  {
+    label: "حفظ  التصميم بدون نشر",
+    className: "save-project",
+  },
+  {
+    label: "نشر التصميم",
+    className: "publish-project",
+  },
+];
+
+export {
+  projectMainProp,
+  saveProjectValidation,
+  edibleInputValidation,
+  initialState,
+  imageStyle,
+  CheckBoxCol1,
+  CheckBoxCol2,
+  buttons,
+};

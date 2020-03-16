@@ -1,5 +1,5 @@
-import React from "react";
 import { Upload, Icon, Modal } from "antd";
+import React from "react";
 
 import "./style.css";
 
@@ -49,7 +49,7 @@ class UploadComponent extends React.Component {
       </div>
     );
     return (
-      <div className="clearfix">
+      <div className="images-container">
         <Upload
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           listType="picture-card"

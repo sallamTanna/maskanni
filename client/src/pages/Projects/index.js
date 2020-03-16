@@ -1,14 +1,16 @@
 /* eslint-disable no-undef */
-import React from "react";
 import axios from "axios";
+import React from "react";
 
-import Header from "../../components/Header";
-import Project from "../../components/Project";
-import Input from "../../components/Input";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
+import Input from "../../components/Input";
+import Message from "../../components/Message";
+import Project from "../../components/Project";
 import RadioButtons from "../../components/RadioButtons";
 import Spinner from "../../components/Spinner";
 import { alert } from "../../utilities";
+
 import {
   numberInputValidation,
   sizeFilterValidation,
@@ -24,7 +26,7 @@ class Projects extends React.Component {
     projects: [],
     allProjects: [],
     errors: false,
-    errorzzzMsg: "",
+    errorMsg: "",
     sizeMin: "",
     sizeMax: "",
     lengthMin: "",
@@ -175,6 +177,11 @@ class Projects extends React.Component {
       });
   };
 
+  handleProjectClick = id => {
+    const { history } = this.props;
+    return history.push(`/projects/${id}`);
+  };
+
   render() {
     const {
       isLoading,
@@ -191,26 +198,29 @@ class Projects extends React.Component {
       roomsNumber,
       livingRoomsNumber,
       bathRoomsNumber,
+      errors,
+      errorMsg,
     } = this.state;
     return (
       <div className="projects">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
-
+        {errors ? <Message message={errorMsg} type="error" className="login__errorMsg" /> : null}
         <Header title="المشاريع" />
         <div className="projects__page">
           <div className="projects_body">
             {projects.length > 0
               ? projects.map(project => (
-                <Project
-                  livingRoomsNumber={project.livingrooms_number}
-                  bedRoomsNumber={project.bedrooms_number}
-                  floorsNumber={project.floors_number}
-                  totalSize={project.size}
-                  src={project.project_wallpaper}
-                  name={project.name}
-                  roomsNumber={project.roomsNumber}
-                />
-              ))
+                  <Project
+                    livingRoomsNumber={project.livingrooms_number}
+                    bedRoomsNumber={project.bedrooms_number}
+                    floorsNumber={project.floors_number}
+                    totalSize={project.size}
+                    src={project.project_wallpaper}
+                    name={project.name}
+                    roomsNumber={project.roomsNumber}
+                    handleProjectClick={() => this.handleProjectClick(project.id)}
+                  />
+                ))
               : null}
             {isEmptyProjects ? <p className="no-projects">لا يوجد مشاريع لعرضها</p> : null}
           </div>

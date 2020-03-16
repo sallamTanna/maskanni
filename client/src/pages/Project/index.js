@@ -1,24 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { Component } from "react";
-import axios from "axios";
 import { Breadcrumb } from "antd";
+import axios from "axios";
+import React, { Component } from "react";
 
-import Message from "../../components/Message";
-import Spinner from "../../components/Spinner";
-
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-
-import ProjectEx from "../../components/Project";
-
-import defaultBG from "../../assets/default-pg.png";
-
-import share from "../../assets/share.svg";
-import floors_number from "../../assets/stair-climber.svg";
 import bedrooms_number from "../../assets/bed-09.svg";
 import car_garage_number from "../../assets/car-parking.svg";
+import defaultBG from "../../assets/default-pg.png";
 import size from "../../assets/design.svg";
+import share from "../../assets/share.svg";
 import livingrooms_number from "../../assets/sofa.svg";
+import floors_number from "../../assets/stair-climber.svg";
+import Message from "../../components/Message";
+import ProjectEx from "../../components/Project";
+import Spinner from "../../components/Spinner";
 
 import Gallery from "./Gallery";
 import LeftSection from "./LeftSection";
@@ -194,7 +188,6 @@ class Project extends Component {
           response: { data },
         },
       } = await axios.get(`/v1/projects/${projectId}`);
-      console.log("data", data);
       this.setState(state => {
         return {
           ...state,
@@ -204,7 +197,6 @@ class Project extends Component {
         };
       });
     } catch (err) {
-      console.log(111, { err });
       const error = err.response && err.response.data && err.response.data.error;
       this.setState({
         errs: true,
@@ -218,7 +210,6 @@ class Project extends Component {
     const { isLoading, errs, errMsg, project, randomProjects } = this.state;
     return (
       <>
-        <Navbar />
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
         {errs ? <Message message={errMsg} type="error" /> : null}
 
@@ -281,7 +272,6 @@ class Project extends Component {
             </div>
           </>
         )}
-        <Footer />
       </>
     );
   }

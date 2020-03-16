@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "eslint-plugin-import"],
   "rules": {
     "camelcase": 0,
     "react/prefer-stateless-function": 0,
@@ -35,6 +35,35 @@
       {
         "trailingComma": "es5",
         "singleQuote": false
+      }
+    ],
+    // configure "eslint-plugin-import" plugin
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "pathGroups": [
+          {
+            "pattern": "../../pages/*",
+            "group": "parent",
+            "position": "before"
+          },
+          {
+            "pattern": "../*",
+            "group": "parent",
+            "position": "before"
+          },
+          {
+            "pattern": "./style.css",
+            "group": "sibling",
+            "position": "after"
+          }
+        ]
       }
     ]
   }

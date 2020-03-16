@@ -12,16 +12,11 @@ module.exports = async (req, res, next) => {
     const allEmails = await dbQuery(getMails());
     const isEmailUsed = allEmails.rows.filter(userEmail => userEmail.email === email);
 
-    if (isEmailUsed.length > 0) {
-      return next(boom.conflict("هذا الايميل موجود فعلا"));
-    }
-    bcrypt.hash(password, 10, async (err, hash) => {
-      if (err) {
-        return next(boom.badImplementation("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
-      }
-      const addNewUserResult = await dbQuery(addNewUser(fullName, email, hash, role));
-      return res.json({ response: { role, fullName, email }, error: null });
-    });
+    if (isEmailUsed.length > 0) return next(boom.conflict("هذا الايميل موجود فعلا"));
+
+    const hashPassword = bcrypt.hashSync(password, 10);
+    const addNewUserResult = await dbQuery(addNewUser(fullName, email, hashPassword, role));
+    return res.json({ response: { role, fullName, email }, error: null });
   } catch (error) {
     return next(boom.conflict("مشكلة بالسيرفر، يرجى المحاولة مرة أخرى"));
   }

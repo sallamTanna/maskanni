@@ -3,7 +3,7 @@
   --gray: #909090;
 }
 
-a{
+a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.65);
 }
@@ -16,30 +16,30 @@ a{
   font-size: 1.3rem;
 }
 
-.margin-bot-2{
+.margin-bot-2 {
   margin-bottom: 2rem;
 }
 
-.margin-top-2rem{
+.margin-top-2rem {
   margin-top: 2rem;
 }
 
-.margin-top-halfrem{
-  margin-top: .5rem;
+.margin-top-halfrem {
+  margin-top: 0.5rem;
 }
 
-.margin-top-1{
+.margin-top-1 {
   margin-top: 1rem;
   line-height: 2;
 }
 
-.margin-1-5-right{
+.margin-1-5-right {
   margin-right: 1.5rem;
 }
 
 .gray-small {
   color: var(--gray);
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .container {
@@ -86,7 +86,7 @@ a{
   width: 100%;
 }
 
-.mid-font-size{
+.mid-font-size {
   font-size: 12px;
 }
 
@@ -94,7 +94,7 @@ a{
   line-height: 2;
 }
 
-.space-bt{
+.space-bt {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -124,7 +124,6 @@ a{
   padding: 6%;
 }
 
-
 .share-section {
   display: flex;
   justify-content: space-between;
@@ -147,10 +146,9 @@ a{
   justify-content: space-around;
   align-items: center;
   padding: 3% 0;
-
 }
 
-.gallery-sec{
+.gallery-sec {
   width: 48%;
   height: 30rem;
 }
@@ -170,7 +168,7 @@ a{
 }
 
 .rotateimg {
-    /* rotate the image */
+  /* rotate the image */
   /* transform: rotate(-90deg); */
 }
 
@@ -241,7 +239,7 @@ a{
   margin-top: 0.5rem;
 }
 
-.warn{
+.warn {
   margin-top: 1rem;
   background-color: rgba(255, 250, 235, 100%);
   padding: 1rem 3rem;
@@ -249,18 +247,18 @@ a{
   position: relative;
 }
 
-.edit-time::before{
+.edit-time::before {
   content: url("../../assets/bulb.svg");
   position: absolute;
-  right: .7rem;
+  right: 0.7rem;
 }
 
-.warn-msg{
+.warn-msg {
   color: var(--primary);
   font-weight: bold;
 }
 
-.buy-btn.ant-btn{
+.buy-btn.ant-btn {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -304,28 +302,26 @@ a{
 }
 
 /* antd custom style */
-.ant-select-dropdown-menu{
+.ant-select-dropdown-menu {
   padding-right: 0;
 }
 
-.ant-select-selection__placeholder{
+.ant-select-selection__placeholder {
   text-align: right;
   right: 0;
 }
 
-.ant-select-selection-selected-value{
+.ant-select-selection-selected-value {
   padding-right: 0;
   float: right;
 }
 
-.ant-select-arrow{
+.ant-select-arrow {
   right: initial;
   left: 11px;
 }
 
-.ant-checkbox-checked
-.ant-checkbox-inner
-{
+.ant-checkbox-checked .ant-checkbox-inner {
   background-color: var(--primary);
   border-color: var(--primary);
 }
@@ -342,28 +338,32 @@ a{
   color: var(--gray);
 }
 
-.check-col .ant-checkbox-group-item.ant-checkbox-wrapper :not(.ant-checkbox-checked) .ant-checkbox-inner {
+.check-col
+  .ant-checkbox-group-item.ant-checkbox-wrapper
+  :not(.ant-checkbox-checked)
+  .ant-checkbox-inner {
   background-color: #b9b9bb;
 }
 
-.check-col .ant-checkbox-group-item.ant-checkbox-wrapper .ant-checkbox::after{
+.check-col .ant-checkbox-group-item.ant-checkbox-wrapper .ant-checkbox::after {
   content: "x";
   color: white;
   position: absolute;
   top: 0rem;
-  right: .3rem;
+  right: 0.3rem;
 }
 
 .check-col .ant-checkbox-group-item.ant-checkbox-wrapper.ant-checkbox-wrapper-checked {
   color: black;
 }
 
-.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-wrapper-disabled span{
+.ant-checkbox-wrapper.ant-checkbox-wrapper-checked.ant-checkbox-wrapper-disabled span {
   color: black;
 }
 
 /* react-image-viewer */
-.previous, .next {
+.previous,
+.next {
   color: white;
   transform: rotateY(180deg);
 }
@@ -371,27 +371,25 @@ a{
 /* responsive */
 
 @media only screen and (max-width: 900px) {
-
-  .container{
+  .container {
     display: block;
   }
 
-  .right-section{
+  .right-section {
     width: 100%;
   }
 
-  .left-section{
+  .left-section {
     width: 100%;
     margin-top: 2rem;
   }
 
-  .gallery{
+  .gallery {
     height: 30rem;
   }
 }
 
 @media only screen and (max-width: 700px) {
-
   .gallery {
     display: block;
     height: initial;
@@ -417,24 +415,24 @@ a{
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-
-  .dt-info-list.wrap{
+  .dt-info-list.wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  .dt-info-list.smaller-width{
+  .dt-info-list.smaller-width {
     width: 18%;
   }
 
-  .dt-info-list.small-width{
+  .dt-info-list.small-width {
     width: 30%;
   }
-
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { }
+@media (min-width: 992px) {
+}
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) {
+}

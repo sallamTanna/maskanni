@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from "react";
 import { Layout, Menu, Avatar } from "antd";
-import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
+import React from "react";
+import { withRouter, Link } from "react-router-dom";
 
 import Button from "../Button";
+import Message from "../Message";
 import Spinner from "../Spinner";
+
 import logo from "../../assets/navbar-logo.png";
 
 import "./style.css";
@@ -33,42 +36,42 @@ class Navbar extends React.Component {
       });
   }
 
-  handleBurgerMenu = () => {
+  handleBurgerMenu = () =>
     this.setState(prevState => ({
       isResponsive: !prevState.isResponsive,
     }));
-  };
 
-  handleLogout = () => {
-    const { history, logout } = this.props;
-    this.setState({ isLoading: true });
-    axios
-      .get("/v1/logout")
-      .then(() =>
-        this.setState(
-          {
-            isLoading: false,
-          },
-          () => {
-            logout();
-            return history.push("/login");
-          }
-        )
-      )
-      .catch(() =>
-        this.setState({
+  handleLogout = async () => {
+    try {
+      const { history, logout } = this.props;
+      const logoutUser = await axios.get("/v1/logout");
+      this.setState(
+        {
           isLoading: false,
-        })
+        },
+        () => {
+          logout();
+          return history.push("/login");
+        }
       );
+    } catch (error) {
+      const err = error.response && error.response.data && error.response.data.error;
+      this.setState({
+        isLoading: false,
+        error: true,
+        errorMsg: err.msg,
+      });
+    }
   };
 
   render() {
-    const { isResponsive, showLinks, isLoading } = this.state;
+    const { isResponsive, showLinks, isLoading, error, errorMsg } = this.state;
     const { isLogged, username, avatar, role } = this.props;
 
     return (
       <Header style={{ backgroundColor: "white", paddingLeft: 0 }} className="Navbar">
         {isLoading ? <Spinner type="spin" width={150} height={150} color="#ffc000" /> : null}
+        {error ? <Message message={errorMsg} type="error" /> : null}
         <div className="Navbar__menu">
           <Menu
             className="Navbar__item"
@@ -106,12 +109,12 @@ class Navbar extends React.Component {
                 <Link to="">طلب تصميم خاص</Link>
               </Menu.Item>
             ) : null}
-            {!showLinks ? (
+            {!isLogged && !showLinks ? (
               <Menu.Item key="9">
                 <Link to="/login">تسجيل الدخول</Link>
               </Menu.Item>
             ) : null}
-            {!showLinks ? (
+            {!isLogged && !showLinks ? (
               <Menu.Item key="10">
                 <Link to="/signup">تسجيل حساب جديد</Link>
               </Menu.Item>
@@ -135,18 +138,18 @@ class Navbar extends React.Component {
               </Link>
             </div>
           ) : (
-              <Menu className="Navbar__item" theme="#fff" mode="horizontal">
-                <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
-                  <img src={logo} alt="logo" />
-                </Menu.Item>
-              </Menu>
-            )
+            <Menu className="Navbar__item" theme="#fff" mode="horizontal">
+              <Menu.Item key="1" disabled style={{ display: `${isResponsive ? "block" : ""}` }}>
+                <img src={logo} alt="logo" />
+              </Menu.Item>
+            </Menu>
+          )
         ) : (
-            <div className="navbar-logged">
-              <Link to={`${role}-home`}>{username}</Link>
-              <Avatar src={avatar} />
-            </div>
-          )}
+          <div className="navbar-logged">
+            <Link to={`/${role}-home`}>{username}</Link>
+            <Avatar src={avatar} />
+          </div>
+        )}
       </Header>
     );
   }

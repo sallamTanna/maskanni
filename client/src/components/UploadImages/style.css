@@ -7,3 +7,10 @@
   margin-top: 8px;
   color: #666;
 }
+
+.images-container span .ant-upload-list.ant-upload-list-picture-card {
+  display: flex;
+  float: right;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

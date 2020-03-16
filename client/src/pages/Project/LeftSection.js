@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from "react";
 import { Select, Checkbox, Input } from "antd";
+import React, { useState } from "react";
 
 import Button from "../../components/Button";
 
@@ -11,12 +11,12 @@ const { TextArea } = Input;
 
 const mapsType = [
   "مخطط انشائي",
+  "مخطط معماري",
   "مخطط صحي",
-  "مخطط تكييف",
-  "مخطط الكهرباء",
+  "مخطط كهرباء",
   "مخطط تصميم الحديقة",
-  "مخطط تفاصيل معمارية",
-  "مخططات التصميم الداخلي",
+  "مخطط الديكور الداخلي",
+  "مخطط تكييف",
 ];
 
 const LeftSection = ({ project }) => {
@@ -104,6 +104,7 @@ const LeftSection = ({ project }) => {
               options={mapsType}
               defaultValue={checkedMaps}
               onChange={setCheckedMaps}
+              disabled
             />
           </div>
 

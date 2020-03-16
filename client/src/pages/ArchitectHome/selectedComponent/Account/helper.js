@@ -1,5 +1,22 @@
 import * as yup from "yup";
 
+const initialState = {
+  password: "",
+  newPassword: "",
+  confirmPassword: "",
+  paypal: "",
+  isLoading: false,
+  passwordErrorMsg: "",
+  passwordError: false,
+  personalDataErrorMsg: "",
+  personalDataError: false,
+  paypayError: false,
+  paypayErrorMsg: "",
+  profileImage: "",
+  uploadingImgError: false,
+  uploadingImgErrorMsg: "",
+};
+
 const passwordValidation = () =>
   yup.object().shape({
     confirmPassword: yup
@@ -25,7 +42,7 @@ const personalDataValidation = () =>
       .string()
       .email("يجب ادخال صيغة صحيحة للايميل")
       .required("يجب ادخال الايميل"),
-    fullName: yup
+    username: yup
       .string()
       .min(6, "الاسم كاملا لا يقل عن 6 حروف")
       .max(20, "الاسم كاملا لا يزيد عن 20 حرف")
@@ -40,4 +57,22 @@ const paypalAccountValidation = () =>
       .matches(/^[0-9]{10,11}$/, "يجب ادخال قيمة صحيحة لحساب البي بال"),
   });
 
-export { passwordValidation, personalDataValidation, paypalAccountValidation };
+const imageStyle = {
+  objectFit: "cover",
+  objectPosition: "80% 80%",
+  display: "inline",
+  width: "200px",
+  height: "200px",
+  margin: "0 auto",
+  borderRadius: "50%",
+  backgroundSize: "cover",
+  backgrounPosition: "center",
+};
+
+export {
+  initialState,
+  passwordValidation,
+  personalDataValidation,
+  paypalAccountValidation,
+  imageStyle,
+};
